@@ -1,0 +1,28 @@
+  ''Dim REPORTNAME As New CrystalDecisions.CrystalReports.Engine.ReportDocument
+
+            ''REPORTNAME.Load(MapPath("~\Reportes" & "\rptGeneralRC.rpt"))
+            ''PrintReport(REPORTNAME, strParamName, strParamValues)
+
+
+
+            ''Dim paraValue As New CrystalDecisions.Shared.ParameterDiscreteValue
+            ''Dim paraValue2 As New CrystalDecisions.Shared.ParameterDiscreteValue
+            ''Dim currValue As CrystalDecisions.Shared.ParameterValues
+
+            ''paraValue.Value = txtFechaI.Text
+            ''paraValue2.Value = txtFechaF.Text
+
+            ''currValue = rptReportGRC.DataDefinition.ParameterFields("@fechaI").CurrentValues
+            ''currValue.Add(paraValue)
+
+            ''currValue = rptReportGRC.DataDefinition.ParameterFields("@fechaF").CurrentValues
+            ''currValue.Add(paraValue2)
+
+            ''rptReportGRC.DataDefinition.ParameterFields("@fechaI").ApplyCurrentValues(currValue)
+            ''rptReportGRC.DataDefinition.ParameterFields("@fechaF").ApplyCurrentValues(currValue)
+
+
+            ''rptReportGRC.SetDataSource(clsReclamaciones.getReclamacionRpt(txtFechaI.Text, txtFechaF.Text))
+
+            ''sRutaRPT = clsReclamaciones.ExportPDF(Server, rptReportGRC, "\GeneralRC.pdf")
+            ''Response.Redirect("~\Reportes\GeneralRC.pdf")
