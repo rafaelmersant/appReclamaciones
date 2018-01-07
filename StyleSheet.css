@@ -1,0 +1,171 @@
+﻿.botonEnviar 
+{
+	margin: 7px;
+}
+body 
+{
+	font-family: Helvetica;
+}
+.NuevosCampos
+{
+	font-size: 18px;
+}
+.acHeader
+{
+	background-color:lightslategray;
+	color:white;
+	text-align:left;
+	font-weight:bold;
+	border-color:white;
+	cursor:pointer;
+	font-family: Helvetica;
+}
+
+.acContent
+{
+	background-color:lightSteelBlue;
+	color:black;
+	text-align:left;
+	font-weight:normal;
+	font-family: Helvetica;
+	font-size: 12px;
+}
+.gridHeader
+{
+	font-family:Helvetica;
+	font-size:11px;	
+	color:White;
+	font-weight:bold;
+	font-family: Helvetica;
+}
+.gridItems
+{
+	font-family:Helvetica;
+	font-size:10px;
+	font-style:italic;
+	color:SteelBlue;
+	font-family: Helvetica;
+}
+.LetraUsual
+{
+	font-family: Helvetica;
+	font-size:12px;
+	font-weight:normal;	
+}
+
+.LetraFiles
+{
+	font-family: Helvetica;
+	font-size:12px;
+	font-weight:normal;
+}
+
+.headerSimples
+{
+	font-family: Helvetica;
+	font-size:13px;
+	font-weight:bold;
+}
+
+.headerPrincipal
+{
+	font-family: Helvetica;
+	font-size:11pt;
+	font-weight:bold;
+	color:White;
+}
+
+.listItems
+{
+	font-family: Helvetica;
+	font-size:12px;
+	font-weight:normal;
+	color:Blue;
+}
+.LetraH1
+{
+	font-family: Helvetica;
+	font-size:10px;
+	font-weight:bold;
+}
+.LetraH2
+{
+	font-family: Helvetica;
+	font-size:11px;
+	font-weight:normal;	
+}
+
+.LFiltros
+{
+	font-family: Helvetica;
+	font-size:12px;
+	font-weight:bolder;
+}
+
+.LAzul
+{
+	font-family: Helvetica;
+	font-size:12px;
+	font-weight:bold;
+	color:SteelBlue;
+}
+
+.CalendarExtenderFI .ajax__calendar_container 
+{
+	background-color: lemonchiffon;
+	color:darkblue;
+	border:1px solid #656565;
+}
+
+.CalendarExtenderFI .ajax__calendar_other .ajax__calendar_day,
+.CalendarExtenderFI .ajax__calendar_other .ajax__calendar_year
+{
+	color: DarkGray;
+}
+
+.CalendarExtenderFI .ajax__calendar_hover .ajax__calendar_day,
+.CalendarExtenderFI .ajax__calendar_hover .ajax__calendar_month,
+.CalendarExtenderFI .ajax__calendar_hover .ajax__calendar_year
+{
+	color:white;
+	background-color:Red;
+}
+
+.CalendarExtenderFI .ajax__calendar_active .ajax__calendar_day,
+.CalendarExtenderFI .ajax__calendar_active .ajax__calendar_month,
+.CalendarExtenderFI .ajax__calendar_active .ajax__calendar_year
+{
+	color:White;
+	background-color:Red;
+	font-weight:bold;
+}
+
+.CalendarExtenderFF .ajax__calendar_container 
+{
+	background-color: lemonchiffon;
+	color:darkblue;
+	border:1px solid #656565;
+}
+
+.CalendarExtenderFF .ajax__calendar_other .ajax__calendar_day,
+.CalendarExtenderFF .ajax__calendar_other .ajax__calendar_year
+{
+	color: DarkGray;
+}
+
+.CalendarExtenderFF .ajax__calendar_hover .ajax__calendar_day,
+.CalendarExtenderFF .ajax__calendar_hover .ajax__calendar_month,
+.CalendarExtenderFF .ajax__calendar_hover .ajax__calendar_year
+{
+	color:white;
+	background-color:Red;
+}
+
+.CalendarExtenderFF .ajax__calendar_active .ajax__calendar_day,
+.CalendarExtenderFF .ajax__calendar_active .ajax__calendar_month,
+.CalendarExtenderFF .ajax__calendar_active .ajax__calendar_year
+{
+	color:White;
+	background-color:Red;
+	font-weight:bold;
+}
