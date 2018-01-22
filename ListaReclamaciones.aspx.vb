@@ -144,6 +144,7 @@ Partial Class ListaReclamaciones
         findNameFromSAP_Cte(cte)
     End Sub
 
+    'CHANGE THIS WITH NEW STATEMENTS FOR TERMOPAC
     Private Sub findNameFromSAP_Cte(ByVal pCte() As String)
         Dim clientes() As wsClientes.ZsdCliente = clsReclamaciones.getClientesSAP(pCte)
 
@@ -410,8 +411,6 @@ Partial Class ListaReclamaciones
             grdReclamaciones.Columns(grdReclamaciones.Columns.Count - 5).Visible = True
             grdReclamaciones.Columns(grdReclamaciones.Columns.Count - 6).Visible = True
 
-
-
             exportarxls(grdReclamaciones)
 
             grdReclamaciones.Columns(grdReclamaciones.Columns.Count - 1).Visible = True
@@ -421,8 +420,6 @@ Partial Class ListaReclamaciones
             grdReclamaciones.Columns(grdReclamaciones.Columns.Count - 4).Visible = False
             grdReclamaciones.Columns(grdReclamaciones.Columns.Count - 5).Visible = False
             grdReclamaciones.Columns(grdReclamaciones.Columns.Count - 6).Visible = False
-
-
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message

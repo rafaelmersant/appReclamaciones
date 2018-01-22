@@ -1,64 +1,66 @@
-<%@ master language="VB" inherits="MasterPage" CodeFile="~/MasterPage.master.vb" %>
+<%@ Master Language="VB" Inherits="MasterPage" CodeFile="~/MasterPage.master.vb" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Reclamaciones</title>
-    
+
     <!--<link href="Normalize.css" rel="stylesheet" type="text/css" />-->
     <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
-    
+
 </head>
 
-<body style="background-image:url(images/LineaG.gif)">
+<body style="background-color: lightgray">
     <form id="form1" runat="server">
-    <div style="text-align:center">    
-        <asp:ScriptManager ID="ScriptMAjax" runat="server">
-        </asp:ScriptManager>
-        
-        <table width="80%">
-        <tr>
-        <td align="right" style="background-image: url(Images/Reclamaciones_TitleNewGM.png); background-repeat:no-repeat; height:44px" valign="bottom">
-                    <table style="width: 30%">
-                        <tr>
-                            <td align="right">
-                                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/Images/Lista.png" PostBackUrl="~/ListaReclamaciones.aspx" CausesValidation="False" /></td>
-                            <td align="left">
-                                <strong><em><span style="font-size: 7pt; font-family: Verdana">Lista de Reclamaciones</span></em></strong></td>
-                            <td align="right">
-                                <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/Images/user.png" PostBackUrl="~/Login.aspx" CausesValidation="False" /></td>
-                            <td align="left">
-                                <strong><em><span style="font-size: 7pt; font-family: Verdana">Cerrar Sesion</span></em></strong></td>
-                            <td align="left">
-                                <asp:HyperLink ID="hlOpciones" runat="server" CssClass="LetraUsual" NavigateUrl="~/Opciones.aspx"
-                                    Visible="False">Opciones</asp:HyperLink></td>
-                        </tr>
-                    </table>
-            <asp:Label ID="lblUserLog" runat="server" Font-Bold="True" Font-Italic="True" Font-Names="Verdana"
-                Font-Size="10px"></asp:Label></td>
-        </tr>
-        <tr>
-        <td style="background: lightsteelblue; font-weight:bold; text-align: left; margin:0; padding:0">::Reclamaciones de Clientes</td>
-        </tr>
-        </table>
-        <table style="width: 80%; background-color:White">
-            <tr>
-                <td align="left" valign="top" style="border-right: #3e6677 thin dotted; border-top: #3e6677 thin dotted; border-left: #3e6677 thin dotted; border-bottom: #3e6677 thin dotted">
-        <asp:contentplaceholder id="ContentPlaceHolder1" runat="server">
-           
-        </asp:contentplaceholder>
-                </td>
-            </tr>
-            <tr>
-                <td align="right" valign="top">
-                    <asp:LinkButton ID="lbCC" runat="server" CausesValidation="False" CssClass="LetraUsual"
-                        PostBackUrl="~/Usuarios.aspx">Cambiar Contraseña</asp:LinkButton>
-                </td>
-            </tr>
-        </table>
-       
-       </div>
+
+        <div style="display: block;">
+
+            <asp:ScriptManager ID="ScriptMAjax" runat="server">
+            </asp:ScriptManager>
+
+            <table width="80%">
+                <tr>
+                    <td align="right" style="background-image: url(Images/Reclamaciones_TitleNewGM.png); background-repeat: no-repeat; height: 44px" valign="bottom">
+                        <table style="width: 30%">
+                            <tr>
+                                <td align="right">
+                                    <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/Images/Lista.png" PostBackUrl="~/ListaReclamaciones.aspx" CausesValidation="False" /></td>
+                                <td align="left">
+                                    <strong><em><span style="font-size: 7pt; font-family: Verdana">Lista de Reclamaciones</span></em></strong></td>
+                                <td align="right">
+                                    <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/Images/user.png" PostBackUrl="~/Login.aspx" CausesValidation="False" /></td>
+                                <td align="left">
+                                    <strong><em><span style="font-size: 7pt; font-family: Verdana">Cerrar Sesion</span></em></strong></td>
+                                <td align="left">
+                                    <asp:HyperLink ID="hlOpciones" runat="server" CssClass="LetraUsual" NavigateUrl="~/Opciones.aspx"
+                                        Visible="False">Opciones</asp:HyperLink></td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblUserLog" runat="server" Font-Bold="True" Font-Italic="True" Font-Names="Verdana"
+                            Font-Size="10px"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td style="background: steelBlue; color: white; font-weight: bold; text-align: left; margin: 0; padding: 0.3em">::Reclamaciones de Clientes</td>
+                </tr>
+            </table>
+
+            <table style="width: 80%; background-color: White">
+                <tr>
+                    <td align="left" valign="top" style="border-right: #3e6677 thin dotted; border-top: #3e6677 thin dotted; border-left: #3e6677 thin dotted; border-bottom: #3e6677 thin dotted">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">
+                        <asp:LinkButton ID="lbCC" runat="server" CausesValidation="False" CssClass="LetraUsual"
+                            PostBackUrl="~/Usuarios.aspx">Cambiar Contraseña</asp:LinkButton>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
     </form>
 </body>
 </html>

@@ -53,6 +53,7 @@ Partial Class Reclamacion
 
                 WhoDepto()
                 CERRADA()
+
             Catch ex As Exception
                 lblMensaje.Text = ex.Message
             End Try
