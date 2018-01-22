@@ -6,7 +6,7 @@
     <table width="100%">
     <tr>
     <td>
-        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnGuardar" Height="270px" Width="321px" BorderColor="SteelBlue" BorderWidth="1px">
+        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnGuardar" Height="310px" Width="321px" BorderColor="SteelBlue" BorderWidth="1px">
             <table style="width: 100%">
                 <tr>
                     <td align="left" colspan="2" style="background-color: lightsteelblue">
