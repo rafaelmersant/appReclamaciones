@@ -21,6 +21,9 @@ Partial Class Reclamacion
 
         If Not Page.IsPostBack Then
             Try
+                'Configurar RECLAMACION por defecto
+                ddlTipoDoc.SelectedIndex = 1
+
                 'Bloquear TIPO DOCUMENTO si no es administrador
                 If Session.Item("nivel") = 2 Then
                     ddlTipoDoc.Enabled = True
@@ -157,7 +160,7 @@ Partial Class Reclamacion
             clsReclamaciones.guardaReclamacion(Pedido, _
             txtDescripcion.Text.Trim(), Decimal.Parse(Replace(ddlCliente.SelectedValue, "ES", String.Empty)), txtContacto.Text.Trim(), _
             Factura, ddlVentas.SelectedValue, txtTelefono.Text, Decimal.Parse(ddlVendedor.SelectedValue), _
-            Integer.Parse(ddlPlanta.SelectedValue), txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text, _
+            0, txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text, _
             ddlTipoDoc.SelectedValue, ddlChoferes.SelectedValue, ddlTransportista.SelectedValue)
 
 
@@ -812,6 +815,7 @@ Partial Class Reclamacion
 
     End Sub
 
+    'Este metodo llena el GridView, solo la columna de codigo de producto.
     Private Sub fillProductos(ByVal irecl As Integer)
         Dim prod As New DataTable
 
@@ -823,6 +827,8 @@ Partial Class Reclamacion
 
     End Sub
 
+    'Este metodo guarda el codigo de cada producto en un arreglo
+    'Para posteriormente buscar la descripcion de cada producto.
     Private Sub setNameProductosSAP()
         Dim prod() As String
         Dim i As Integer = 0
@@ -837,6 +843,8 @@ Partial Class Reclamacion
         findNameFromSAP_Prod(prod)
     End Sub
 
+    'Este metodo es simplemente para poner la descripcion del producto
+    'una vez que el GridView tiene el codigo del mismo
     Private Sub findNameFromSAP_Prod(ByVal pProd() As String)
         Dim productos() As wsProductos.ZsdProductos = clsReclamaciones.getProductosSAP(pProd)
 
@@ -850,11 +858,11 @@ Partial Class Reclamacion
     End Sub
 
     Private Sub fillPlantas()
-        Dim dtDatos As DataTable = clsReclamaciones.getPlantas()
-        ddlPlanta.DataSource = dtDatos
-        ddlPlanta.DataTextField = "descripcion"
-        ddlPlanta.DataValueField = "descripcion"
-        ddlPlanta.DataBind()
+        'Dim dtDatos As DataTable = clsReclamaciones.getPlantas()
+        'ddlPlanta.DataSource = dtDatos
+        'ddlPlanta.DataTextField = "descripcion"
+        'ddlPlanta.DataValueField = "descripcion"
+        'ddlPlanta.DataBind()
 
     End Sub
 
@@ -933,7 +941,7 @@ Partial Class Reclamacion
     Private Sub BuscarPorPedido()
         ddlCliente.Items.Clear()
         ddlVendedor.Items.Clear()
-        ddlPlanta.Items.Clear()
+        'ddlPlanta.Items.Clear()
         txtTipoPedido.Text = String.Empty
 
         Dim datos() As String = clsReclamaciones.getPedidoSAP(txtPedido.Text, lblNoReclamacion.Text)
@@ -941,7 +949,7 @@ Partial Class Reclamacion
         If datos.Length > 0 Then
             ddlVendedor.Items.Add(New ListItem(Trim(datos(1)), Trim(datos(0))))
             ddlCliente.Items.Add(New ListItem(Trim(datos(3)), Trim(datos(2))))
-            ddlPlanta.Items.Add(New ListItem(Trim(datos(4)), Trim(datos(4))))
+            'ddlPlanta.Items.Add(New ListItem(Trim(datos(4)), Trim(datos(4))))
             txtTipoPedido.Text = Trim(datos(6))
 
             If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
@@ -952,20 +960,20 @@ Partial Class Reclamacion
         End If
     End Sub
 
+    'Este metodo busca la factura para extraer los campos: Vendedor, Cliente, Venta Local/Internacional
+    'y extrae el listado de productos de dicha factura
     Private Sub BuscarPorFactura()
         ddlCliente.Items.Clear()
         ddlVendedor.Items.Clear()
-        ddlPlanta.Items.Clear()
-
+        
         txtTipoPedido.Text = String.Empty
 
-        Dim datos() As String = clsReclamaciones.getFacturaSAP(txtPedido.Text, lblNoReclamacion.Text)
+        Dim datos() As String = clsReclamaciones.getFactura(txtPedido.Text, lblNoReclamacion.Text)
 
         If datos.Length > 0 Then
             ddlVendedor.Items.Add(New ListItem(Trim(datos(1)), Trim(datos(0))))
             ddlCliente.Items.Add(New ListItem(Trim(datos(3)), Trim(datos(2))))
-            ddlPlanta.Items.Add(New ListItem(Trim(datos(4)), Trim(datos(4))))
-
+        
             If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
             lblMensaje.Text = String.Empty
             fillProductos(lblNoReclamacion.Text)
@@ -1085,8 +1093,8 @@ Partial Class Reclamacion
 
                 ddlVentas.SelectedValue = dtDatos.Rows(0).Item("ventas").ToString().Trim()
 
-                ddlPlanta.Items.Clear()
-                ddlPlanta.Items.Add(dtDatos.Rows(0).Item("planta"))
+                'ddlPlanta.Items.Clear()
+                'ddlPlanta.Items.Add(dtDatos.Rows(0).Item("planta"))
 
                 'txtCodProd.Text = dtDatos.Rows(0).Item("producto").ToString().ToUpper()
                 'Dim dtDatoProd As DataTable = clsReclamaciones.getProducto(dtDatos.Rows(0).Item("producto"))

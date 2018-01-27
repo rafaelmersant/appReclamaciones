@@ -663,26 +663,26 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     End Function
 
 
-    Public Shared Function getClienteSAP(ByVal cod As String) As String
-        Dim service As New wsClientes.service
-        Dim cte As New ZsdGetClientes
-        Dim resp As New ZsdGetClientesResponse
-        Dim arr_cte() As ZsdCliente
+    Public Shared Function getClienteName(ByVal cod As String) As String
+        'Dim service As New wsClientes.service
+        'Dim cte As New ZsdGetClientes
+        'Dim resp As New ZsdGetClientesResponse
+        'Dim arr_cte() As ZsdCliente
 
-        If IsNumeric(Left(cod, 1)) And Not Left(cod, 1) = "0" Then
-            cod = Right("00000" & cod, 10)
-        End If
+        'If IsNumeric(Left(cod, 1)) And Not Left(cod, 1) = "0" Then
+        'cod = Right("00000" & cod, 10)
+        'End If
 
-        arr_cte = New ZsdCliente(1) {}
-        arr_cte(0) = New ZsdCliente()
-        arr_cte(0).Kunnr = cod
+        'arr_cte = New ZsdCliente(1) {}
+        'arr_cte(0) = New ZsdCliente()
+        'arr_cte(0).Kunnr = cod
 
-        cte.Codigo = ""
-        cte.CodigoClientes = arr_cte
+        'cte.Codigo = ""
+        'cte.CodigoClientes = arr_cte
 
-        resp = service.ZsdGetClientes(cte)
+        'resp = service.ZsdGetClientes(cte)
 
-        Return resp.Clientes(0).Name1
+        Return "Cliente Name" 'resp.Clientes(0).Name1
 
     End Function
 
@@ -736,24 +736,27 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getFacturaSAP(ByVal pFact As String, ByVal idReclamacion As Integer) As String()
-        Dim service As New wsFacturas.service
-        Dim fact As New ZsdGetFacturas
-        Dim resp As New ZsdGetFacturasResponse
+    Public Shared Function getFactura(ByVal pFact As String, ByVal idReclamacion As Integer) As String()
+        'Dim service As New wsFacturas.service
+        'Dim fact As New ZsdGetFacturas
+        'Dim resp As New ZsdGetFacturasResponse
         Dim cte As String
         Dim datos() As String
-        Dim productos() As wsFacturas.ZsdProductos
+        'Dim productos() As wsFacturas.ZsdProductos
 
-        fact.Codigo = pFact
-        resp = service.ZsdGetFacturas(fact)
+        'fact.Codigo = pFact
+        'resp = service.ZsdGetFacturas(fact)
 
-        productos = resp.Facturas(0).Productos()
+        'productos = resp.Facturas(0).Productos()
+        Dim productos() As String
 
-        For Each product As wsFacturas.ZsdProductos In productos
-            adProductoRecl(idReclamacion, product.Matnr)
+
+        For Each product As String In productos
+            adProductoRecl(idReclamacion, product)
         Next
 
-        cte = getClienteSAP(resp.Facturas(0).Kunrg)
+        cte = "Nombre del Cliente" 'getClienteSAP(resp.Facturas(0).Kunrg)
+
         datos = New String() {resp.Facturas(0).Vkgrp, resp.Facturas(0).Name1Gp, _
         resp.Facturas(0).Kunrg, cte, resp.Facturas(0).Werks, resp.Facturas(0).Vtweg}
 

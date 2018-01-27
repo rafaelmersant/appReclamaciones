@@ -26,6 +26,17 @@
                     <asp:ListItem>DEVOLUCION</asp:ListItem>
                 </asp:DropDownList></td>
             <td align="right" colspan="1">
+                <asp:DropDownList ID="ddlTransportista" runat="server" Width="57px" TabIndex="8" CssClass="LetraH2" Height="16px" Visible="False">
+                        </asp:DropDownList>
+                            <asp:Label ID="Label26" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana"
+                                Font-Size="12px" ForeColor="Black" Text="Transportista" Width="53px"></asp:Label><asp:DropDownList ID="ddlChoferes" runat="server" Width="47px" TabIndex="8" CssClass="LetraH2" Height="16px" Visible="False">
+                        </asp:DropDownList>
+                            <asp:Label ID="Label25" runat="server" Font-Bold="True"
+                                    Font-Names="Verdana" Text="Chofer" Width="53px" CssClass="LetraH1" Font-Size="12px" ForeColor="Black" Visible="False"></asp:Label>
+                            <asp:DropDownList ID="ddlPlanta" runat="server" Width="42px" TabIndex="9" CssClass="LetraH2" Height="16px" Visible="False">
+                            </asp:DropDownList>
+                            <asp:Label ID="Label12" runat="server" Font-Bold="True" Font-Names="Verdana"
+                                Text="Planta" Width="53px" CssClass="LetraH1" Font-Size="12px" Visible="False"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -89,11 +100,14 @@
                             <asp:DropDownList ID="ddlCliente" runat="server" Width="295px" TabIndex="2" CssClass="LetraH2">
                             </asp:DropDownList></td>
                         <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
-                            <asp:Label ID="Label12" runat="server" Font-Bold="True" Font-Names="Verdana"
-                                Text="Planta" Width="53px" CssClass="LetraH1" Font-Size="12px"></asp:Label></td>
+                            <asp:Label ID="Label11" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Ventas" Width="53px"></asp:Label>
+                        </td>
                         <td style="width: 40%">
-                            <asp:DropDownList ID="ddlPlanta" runat="server" Width="236px" TabIndex="9" CssClass="LetraH2">
-                            </asp:DropDownList></td>
+                            <asp:DropDownList ID="ddlVentas" runat="server" CssClass="LetraH2" TabIndex="5" Width="236px">
+                                <asp:ListItem>LOCALES</asp:ListItem>
+                                <asp:ListItem>INTERNACIONALES</asp:ListItem>
+                            </asp:DropDownList>
+                        </td>
                     </tr>
                     <tr>
                         <td valign="middle">
@@ -102,13 +116,11 @@
                         <td>
                             <asp:TextBox ID="txtContacto" runat="server" Width="290px" TabIndex="3" Height="11px" CssClass="LetraH2"></asp:TextBox></td>
                         <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
-                            <asp:Label ID="Label11" runat="server" Font-Bold="True" Font-Names="Verdana"
-                                Text="Ventas" Width="53px" CssClass="LetraH1" Font-Size="12px"></asp:Label></td>
+                            <asp:Label ID="lblCerrada" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Cerrada" Visible="False" Width="53px"></asp:Label>
+                        </td>
                         <td style="width: 40%">
-                            <asp:DropDownList ID="ddlVentas" runat="server" Width="236px" TabIndex="5" CssClass="LetraH2">
-                                <asp:ListItem>LOCALES</asp:ListItem>
-                                <asp:ListItem>INTERNACIONALES</asp:ListItem>
-                            </asp:DropDownList></td>
+                            <asp:TextBox ID="txtCerradaFecha" runat="server" CssClass="LetraH2" Enabled="False" Font-Bold="True" ForeColor="Red" Height="11px" TabIndex="6" Visible="False" Width="157px"></asp:TextBox>
+                        </td>
                     </tr>
                     <tr>
                         <td valign="middle">
@@ -118,10 +130,8 @@
                             <asp:TextBox ID="txtSoporteVta" runat="server" CssClass="LetraH2" Height="11px" TabIndex="1"
                                 Width="290px"></asp:TextBox></td>
                         <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
-                            <asp:Label ID="Label25" runat="server" Font-Bold="True"
-                                    Font-Names="Verdana" Text="Chofer" Width="53px" CssClass="LetraH1" Font-Size="12px" ForeColor="Black"></asp:Label></td>
-                        <td style="width: 40%" valign="bottom"><asp:DropDownList ID="ddlChoferes" runat="server" Width="264px" TabIndex="8" CssClass="LetraH2">
-                        </asp:DropDownList></td>
+                            &nbsp;</td>
+                        <td style="width: 40%" valign="bottom">&nbsp;</td>
                     </tr>
                     <tr>
                         <td valign="middle">
@@ -130,10 +140,8 @@
                         <td>
                             <asp:TextBox ID="txtFactura" runat="server" TabIndex="4" Height="11px" CssClass="LetraH2" Visible="False"></asp:TextBox></td>
                         <td style="border-left: #ccccff thin outset; width: 10%; color: white; background-color: white;" valign="middle">
-                            <asp:Label ID="Label26" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana"
-                                Font-Size="12px" ForeColor="Black" Text="Transportista" Width="53px"></asp:Label></td>
-                        <td style="width: 40%" valign="bottom"><asp:DropDownList ID="ddlTransportista" runat="server" Width="264px" TabIndex="8" CssClass="LetraH2">
-                        </asp:DropDownList></td>
+                            &nbsp;</td>
+                        <td style="width: 40%" valign="bottom">&nbsp;</td>
                     </tr>
                     <tr>
                         <td valign="middle">
@@ -141,13 +149,10 @@
                         <td>
                             </td>
                         <td style="border-left: #ccccff thin outset; width: 10%" valign="middle">
-                            <asp:Label ID="lblCerrada" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana"
-                                Font-Size="12px" Text="Cerrada" Visible="False" Width="53px"></asp:Label>
                             <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
                                 Text=" " Width="14px"></asp:Label></td>
                         <td style="width: 40%" valign="bottom">
-                            <asp:TextBox ID="txtCerradaFecha" runat="server" Enabled="False" Font-Bold="True"
-                                ForeColor="Red" Height="11px" TabIndex="6" Visible="False" Width="157px" CssClass="LetraH2"></asp:TextBox></td>
+                            &nbsp;</td>
                     </tr>
                 </table>
                             </asp:Panel>
