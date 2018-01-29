@@ -196,7 +196,7 @@
                             <asp:ImageButton ID="imgbtnRefresh" runat="server" ImageUrl="~/Images/refresh.png" ToolTip="Refrescar" Visible="False" /></td>
                     </tr>
                     <tr>
-                        <td colspan="6" style="height: 190px">
+                        <td colspan="6">
                             <asp:GridView ID="grdProdReclam" runat="server" AutoGenerateColumns="False" CellPadding="4"
                                 ForeColor="#333333" GridLines="None" Width="100%">
                                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
