@@ -158,11 +158,10 @@ Partial Class Reclamacion
             If lbUsrInvolucrados.Items.Count < 1 Then lblMensaje.Text = "debe incluir por lo menos un usuario en la reclamación" : Exit Try
 
             clsReclamaciones.guardaReclamacion(Pedido, _
-            txtDescripcion.Text.Trim(), Decimal.Parse(Replace(ddlCliente.SelectedValue, "ES", String.Empty)), txtContacto.Text.Trim(), _
+            txtDescripcion.Text.Trim(), ddlCliente.SelectedValue, txtContacto.Text.Trim(), _
             Factura, ddlVentas.SelectedValue, txtTelefono.Text, Decimal.Parse(ddlVendedor.SelectedValue), _
             0, txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text, _
             ddlTipoDoc.SelectedValue, ddlChoferes.SelectedValue, ddlTransportista.SelectedValue)
-
 
             UsuariosReclamacion() 'Aqui dentro se envia el correo
 
@@ -175,9 +174,13 @@ Partial Class Reclamacion
     End Sub
 
     Private Sub UsuariosReclamacion()
+        Dim usr As String = ""
+
         For Each item As ListItem In lbUsrInvolucrados.Items
-            clsReclamaciones.setUsuarioReclamacion(Val(lblNoReclamacion.Text), item.Value.Trim().Replace("@gerdaumetaldom.com", ""))
+            usr = item.Value.Trim().Split("@")(0)
+            clsReclamaciones.setUsuarioReclamacion(Val(lblNoReclamacion.Text), usr)
         Next
+
         EnviaCorreo()
     End Sub
 
@@ -823,7 +826,8 @@ Partial Class Reclamacion
         grdProdReclam.DataSource = prod
         grdProdReclam.DataBind()
 
-        setNameProductosSAP()
+        'Sustituir este procedimiento y poner un inner join que haga un get del nombre del producto
+        'setNameProductosSAP()
 
     End Sub
 
@@ -1083,10 +1087,10 @@ Partial Class Reclamacion
                 End If
 
                 'Condicion para el tipo de cliente ESPORADICO
-                If Integer.Parse(sCliente) < 5000 Then sCliente = "ES0" & sCliente
+                'If Integer.Parse(sCliente) < 5000 Then sCliente = "ES0" & sCliente
 
                 ddlCliente.Items.Clear()
-                ddlCliente.Items.Add(New ListItem(clsReclamaciones.getClienteSAP(sCliente), sCliente))
+                ddlCliente.Items.Add(New ListItem(clsReclamaciones.getClienteName(sCliente), sCliente))
                 
                 ddlVendedor.Items.Clear()
                 ddlVendedor.Items.Add(New ListItem(clsReclamaciones.getVendedorSAP(sVendedor), sVendedor))

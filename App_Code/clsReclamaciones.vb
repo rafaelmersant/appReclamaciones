@@ -15,7 +15,7 @@ Public Class clsReclamaciones
 
 #Region "INSERT's"
 
-    Public Shared Function guardaReclamacion(ByVal pedido As String, ByVal descripcion As String, ByVal cliente As Decimal, _
+    Public Shared Function guardaReclamacion(ByVal pedido As String, ByVal descripcion As String, ByVal cliente As String, _
 ByVal contacto As String, ByVal factura As String, ByVal ventas As String, ByVal telefono As String, ByVal vendedor As Decimal, ByVal planta As Integer, _
 ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As String, ByVal correo As String, ByVal tipoDoc As String, ByVal chofer As String, _
     ByVal transportista As String) As Integer
@@ -748,8 +748,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         'resp = service.ZsdGetFacturas(fact)
 
         'productos = resp.Facturas(0).Productos()
-        Dim productos() As String
-
+        Dim productos() As String = {"PROD1", "PROD2", "PROD3"}
 
         For Each product As String In productos
             adProductoRecl(idReclamacion, product)
@@ -757,8 +756,15 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
         cte = "Nombre del Cliente" 'getClienteSAP(resp.Facturas(0).Kunrg)
 
-        datos = New String() {resp.Facturas(0).Vkgrp, resp.Facturas(0).Name1Gp, _
-        resp.Facturas(0).Kunrg, cte, resp.Facturas(0).Werks, resp.Facturas(0).Vtweg}
+        'Parameters:
+        '0-Codigo de Vendedor
+        '1-Nombre de Vendedor
+        '2-Codigo de Cliente
+        '3-Nombre de Cliente
+        '4-
+        '5-Venta Loca / Internacional
+        datos = New String() {"001", "Rafa Vendedor", _
+        "001", "Rafa Cliente", "", "VE"}
 
         Return datos
 
@@ -781,7 +787,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
             adProductoRecl(idReclamacion, product.Matnr)
         Next
 
-        cte = getClienteSAP(resp.Pedidos(0).Kunnr)
+        cte = getClienteName(resp.Pedidos(0).Kunnr)
         datos = New String() {resp.Pedidos(0).Vkgrp, resp.Pedidos(0).Name1Gp, _
         resp.Pedidos(0).Kunnr, cte, resp.Pedidos(0).Werks, resp.Pedidos(0).Vtweg, resp.Pedidos(0).DenMotivo}
 

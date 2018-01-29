@@ -130,33 +130,33 @@ Partial Class ListaReclamaciones
         Colorea()
     End Sub
 
-    Private Sub setNameClientesSAP()
-        Dim cte() As String
-        Dim i As Integer = 0
+    'Private Sub setNameClientesSAP()
+    'Dim cte() As String
+    'Dim i As Integer = 0
 
-        cte = New String(grdReclamaciones.Rows.Count - 1) {}
+    '    cte = New String(grdReclamaciones.Rows.Count - 1) {}
 
-        For Each row As GridViewRow In grdReclamaciones.Rows
-            cte(i) = CType(row.FindControl("lblCod_Cte"), Label).Text.Trim()
-            i += 1
-        Next
+    '    For Each row As GridViewRow In grdReclamaciones.Rows
+    '        cte(i) = CType(row.FindControl("lblCod_Cte"), Label).Text.Trim()
+    '        i += 1
+    '    Next
 
-        findNameFromSAP_Cte(cte)
-    End Sub
+    '    findNameFromSAP_Cte(cte)
+    'End Sub
 
     'CHANGE THIS WITH NEW STATEMENTS FOR TERMOPAC
-    Private Sub findNameFromSAP_Cte(ByVal pCte() As String)
-        Dim clientes() As wsClientes.ZsdCliente = clsReclamaciones.getClientesSAP(pCte)
+    'Private Sub findNameFromSAP_Cte(ByVal pCte() As String)
+    'Dim clientes() As wsClientes.ZsdCliente = clsReclamaciones.getClientesSAP(pCte)
 
-        For Each row As GridViewRow In grdReclamaciones.Rows
-            For x As Integer = 0 To clientes.Length - 1
-                If Right("0000000000" & clientes(x).Kunnr, 10) = Right("0000000000" & CType(row.FindControl("lblCod_Cte"), Label).Text.Trim(), 10) _
-                Or (Not IsNumeric(Left(clientes(x).Kunnr, 1)) And clientes(x).Kunnr = "ES0" & CType(row.FindControl("lblCod_Cte"), Label).Text.Trim()) Then
-                    CType(row.FindControl("lblNombre_Cte"), Label).Text = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(clientes(x).Name1.ToLower())
-                End If
-            Next
-        Next
-    End Sub
+    '    For Each row As GridViewRow In grdReclamaciones.Rows
+    '        For x As Integer = 0 To clientes.Length - 1
+    '            If Right("0000000000" & clientes(x).Kunnr, 10) = Right("0000000000" & CType(row.FindControl("lblCod_Cte"), Label).Text.Trim(), 10) _
+    '            Or (Not IsNumeric(Left(clientes(x).Kunnr, 1)) And clientes(x).Kunnr = "ES0" & CType(row.FindControl("lblCod_Cte"), Label).Text.Trim()) Then
+    '                CType(row.FindControl("lblNombre_Cte"), Label).Text = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(clientes(x).Name1.ToLower())
+    '            End If
+    '        Next
+    '    Next
+    'End Sub
 
     Private Sub Colorea()
         For Each row As GridViewRow In grdReclamaciones.Rows
@@ -370,7 +370,7 @@ Partial Class ListaReclamaciones
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
-  
+
         End Try
     End Sub
 
@@ -391,7 +391,7 @@ Partial Class ListaReclamaciones
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
-       
+
         End Try
     End Sub
 

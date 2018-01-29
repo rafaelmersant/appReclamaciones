@@ -29,7 +29,7 @@
                 <asp:DropDownList ID="ddlTransportista" runat="server" Width="57px" TabIndex="8" CssClass="LetraH2" Height="16px" Visible="False">
                         </asp:DropDownList>
                             <asp:Label ID="Label26" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana"
-                                Font-Size="12px" ForeColor="Black" Text="Transportista" Width="53px"></asp:Label><asp:DropDownList ID="ddlChoferes" runat="server" Width="47px" TabIndex="8" CssClass="LetraH2" Height="16px" Visible="False">
+                                Font-Size="12px" ForeColor="Black" Text="Transp." Width="53px" Visible="False"></asp:Label><asp:DropDownList ID="ddlChoferes" runat="server" Width="47px" TabIndex="8" CssClass="LetraH2" Height="16px" Visible="False">
                         </asp:DropDownList>
                             <asp:Label ID="Label25" runat="server" Font-Bold="True"
                                     Font-Names="Verdana" Text="Chofer" Width="53px" CssClass="LetraH1" Font-Size="12px" ForeColor="Black" Visible="False"></asp:Label>
