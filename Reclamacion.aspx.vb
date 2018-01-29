@@ -1027,7 +1027,7 @@ Partial Class Reclamacion
                 ddlCliente.Items.Add(New ListItem(clsReclamaciones.getClienteName(sCliente), sCliente))
                 
                 ddlVendedor.Items.Clear()
-                ddlVendedor.Items.Add(New ListItem(clsReclamaciones.getVendedorSAP(sVendedor), sVendedor))
+                ddlVendedor.Items.Add(New ListItem(clsReclamaciones.getVendedorName(sVendedor), sVendedor))
 
                 ddlVentas.SelectedValue = dtDatos.Rows(0).Item("ventas").ToString().Trim()
 

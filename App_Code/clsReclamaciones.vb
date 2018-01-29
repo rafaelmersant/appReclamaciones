@@ -715,24 +715,24 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getVendedorSAP(ByVal cod As String) As String
-        Dim service As New wsVendedores.service
-        Dim vend As New ZsdGetVendedores
-        Dim resp As New ZsdGetVendedoresResponse
-        Dim arr_vend() As ZsdVendedor
+    Public Shared Function getVendedorName(ByVal cod As String) As String
+        'Dim service As New wsVendedores.service
+        'Dim vend As New ZsdGetVendedores
+        'Dim resp As New ZsdGetVendedoresResponse
+        'Dim arr_vend() As ZsdVendedor
 
-        cod = Right("000" & cod, 3)
+        'cod = Right("000" & cod, 3)
 
-        arr_vend = New ZsdVendedor(1) {}
-        arr_vend(0) = New ZsdVendedor()
-        arr_vend(0).Vkgrp = cod
+        'arr_vend = New ZsdVendedor(1) {}
+        'arr_vend(0) = New ZsdVendedor()
+        'arr_vend(0).Vkgrp = cod
 
-        vend.Codigo = ""
-        vend.CodigoVendedores = arr_vend
+        'vend.Codigo = ""
+        'vend.CodigoVendedores = arr_vend
 
-        resp = service.ZsdGetVendedores(vend)
+        'resp = service.ZsdGetVendedores(vend)
 
-        Return resp.Vendedores(0).Bezei
+        Return "Nombre Vendedor" 'resp.Vendedores(0).Bezei
 
     End Function
 

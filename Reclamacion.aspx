@@ -343,7 +343,7 @@
                                             <td align="left">
                                                 <asp:DataList ID="dlVentas" runat="server" Width="100%">
                                                     <ItemTemplate>
-                                                        <table style="width: 100%; border-bottom: #330099 thin ridge">
+                                                        <table style="width: 100%; border-bottom: gray thin ridge">
                                                             <tr>
                                                                 <td colspan="2">
                                                                     <asp:Label ID="lblComentario" runat="server" Font-Names="Verdana" Font-Size="11px"
@@ -404,12 +404,6 @@
                                 </asp:Panel>
                             </Content>
                         </cc1:AccordionPane>
-
-
-
-
-
-
 
 
                         <cc1:AccordionPane ID="AccordionPane2" runat="server">
