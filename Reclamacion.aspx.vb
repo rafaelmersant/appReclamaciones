@@ -38,16 +38,16 @@ Partial Class Reclamacion
                 Next
 
                 txtFecha.Text = Format(Now.Date, "dd/MM/yyyy")
+                fillGruposDDL()
+
                 'fillClientes()
                 'fillVendedores()
                 'fillPlantas()
-                fillGruposDDL()
-                fillChoferes("")
-                fillTransportistas("")
+                'fillChoferes("")
+                'fillTransportistas("")
 
                 llenaReclamacion()
 
-                ListaComentarios(dlMarketing, ConfigurationManager.AppSettings.Get("deptoMARKETING"))
                 ListaComentarios(dlVentas, ConfigurationManager.AppSettings.Get("deptoVENTAS"))
                 ListaComentarios(dlProduccion, ConfigurationManager.AppSettings.Get("deptoPRODUCCION"))
                 ListaComentarios(dlLogistica, ConfigurationManager.AppSettings.Get("deptoLOGISTICA"))
@@ -109,9 +109,6 @@ Partial Class Reclamacion
                 btnAgregarF.Visible = True
             Case 5
                 btnAgregarC.Visible = True
-            Case 6
-                btnAgregarM.Visible = True
-
         End Select
         
     End Sub
@@ -123,8 +120,7 @@ Partial Class Reclamacion
             btnAgregarL.Visible = False
             btnAgregarF.Visible = False
             btnAgregarC.Visible = False
-            btnAgregarM.Visible = False
-
+           
             txtCerradaFecha.Visible = True
             lblCerrada.Visible = True
 
@@ -382,69 +378,7 @@ Partial Class Reclamacion
 #End Region
 
 #Region "AREAS AGREGAR COMENTARIOS"
-    '*************************************************************************************************************
-    'MARKETING ******************************************************************************************************
-    '*************************************************************************************************************
-    Protected Sub btnAgregarM_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAgregarM.Click
-        txtComentarioM.Visible = True
-        btnGuardaM.Visible = True
-        btnCancelarM.Visible = True
-        btnAgregarM.Enabled = False
-
-        fuFileM.Visible = True
-        btnAgregarFileM.Visible = True
-        LiteralFileM.Visible = True
-
-    End Sub
-
-    Protected Sub btnGuardaM_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnGuardaM.Click
-        Try
-            Dim pComentario As String = txtComentarioM.Text
-            Dim iMarketingDepto As Integer = ConfigurationManager.AppSettings.Get("deptoMARKETING")
-
-            If txtComentarioM.Text.Trim() <> String.Empty Then
-                intComentario = guardaComentario(txtComentarioM.Text.Trim())
-            Else : Exit Try
-            End If
-
-            txtComentarioM.Visible = False : txtComentarioM.Text = String.Empty
-            btnGuardaM.Visible = False
-            btnCancelarM.Visible = False
-            btnAgregarM.Enabled = True
-
-            fuFileM.Visible = False
-            btnAgregarFileM.Visible = False
-            LiteralFileM.Visible = False
-            btnEliminarAdjM.Visible = False
-
-            'Si existen archivos para adjuntar
-            If arrFiles.Count > 0 Then
-                AgregarFile(intComentario)
-                CleanMarketing()
-            End If
-
-            EnviaCorreoNuevoComentario(pComentario, " NUEVO COMENTARIO - por" & Session.Item("name").ToString().Trim())
-            EnviaCorreoNuevoInvolucradosVENDEDORES(pComentario, " NUEVO COMENTARIO - por" & Session.Item("name").ToString().Trim())
-
-            ListaComentarios(dlMarketing, iMarketingDepto)
-
-        Catch ex As Exception
-            lblMensaje.Text = ex.Message
-        End Try
-
-    End Sub
-
-    Protected Sub btnCancelarM_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnCancelarM.Click
-        Try
-            txtComentarioM.Text = String.Empty
-            btnGuardaM_Click(Nothing, Nothing)
-            btnEliminarAdj_Click(Nothing, Nothing)
-
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
+    
     '*************************************************************************************************************
     'VENTAS ******************************************************************************************************
     '*************************************************************************************************************
@@ -1369,46 +1303,6 @@ Partial Class Reclamacion
         End Try
     End Sub
 
-    'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM MARKETING
-    Protected Sub btnAgregarFileM_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAgregarFileM.Click
-        Try
-            If fuFileM.PostedFile.FileName.Trim() <> String.Empty Then GuardaFilePath(fuFileM, "Marketing") Else Exit Try
-
-            arrFiles.Add(fuFileM.PostedFile.FileName)
-
-            LiteralFileM.Text &= "<a Class=""LetraFiles"" href=""Adjuntos/Marketing/" & fuFileM.FileName & """ target=""_blank"" > " & fuFileM.FileName & "</a> |"
-            iFiles += 1
-
-            If arrFiles.Count > 0 Then btnEliminarAdjM.Visible = True
-
-        Catch ex As Exception
-            lblMensaje.Text = ex.Message
-
-        End Try
-    End Sub
-
-
-    Protected Sub dlMarketing_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataListItemEventArgs) Handles dlMarketing.ItemDataBound
-
-        Dim dtArchivos As New DataTable
-        dtArchivos = clsReclamaciones.getArchivos(6, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
-
-        If dtArchivos.Rows.Count > 0 Then
-            CType(e.Item.FindControl("lFiles"), Literal).Text = "<div Class=""LetraFiles""><b>Adjuntos:</b>"
-            For Each row As DataRow In dtArchivos.Rows
-                CType(e.Item.FindControl("lFiles"), Literal).Text &= " <a Class=""LetraFiles"" href=""Adjuntos/Marketing/" & row.Item("filen") & """ target=""_blank"" > " & row.Item("filen") & "</a> |"
-            Next
-            CType(e.Item.FindControl("lFiles"), Literal).Text &= "</div>"
-        End If
-    End Sub
-
-
-    Protected Sub btnEliminarAdjM_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnEliminarAdjM.Click
-        CleanMarketing()
-        DeleteFilesPath(arrFiles, "Marketing")
-        btnEliminarAdjM.Visible = False
-    End Sub
-
     'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM VENTAS
     Protected Sub btnAgregarFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAgregarFileV.Click
         Try
@@ -1602,11 +1496,6 @@ Partial Class Reclamacion
     End Sub
 
     'CLEANERS ATTACH FILE
-    Private Sub CleanMarketing()
-        arrFiles = New ArrayList()
-        LiteralFileM.Text = ""
-    End Sub
-
     Private Sub CleanVentas()
         arrFiles = New ArrayList()
         LiteralFileV.Text = ""
