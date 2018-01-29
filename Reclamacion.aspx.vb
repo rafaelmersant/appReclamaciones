@@ -879,7 +879,7 @@ Partial Class Reclamacion
     Private Sub BuscarPorPedido()
         ddlCliente.Items.Clear()
         ddlVendedor.Items.Clear()
-        'ddlPlanta.Items.Clear()
+
         txtTipoPedido.Text = String.Empty
 
         Dim datos() As String = clsReclamaciones.getPedidoSAP(txtPedido.Text, lblNoReclamacion.Text)
@@ -887,7 +887,7 @@ Partial Class Reclamacion
         If datos.Length > 0 Then
             ddlVendedor.Items.Add(New ListItem(Trim(datos(1)), Trim(datos(0))))
             ddlCliente.Items.Add(New ListItem(Trim(datos(3)), Trim(datos(2))))
-            'ddlPlanta.Items.Add(New ListItem(Trim(datos(4)), Trim(datos(4))))
+
             txtTipoPedido.Text = Trim(datos(6))
 
             If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"

@@ -41,14 +41,14 @@
         </tr>
         <tr>
             <td colspan="3">
-                <asp:Label ID="Label1" runat="server" BackColor="SteelBlue" Font-Bold="True" ForeColor="White"
+                <asp:Label ID="Label1" runat="server" BackColor="Gray" Font-Bold="True" ForeColor="White"
                     Text="Formulario de Reclamaciones de Clientes (RC)" Width="100%" CssClass="headerPrincipal" Height="19px"></asp:Label></td>
         </tr>
         <tr>
             <td colspan="3">
                 <asp:Panel ID="pnDetalles" runat="server" Width="100%">
 
-                    <table cellpadding="1" cellspacing="0" width="100%" style="border-right: #ccccff thin outset; border-top: #ccccff thin outset; border-left: #ccccff thin outset; border-bottom: #ccccff thin outset">
+                    <table cellpadding="1" cellspacing="0" width="100%" style="border-right: gray thin outset; border-top: gray thin outset; border-left: gray thin outset; border-bottom: gray thin outset">
                         <tr>
                             <td style="height: 22px;" valign="bottom" align="left">
                                 <asp:Label ID="Label14" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana"
@@ -151,7 +151,7 @@
                         </tr>
                     </table>
                 </asp:Panel>
-                <asp:Label ID="Label23" runat="server" BackColor="SteelBlue" CssClass="headerSimples"
+                <asp:Label ID="Label23" runat="server" BackColor="Gray" CssClass="headerSimples"
                     Font-Bold="True" ForeColor="White" Height="17px" Text="::Correo del Cliente para envio de correo"
                     Width="100%"></asp:Label><br />
                 <table>
@@ -174,7 +174,7 @@
         </tr>
         <tr>
             <td colspan="3">
-                <asp:Label ID="Label19" runat="server" BackColor="SteelBlue" CssClass="headerSimples"
+                <asp:Label ID="Label19" runat="server" BackColor="Gray" CssClass="headerSimples"
                     Font-Bold="True" ForeColor="White" Height="17px" Text="::Productos" Width="100%"></asp:Label></td>
         </tr>
         <tr>
@@ -254,7 +254,7 @@
 
         <tr>
             <td colspan="3">
-                <asp:Label ID="lblInvolucradosUsr" runat="server" BackColor="SteelBlue" CssClass="headerSimples"
+                <asp:Label ID="lblInvolucradosUsr" runat="server" BackColor="Gray" CssClass="headerSimples"
                     Font-Bold="True" ForeColor="White" Text="::Usuarios Involucrados en Reclamación" Width="100%" Height="17px"></asp:Label></td>
         </tr>
         <tr>
@@ -315,7 +315,7 @@
         </tr>
         <tr>
             <td colspan="3">
-                <asp:Label ID="lblDescrip" runat="server" BackColor="SteelBlue" Font-Bold="True" ForeColor="White"
+                <asp:Label ID="lblDescrip" runat="server" BackColor="Gray" Font-Bold="True" ForeColor="White"
                     Text="::Descripción de la reclamación" Width="100%" CssClass="headerSimples" Height="17px"></asp:Label></td>
         </tr>
         <tr>
@@ -326,7 +326,7 @@
         <tr>
             <td colspan="3">
 
-                <asp:Label ID="lblDeptosInvolucrados" runat="server" BackColor="SteelBlue" Font-Bold="True" ForeColor="White"
+                <asp:Label ID="lblDeptosInvolucrados" runat="server" BackColor="Gray" Font-Bold="True" ForeColor="White"
                     Text="::Departamentos Involucrados" Width="100%" CssClass="headerSimples" Height="17px"></asp:Label></td>
         </tr>
         <tr>
@@ -415,7 +415,7 @@
                                             <td align="left">
                                                 <asp:DataList ID="dlProduccion" runat="server" Width="100%">
                                                     <ItemTemplate>
-                                                        <table style="width: 100%; border-bottom: #330099 thin ridge">
+                                                        <table style="width: 100%; border-bottom: gray thin ridge">
                                                             <tr>
                                                                 <td colspan="2">
                                                                     <asp:Label ID="lblComentarioP" runat="server" Font-Names="Verdana" Font-Size="11px"
@@ -487,7 +487,7 @@
                                             <td align="left">
                                                 <asp:DataList ID="dlLogistica" runat="server" Width="100%">
                                                     <ItemTemplate>
-                                                        <table style="width: 100%; border-bottom: #330099 thin ridge">
+                                                        <table style="width: 100%; border-bottom: gray thin ridge">
                                                             <tr>
                                                                 <td colspan="2">
                                                                     <asp:Label ID="lblComentarioL" runat="server" Font-Names="Verdana" Font-Size="11px"
@@ -558,7 +558,7 @@
                                             <td align="left">
                                                 <asp:DataList ID="dlFinanzas" runat="server" Width="100%">
                                                     <ItemTemplate>
-                                                        <table style="width: 100%; border-bottom: #330099 thin ridge">
+                                                        <table style="width: 100%; border-bottom: gray thin ridge">
                                                             <tr>
                                                                 <td colspan="2">
                                                                     <asp:Label ID="lblComentarioF" runat="server" Font-Names="Verdana" Font-Size="11px"
@@ -630,7 +630,7 @@
                                             <td align="left">
                                                 <asp:DataList ID="dlCalidad" runat="server" Width="100%">
                                                     <ItemTemplate>
-                                                        <table style="width: 100%; border-bottom: #330099 thin ridge">
+                                                        <table style="width: 100%; border-bottom: gray thin ridge">
                                                             <tr>
                                                                 <td colspan="2">
                                                                     <asp:Label ID="lblComentarioC" runat="server" Font-Names="Verdana" Font-Size="11px"

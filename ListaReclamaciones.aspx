@@ -202,11 +202,11 @@
         <tr>
             <td>
                 <asp:GridView ID="grdReclamaciones" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="False" Width="100%" AllowPaging="True" PageSize="15">
-                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <FooterStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
                     <RowStyle BackColor="WhiteSmoke" ForeColor="#333333" />
-                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" Font-Names="Verdana" Font-Size="11px" />
+                    <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" Font-Names="Verdana" Font-Size="11px" />
                     <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" />
+                    <HeaderStyle BackColor="#666666" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" />
                     <EditRowStyle BackColor="#999999" />
                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                     <Columns>
@@ -288,7 +288,7 @@
             <td>
                 <asp:Button ID="btnNuevaRecl" runat="server" BackColor="SteelBlue" BorderColor="Gray"
                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                    PostBackUrl="~/Reclamacion.aspx" Text="Nueva Reclamación" Width="146px" Visible="False" />
+                    PostBackUrl="~/Reclamacion.aspx" Text="Nueva Reclamación" Width="146px" Visible="False" Height="34px" />
                 <asp:Image ID="imgUtil" runat="server" Height="1px" ImageUrl="~/Images/LineaG.gif"
                     Width="1px" /></td>
         </tr>
