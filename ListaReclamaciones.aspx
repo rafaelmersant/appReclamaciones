@@ -25,14 +25,14 @@
                 </asp:DropDownList>
                 <asp:Label ID="Label10" runat="server" CssClass="LFiltros" Font-Italic="True" Font-Size="10px"
                     ForeColor="Gray" Text="Si desea ver todas las reclamaciones presione ->" Width="272px"></asp:Label>
-                <asp:Button ID="btnVerTodas" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                <asp:Button ID="btnVerTodas" runat="server" BackColor="#333333" BorderColor="Gray"
                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Text="VER TODAS" Width="126px" Height="20px" /></td>
         </tr>
         <tr>
             <td>
                 <table width="50%">
                     <tr>
-                        <td colspan="2" rowspan="3">
+                        <td colspan="2" rowspan="2">
                 <div id="porfecha" style="border: 1px dotted blue; padding: 2px 2px 2px 2px;">
                     <table>
                         <tr>
@@ -183,9 +183,7 @@
                 
                         </td>
                     </tr>
-                    <tr>
-                    </tr>
-                    
+                                        
                 </table>
                 <cc1:CalendarExtender ID="CalendarExtenderFIM" runat="server" CssClass="CalendarExtenderFI"
                     FirstDayOfWeek="Monday" Format="MM/dd/yyyy" TargetControlID="txtFechaIM">
@@ -208,7 +206,7 @@
                     <RowStyle BackColor="WhiteSmoke" ForeColor="#333333" />
                     <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" Font-Names="Verdana" Font-Size="11px" />
                     <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" />
                     <EditRowStyle BackColor="#999999" />
                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                     <Columns>
@@ -275,7 +273,7 @@
                                     ImageUrl="~/Images/search.gif" OnClick="btnVerRec_Click" OnClientClick="aspnetForm.target='_blank';" />
                             </ItemTemplate>
                             <ItemStyle HorizontalAlign="Center" Width="4%" />
-                            <HeaderStyle CssClass="gridHeaders" />
+                            <HeaderStyle CssClass="gridHeaders" HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
