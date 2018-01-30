@@ -770,26 +770,36 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getPedidoSAP(ByVal pPed As String, ByVal idReclamacion As Integer) As String()
-        Dim service As New wsPedidos.service
-        Dim ped As New ZsdGetPedidos
-        Dim resp As New ZsdGetPedidosResponse
+    Public Shared Function getPedidoERP(ByVal pPed As String, ByVal idReclamacion As Integer) As String()
+        'Dim service As New wsPedidos.service
+        'Dim ped As New ZsdGetPedidos
+        'Dim resp As New ZsdGetPedidosResponse
         Dim cte As String
         Dim datos() As String
-        Dim productos() As wsPedidos.ZsdProductos
+        'Dim productos() As wsPedidos.ZsdProductos
 
-        ped.Codigo = pPed
-        resp = service.ZsdGetPedidos(ped)
+        'ped.Codigo = pPed
+        'resp = service.ZsdGetPedidos(ped)
 
-        productos = resp.Pedidos(0).Productos()
+        'productos = resp.Pedidos(0).Productos()
+        Dim productos() As String = {"PROD45", "PROD65", "PROD78"}
 
-        For Each product As wsPedidos.ZsdProductos In productos
-            adProductoRecl(idReclamacion, product.Matnr)
+        For Each product As String In productos
+            adProductoRecl(idReclamacion, product)
         Next
 
-        cte = getClienteName(resp.Pedidos(0).Kunnr)
-        datos = New String() {resp.Pedidos(0).Vkgrp, resp.Pedidos(0).Name1Gp, _
-        resp.Pedidos(0).Kunnr, cte, resp.Pedidos(0).Werks, resp.Pedidos(0).Vtweg, resp.Pedidos(0).DenMotivo}
+        cte = "Nombre del Cliente" 'getClienteName(resp.Pedidos(0).Kunnr)
+
+        'Parameters:
+        '0-Codigo de Vendedor
+        '1-Nombre de Vendedor
+        '2-Codigo de Cliente
+        '3-Nombre de Cliente
+        '4-
+        '5-Venta Loca / Internacional
+        '6-Motivo (eliminar este parametro)
+        datos = New String() {"005", "Test Vendedor", _
+        "009", cte, "", "VE", ""}
 
         Return datos
 

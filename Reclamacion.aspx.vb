@@ -882,7 +882,7 @@ Partial Class Reclamacion
 
         txtTipoPedido.Text = String.Empty
 
-        Dim datos() As String = clsReclamaciones.getPedidoSAP(txtPedido.Text, lblNoReclamacion.Text)
+        Dim datos() As String = clsReclamaciones.getPedidoERP(txtPedido.Text, lblNoReclamacion.Text)
 
         If datos.Length > 0 Then
             ddlVendedor.Items.Add(New ListItem(Trim(datos(1)), Trim(datos(0))))
