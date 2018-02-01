@@ -4,8 +4,8 @@
     <table width="100%">
         <tr>
             <td>
-                <asp:Label ID="Label7" runat="server" BackColor="LightSteelBlue" Font-Bold="True"
-                    Font-Italic="True" Text=".::Grupos::." Width="100%"></asp:Label></td>
+                <asp:Label ID="Label7" runat="server" BackColor="Gray" Font-Bold="True"
+                    Font-Italic="True" Text=".::Grupos::." Width="100%" ForeColor="White"></asp:Label></td>
         </tr>
         <tr>
             <td>
@@ -13,7 +13,7 @@
                     Height="118px" Width="321px">
                     <table style="width: 100%">
                         <tr>
-                            <td align="left" colspan="2" style="background-color: lightsteelblue">
+                            <td align="left" colspan="2" style="background-color: gray">
                                 </td>
                         </tr>
                         <tr>
@@ -35,10 +35,10 @@
                             <td>
                             </td>
                             <td align="left">
-                                <asp:Button ID="btnGuardar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnGuardar" runat="server" BackColor="Gray" BorderColor="Black"
                                     BorderStyle="Solid" CausesValidation="False" Font-Bold="True" ForeColor="White"
                                     Text="Guardar" Width="76px" ValidationGroup="g" />
-                                <asp:Button ID="btnNuevo" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnNuevo" runat="server" BackColor="Gray" BorderColor="Black"
                                     BorderStyle="Solid" CausesValidation="False" Font-Bold="True" ForeColor="White"
                                     Text="Nuevo" Width="76px" ValidationGroup="g" /></td>
                         </tr>
@@ -57,6 +57,7 @@
                     <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                     <Columns>
                         <asp:BoundField DataField="grupo" HeaderText="Grupo">
+                            <HeaderStyle HorizontalAlign="Left" />
                             <ItemStyle CssClass="gridItems" Width="25%" />
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="Editar">
@@ -65,15 +66,15 @@
                                     CausesValidation="False" CommandArgument='<%# bind("grupo") %>' ImageUrl="~/Images/lista.png"
                                     OnClick="ImageButton1_Click" />
                             </ItemTemplate>
-                            <ItemStyle Width="7%" />
+                            <ItemStyle Width="7%" HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Quitar">
                             <ItemTemplate>
-                                <asp:Button ID="btnQuitar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnQuitar" runat="server" BackColor="Red" BorderColor="Maroon"
                                     BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_grupo") %>'
                                     Font-Bold="True" ForeColor="White" OnClick="btnQuitar_Click" Text="X" Width="34px" />
                             </ItemTemplate>
-                            <ItemStyle Width="7%" />
+                            <ItemStyle Width="7%" HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
                     <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -87,8 +88,8 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="Label4" runat="server" BackColor="LightSteelBlue" Font-Bold="True"
-                    Font-Italic="True" Text=".::Relacion de Grupos con Usuarios::." Width="100%"></asp:Label></td>
+                <asp:Label ID="Label4" runat="server" BackColor="Gray" Font-Bold="True"
+                    Font-Italic="True" Text=".::Relacion de Grupos con Usuarios::." Width="100%" ForeColor="White"></asp:Label></td>
         </tr>
         <tr>
             <td>
@@ -111,7 +112,7 @@
                     <tr>
                         <td>
                         </td>
-                        <td><asp:Button ID="btnAgregar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                        <td><asp:Button ID="btnAgregar" runat="server" BackColor="Gray" BorderColor="Black"
                                     BorderStyle="Solid" CausesValidation="False" Font-Bold="True" ForeColor="White"
                                     Text="Agregar" Width="76px" /></td>
                     </tr>
@@ -130,19 +131,19 @@
                     <Columns>
                         <asp:BoundField DataField="nGrupo" HeaderText="Grupo">
                             <ItemStyle CssClass="gridItems" Width="25%" />
-                            <HeaderStyle Width="10%" />
+                            <HeaderStyle Width="10%" HorizontalAlign="Left" />
                         </asp:BoundField>
                         <asp:BoundField DataField="usuario" HeaderText="Usuario" >
-                            <HeaderStyle Width="10%" />
+                            <HeaderStyle Width="10%" HorizontalAlign="Left" />
                             <ItemStyle CssClass="gridItems" />
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="Quitar">
                             <ItemTemplate>
-                                <asp:Button ID="btnQuitar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnQuitar" runat="server" BackColor="Red" BorderColor="Maroon"
                                     BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("usuario") %>'
                                     Font-Bold="True" ForeColor="White" OnClick="btnQuitar_Click" Text="X" Width="32px" Height="20px" ToolTip='<%# bind("grupo_id") %>' />
                             </ItemTemplate>
-                            <ItemStyle Width="7%" />
+                            <ItemStyle Width="7%" HorizontalAlign="Center" />
                             <HeaderStyle Width="5%" />
                         </asp:TemplateField>
                     </Columns>

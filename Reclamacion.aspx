@@ -26,9 +26,12 @@
                     <asp:ListItem>DEVOLUCION</asp:ListItem>
                 </asp:DropDownList></td>
             <td align="right" colspan="1">
-                                <asp:TextBox ID="txtTipoPedido" runat="server" Height="11px" TabIndex="1" Width="16px" CssClass="LetraH2" ReadOnly="True"></asp:TextBox>
+                                <asp:Label ID="Label6" runat="server" Font-Bold="True" Font-Names="Verdana"
+                                    Text="Contacto" Width="80px" CssClass="LetraH1" Font-Size="12px" Visible="False"></asp:Label>
+                                <asp:TextBox ID="txtTipoPedido" runat="server" Height="11px" TabIndex="1" Width="16px" CssClass="LetraH2" ReadOnly="True" Visible="False"></asp:TextBox>
+                                <asp:TextBox ID="txtContacto" runat="server" Width="16px" TabIndex="3" Height="11px" CssClass="LetraH2" Visible="False"></asp:TextBox>
                                 <asp:Label ID="Label18" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana"
-                                    Text="Motivo" Width="80px" Font-Size="12px"></asp:Label>
+                                    Text="Motivo" Width="80px" Font-Size="12px" Visible="False"></asp:Label>
                 <asp:DropDownList ID="ddlTransportista" runat="server" Width="57px" TabIndex="8" CssClass="LetraH2" Height="16px" Visible="False">
                 </asp:DropDownList>
                 <asp:Label ID="Label26" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana"
@@ -99,10 +102,10 @@
                         </tr>
                         <tr>
                             <td valign="middle">
-                                <asp:Label ID="Label6" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Contacto" Width="80px"></asp:Label>
+                                <asp:Label ID="Label21" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Soporte Venta"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtContacto" runat="server" CssClass="LetraH2" Height="11px" TabIndex="3" Width="290px"></asp:TextBox>
+                                <asp:TextBox ID="txtSoporteVta" runat="server" CssClass="LetraH2" Height="11px" TabIndex="1" Width="290px"></asp:TextBox>
                             </td>
                             <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
                                 <asp:Label ID="Label11" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Ventas" Width="53px"></asp:Label>
@@ -116,10 +119,10 @@
                         </tr>
                         <tr>
                             <td valign="middle">
-                                <asp:Label ID="Label21" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Soporte Venta"></asp:Label>
+                                <asp:Label ID="Label10" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Factura" Visible="False" Width="80px"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtSoporteVta" runat="server" CssClass="LetraH2" Height="11px" TabIndex="1" Width="290px"></asp:TextBox>
+                                <asp:TextBox ID="txtFactura" runat="server" CssClass="LetraH2" Height="11px" TabIndex="4" Visible="False"></asp:TextBox>
                             </td>
                             <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
                                 <asp:Label ID="lblCerrada" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Cerrada" Visible="False" Width="53px"></asp:Label>
@@ -130,20 +133,10 @@
                         </tr>
                         <tr>
                             <td valign="middle">
-                                <asp:Label ID="Label10" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Factura" Visible="False" Width="80px"></asp:Label>
-                            </td>
+                                &nbsp;</td>
                             <td>
-                                <asp:TextBox ID="txtFactura" runat="server" CssClass="LetraH2" Height="11px" TabIndex="4" Visible="False"></asp:TextBox>
-                            </td>
+                                &nbsp;</td>
                             <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">&nbsp;</td>
-                            <td style="width: 40%" valign="bottom">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td valign="middle">
-                                &nbsp;</td>
-                            <td>
-                                &nbsp;</td>
-                            <td style="border-left: #ccccff thin outset; width: 10%; color: white; background-color: white;" valign="middle">&nbsp;</td>
                             <td style="width: 40%" valign="bottom">&nbsp;</td>
                         </tr>
                     </table>
@@ -160,7 +153,7 @@
                             <asp:TextBox ID="txtCorreo" runat="server" CssClass="LetraH2"
                                 TabIndex="1" Width="358px"></asp:TextBox></td>
                         <td>
-                            <asp:Button ID="btnSaveMail" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                            <asp:Button ID="btnSaveMail" runat="server" BackColor="SteelBlue" BorderColor="LightSlateGray"
                                 BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_producto") %>'
                                 CssClass="gridItems" Font-Bold="True" ForeColor="White"
                                 Text="Guardar" Visible="False" /></td>
@@ -781,8 +774,8 @@
     </table>
     <asp:ImageButton ID="imgbtnPrint" runat="server" ImageUrl="~/Images/print.png" Visible="False" />
     <asp:ImageButton ID="btnReportToClient" runat="server" ImageUrl="~/Images/directory.jpg"
-        Visible="False" />
-    <asp:Button ID="btnEnviarMail" runat="server" BorderStyle="Solid" Text="Generar Email" Visible="False" CssClass="botonEnviar" Width="119px" />
+        Visible="False" ToolTip="Generar Carta para Cliente" />
+    <asp:Button ID="btnEnviarMail" runat="server" BorderStyle="Solid" Text="Enviar Carta por Email" Visible="False" CssClass="botonEnviar" Width="154px" ToolTip="Enviar carta por correo" />
 
 
 

@@ -13,7 +13,7 @@
 
         <table style="width: 100%">
             <tr>
-                <td align="right" colspan="2" style="background-color: steelblue; width: 100%">
+                <td colspan="2" style="background-color: steelblue; width: 100%">
                     <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Login::." ForeColor="White"></asp:Label></td>
             </tr>
             <tr>

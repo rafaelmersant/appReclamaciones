@@ -8,8 +8,8 @@
                     Height="118px" Width="321px">
                     <table style="width: 100%">
                         <tr>
-                            <td align="left" colspan="2" style="background-color: lightsteelblue">
-                                <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Motivos::."></asp:Label></td>
+                            <td align="left" colspan="2" style="background-color: gray">
+                                <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Motivos::." ForeColor="White"></asp:Label></td>
                         </tr>
                         <tr>
                             <td align="right">
@@ -30,9 +30,9 @@
                             <td>
                             </td>
                             <td align="left">
-                                <asp:Button ID="btnGuardar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnGuardar" runat="server" BackColor="Gray" BorderColor="Black"
                                     BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Guardar" Width="76px" CausesValidation="False" />
-                                <asp:Button ID="Button1" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="Button1" runat="server" BackColor="Gray" BorderColor="Black"
                                     BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Nuevo" Width="76px" CausesValidation="False" /></td>
                         </tr>
                         <tr>
@@ -52,6 +52,7 @@
                     <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                     <Columns>
                         <asp:BoundField HeaderText="Motivo" DataField="descripcion">
+                            <HeaderStyle HorizontalAlign="Left" />
                             <ItemStyle CssClass="gridItems" Width="25%" />
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="Editar">
@@ -60,15 +61,16 @@
                                     CausesValidation="False" CommandArgument='<%# bind("descripcion") %>' ImageUrl="~/Images/lista.png"
                                     OnClick="ImageButton1_Click" />
                             </ItemTemplate>
-                            <ItemStyle Width="7%" />
+                            <ItemStyle Width="7%" HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Quitar">
                             <ItemTemplate>
-                                <asp:Button ID="btnQuitar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnQuitar" runat="server" BackColor="Red" BorderColor="Maroon"
                                     BorderStyle="Solid" CausesValidation="False" Font-Bold="True" ForeColor="White"
                                     Text="X" Width="34px" CommandArgument='<%# bind("id_motivo") %>' OnClick="btnQuitar_Click" />
                             </ItemTemplate>
-                            <ItemStyle Width="7%" />
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle Width="7%" HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
                     <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />

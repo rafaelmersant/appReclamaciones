@@ -5,7 +5,7 @@
     <table style="width: 100%;">
         <tr>
             <td>
-                <asp:Label ID="Label1" runat="server" BackColor="SteelBlue" Font-Bold="True" ForeColor="White"
+                <asp:Label ID="Label1" runat="server" BackColor="Gray" Font-Bold="True" ForeColor="White"
                     Text="Lista de Reclamaciones" Width="100%"></asp:Label></td>
         </tr>
         <tr>
@@ -26,7 +26,7 @@
                 <asp:Label ID="Label10" runat="server" CssClass="LFiltros" Font-Italic="True" Font-Size="10px"
                     ForeColor="Gray" Text="Si desea ver todas las reclamaciones presione ->" Width="272px"></asp:Label>
                 <asp:Button ID="btnVerTodas" runat="server" BackColor="#333333" BorderColor="Gray"
-                    BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Text="VER TODAS" Width="126px" Height="20px" /></td>
+                    BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Text="VER TODAS" Width="126px" Height="23px" /></td>
         </tr>
         <tr>
             <td>

@@ -5,7 +5,7 @@
     <table width="40%" cellspacing="3" style="border-right: #ccccff thin ridge; border-top: #ccccff thin ridge; border-left: #ccccff thin ridge; border-bottom: #ccccff thin ridge">
         <tr>
             <td colspan="3">
-                <asp:Label ID="Label1" runat="server" BackColor="SteelBlue" CssClass="headerPrincipal"
+                <asp:Label ID="Label1" runat="server" BackColor="Gray" CssClass="headerPrincipal"
                     Font-Bold="True" ForeColor="White" Text="Opciones Administrativas" Width="100%"></asp:Label></td>
         </tr>
         <tr>

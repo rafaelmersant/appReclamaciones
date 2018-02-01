@@ -5,7 +5,7 @@
     
     <table width="100%">
     <tr>
-    <td>
+    <td style="height: 354px">
         <asp:Panel ID="Panel1" runat="server" DefaultButton="btnGuardar" Height="310px" Width="321px" BorderColor="SteelBlue" BorderWidth="1px">
             <table style="width: 100%">
                 <tr>
@@ -79,9 +79,9 @@
                     <td>
                     </td>
                     <td align="left">
-                        <asp:Button ID="btnGuardar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                        <asp:Button ID="btnGuardar" runat="server" BackColor="Gray" BorderColor="Black"
                             BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Guardar" Width="76px" />
-                        <asp:Button ID="btnNuevo" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                        <asp:Button ID="btnNuevo" runat="server" BackColor="Gray" BorderColor="Black"
                             BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Nuevo" Width="76px" CausesValidation="False" /></td>
                 </tr>
                 <tr>

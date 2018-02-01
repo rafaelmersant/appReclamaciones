@@ -8,8 +8,8 @@
                     Height="118px" Width="321px">
                     <table style="width: 100%">
                         <tr>
-                            <td align="left" colspan="2" style="background-color: lightsteelblue">
-                                <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Areas::."></asp:Label></td>
+                            <td align="left" colspan="2" style="background-color: gray">
+                                <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Areas::." ForeColor="White"></asp:Label></td>
                         </tr>
                         <tr>
                             <td align="right">
@@ -24,7 +24,7 @@
                             <td>
                             </td>
                             <td align="left">
-                                <asp:Button ID="btnGuardar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnGuardar" runat="server" BackColor="Gray" BorderColor="Black"
                                     BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Guardar" Width="76px" />
                             </td>
                         </tr>
@@ -45,15 +45,16 @@
                     <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                     <Columns>
                         <asp:BoundField DataField="area" HeaderText="Area">
+                            <HeaderStyle HorizontalAlign="Left" />
                             <ItemStyle CssClass="gridItems" Width="25%" />
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="Quitar">
                             <ItemTemplate>
-                                <asp:Button ID="btnQuitar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnQuitar" runat="server" BackColor="Red" BorderColor="Maroon"
                                     BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_area") %>'
                                     Font-Bold="True" ForeColor="White" OnClick="btnQuitar_Click" Text="X" Width="34px" />
                             </ItemTemplate>
-                            <ItemStyle Width="7%" />
+                            <ItemStyle Width="7%" HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
                     <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />

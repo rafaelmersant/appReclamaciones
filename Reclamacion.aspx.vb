@@ -1256,6 +1256,12 @@ Partial Class Reclamacion
     Protected Sub btnCerrar_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnCerrar.Click
         Try
             If txtConclusion.Text.Trim() = String.Empty Then lblMensaje.Text = "Debe escribir una conclusión." : Exit Try
+
+            If txtCantidad.Text.Trim() = String.Empty Or txtMonto.Text.Trim() = String.Empty Then
+                txtCantidad.Text = "0"
+                txtMonto.Text = "0"
+            End If
+
             clsReclamaciones.closeReclamacion(Val(lblNoReclamacion.Text), txtConclusion.Text.Trim(), _
             ddlAreas.SelectedValue, ddlMotivos.SelectedValue, txtMonto.Text, txtNCND.Text, ddlMoneda.SelectedValue, _
             txtCantidad.Text, ddlMetrica.SelectedValue)

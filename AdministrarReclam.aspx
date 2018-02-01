@@ -7,8 +7,8 @@
                 <asp:Panel ID="Panel1" runat="server" BorderColor="SteelBlue" BorderWidth="1px" DefaultButton="btnBuscar" Width="321px">
                     <table style="width: 100%">
                         <tr>
-                            <td align="left" colspan="2" style="background-color: lightsteelblue">
-                                <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Eliminar Reclamación::."></asp:Label></td>
+                            <td align="left" colspan="2" style="background-color: gray">
+                                <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Eliminar Reclamación::." ForeColor="White"></asp:Label></td>
                         </tr>
                         <tr>
                             <td align="right">
@@ -23,7 +23,7 @@
                             <td align="right">
                             </td>
                             <td align="left">
-                                <asp:Button ID="btnBuscar" runat="server" BackColor="LightSteelBlue" BorderColor="LightSlateGray"
+                                <asp:Button ID="btnBuscar" runat="server" BackColor="Gray" BorderColor="Black"
                                     BorderStyle="Solid" CausesValidation="False" Font-Bold="True" ForeColor="White"
                                     Text="Buscar" Width="76px" /></td>
                         </tr>
@@ -66,6 +66,7 @@
                     <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                     <Columns>
                         <asp:BoundField DataField="comentario" HeaderText="Comentarios">
+                            <HeaderStyle HorizontalAlign="Left" />
                             <ItemStyle CssClass="gridItems" Width="93%" />
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="Quitar">
@@ -74,7 +75,7 @@
                                     BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_comentario") %>'
                                     Font-Bold="True" ForeColor="SeaShell" OnClick="btnQuitarComent_Click" Text="X" Width="34px" />
                             </ItemTemplate>
-                            <ItemStyle Width="7%" />
+                            <ItemStyle Width="7%" HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
                     <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
