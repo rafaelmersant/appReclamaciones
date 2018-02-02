@@ -767,32 +767,34 @@ Partial Class Reclamacion
 
     'Este metodo guarda el codigo de cada producto en un arreglo
     'Para posteriormente buscar la descripcion de cada producto.
-    Private Sub setNameProductosSAP()
+    Private Sub setNameProductosAX()
         Dim prod() As String
         Dim i As Integer = 0
 
-        prod = New String(grdProdReclam.Rows.Count - 1) {}
+        'prod = New String(grdProdReclam.Rows.Count - 1) {}
 
-        For Each row As GridViewRow In grdProdReclam.Rows
-            prod(i) = CType(row.FindControl("lblCod_Prod"), Label).Text.Trim()
-            i += 1
-        Next
+        'For Each row As GridViewRow In grdProdReclam.Rows
+        'prod(i) = CType(row.FindControl("lblCod_Prod"), Label).Text.Trim()
+        'i += 1
+        'Next
 
-        findNameFromSAP_Prod(prod)
+        'findNameFromSAP_Prod(prod)
     End Sub
 
     'Este metodo es simplemente para poner la descripcion del producto
     'una vez que el GridView tiene el codigo del mismo
     Private Sub findNameFromSAP_Prod(ByVal pProd() As String)
-        Dim productos() As wsProductos.ZsdProductos = clsReclamaciones.getProductosSAP(pProd)
 
-        For Each row As GridViewRow In grdProdReclam.Rows
-            For x As Integer = 0 To productos.Length - 1
-                If productos(x).Matnr = row.Cells(0).Text.Trim() Then
-                    CType(row.FindControl("lblNombreProd"), Label).Text = productos(x).Maktx
-                End If
-            Next
-        Next
+        'Dim productos() As wsProductos.ZsdProductos = clsReclamaciones.getProductosSAP(pProd)
+
+        'For Each row As GridViewRow In grdProdReclam.Rows
+        'For x As Integer = 0 To productos.Length - 1
+        'If productos(x).Matnr = row.Cells(0).Text.Trim() Then
+        'CType(row.FindControl("lblNombreProd"), Label).Text = productos(x).Maktx
+        'End If
+        'Next
+        'Next
+
     End Sub
 
     Private Sub fillPlantas()

@@ -622,43 +622,43 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     End Sub
 
     Public Shared Function getProductoSAP(ByVal cod As String) As String
-        Dim service As New wsProductos.service
-        Dim prod As New ZsdGetProductos()
-        Dim resp As New wsProductos.ZsdGetProductosResponse
-        Dim arr_prod() As wsProductos.ZsdProductos
+        'Dim service As New wsProductos.service
+        'Dim prod As New ZsdGetProductos()
+        'Dim resp As New wsProductos.ZsdGetProductosResponse
+        'Dim arr_prod() As wsProductos.ZsdProductos
 
-        arr_prod = New wsProductos.ZsdProductos(1) {}
-        arr_prod(0) = New wsProductos.ZsdProductos()
-        arr_prod(0).Matnr = cod
+        'arr_prod = New wsProductos.ZsdProductos(1) {}
+        'arr_prod(0) = New wsProductos.ZsdProductos()
+        'arr_prod(0).Matnr = cod
 
-        prod.Codigo = ""
-        prod.CodigoProductos = arr_prod
+        'prod.Codigo = ""
+        'prod.CodigoProductos = arr_prod
 
-        resp = service.ZsdGetProductos(prod)
+        'resp = service.ZsdGetProductos(prod)
 
-        Return resp.Productos(0).Maktx
+        Return "Producto Ejemplo" 'resp.Productos(0).Maktx
 
     End Function
 
-    Public Shared Function getProductosSAP(ByVal cod() As String) As wsProductos.ZsdProductos()
-        Dim service As New wsProductos.service
-        Dim prod As New ZsdGetProductos()
-        Dim resp As New wsProductos.ZsdGetProductosResponse
-        Dim arr_prod() As wsProductos.ZsdProductos
+    Public Shared Function getProductosSAP(ByVal cod() As String) As String()
+        'Dim service As New wsProductos.service
+        'Dim prod As New ZsdGetProductos()
+        'Dim resp As New wsProductos.ZsdGetProductosResponse
+        'Dim arr_prod() As wsProductos.ZsdProductos
 
-        arr_prod = New wsProductos.ZsdProductos(cod.Length) {}
+        'arr_prod = New wsProductos.ZsdProductos(cod.Length) {}
 
-        For i As Integer = 0 To cod.Length - 1
-            arr_prod(i) = New wsProductos.ZsdProductos()
-            arr_prod(i).Matnr = cod(i)
-        Next
+        'For i As Integer = 0 To cod.Length - 1
+        'arr_prod(i) = New wsProductos.ZsdProductos()
+        'arr_prod(i).Matnr = cod(i)
+        'Next
 
-        prod.Codigo = ""
-        prod.CodigoProductos = arr_prod
+        'prod.Codigo = ""
+        'prod.CodigoProductos = arr_prod
 
-        resp = service.ZsdGetProductos(prod)
+        'resp = service.ZsdGetProductos(prod)
 
-        Return resp.Productos
+        Return {""} 'resp.Productos
 
     End Function
 
@@ -686,32 +686,32 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getClientesSAP(ByVal cod() As String) As wsClientes.ZsdCliente()
-        Dim service As New wsClientes.service
-        Dim prod As New ZsdGetClientes()
-        Dim resp As New wsClientes.ZsdGetClientesResponse
-        Dim arr_prod() As wsClientes.ZsdCliente
+    Public Shared Function getClientesSAP(ByVal cod() As String) As String()
+        'Dim service As New wsClientes.service
+        'Dim prod As New ZsdGetClientes()
+        'Dim resp As New wsClientes.ZsdGetClientesResponse
+        'Dim arr_prod() As wsClientes.ZsdCliente
 
-        arr_prod = New wsClientes.ZsdCliente(cod.Length) {}
+        'arr_prod = New wsClientes.ZsdCliente(cod.Length) {}
 
-        For i As Integer = 0 To cod.Length - 1
+        'For i As Integer = 0 To cod.Length - 1
 
-            If Integer.Parse(cod(i)) < 5000 Then
-                cod(i) = "ES0" & cod(i)
-            Else
-                cod(i) = Right("0000000000" & cod(i), 10)
-            End If
+        'If Integer.Parse(cod(i)) < 5000 Then
+        'cod(i) = "ES0" & cod(i)
+        'Else
+        'cod(i) = Right("0000000000" & cod(i), 10)
+        'End If
 
-            arr_prod(i) = New wsClientes.ZsdCliente()
-            arr_prod(i).Kunnr = cod(i)
-        Next
+        'arr_prod(i) = New wsClientes.ZsdCliente()
+        'arr_prod(i).Kunnr = cod(i)
+        'Next
 
-        prod.Codigo = ""
-        prod.CodigoClientes = arr_prod
+        'prod.Codigo = ""
+        'prod.CodigoClientes = arr_prod
 
-        resp = service.ZsdGetClientes(prod)
+        'resp = service.ZsdGetClientes(prod)
 
-        Return resp.Clientes
+        Return {""} 'resp.Clientes
 
     End Function
 
