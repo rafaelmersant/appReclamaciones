@@ -30,6 +30,7 @@ Partial Class Motivos
 
         If Not Page.IsPostBack Then
             fillMotivos()
+            clean()
         End If
     End Sub
 

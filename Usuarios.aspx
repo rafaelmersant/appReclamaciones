@@ -13,7 +13,7 @@
                         <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Usuario::."></asp:Label></td>
                 </tr>
                 <tr>
-                    <td align="right">
+                    <td align="right" style="width: 142px">
                         <asp:Label ID="Label1" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Usuario:"></asp:Label></td>
                     <td align="left">
                         <asp:TextBox ID="txtUsuario" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
@@ -21,7 +21,7 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtUsuario">*</asp:RequiredFieldValidator></td>
                 </tr>
                 <tr>
-                    <td align="right">
+                    <td align="right" style="width: 142px">
                         <asp:Label ID="Label2" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Contraseña:"></asp:Label></td>
                     <td align="left">
                         <asp:TextBox ID="txtContrasena" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
@@ -29,14 +29,14 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtContrasena">*</asp:RequiredFieldValidator></td>
                 </tr>
                 <tr>
-                    <td align="right">
-                        <asp:Label ID="lbl_idempleado" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Id Empleado:" Width="91px"></asp:Label></td>
+                    <td align="right" style="width: 142px">
+                        <asp:Label ID="lbl_idempleado" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Id_Empleado:" Width="105px"></asp:Label></td>
                     <td align="left">
                         <asp:TextBox ID="txtidEmpleado" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
                             Font-Bold="True" ForeColor="SteelBlue" Width="147px"></asp:TextBox></td>
                 </tr>
                 <tr>
-                    <td align="right">
+                    <td align="right" style="width: 142px">
                         <asp:Label ID="lblNombre" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Nombre:"></asp:Label></td>
                     <td align="left">
                         <asp:TextBox ID="txtNombre" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
@@ -45,20 +45,20 @@
                             ErrorMessage="RequiredFieldValidator">*</asp:RequiredFieldValidator></td>
                 </tr>
                 <tr>
-                    <td align="right">
+                    <td align="right" style="width: 142px">
                         <asp:Label ID="lblArea" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Area:"></asp:Label></td>
                     <td align="left">
                         <asp:DropDownList ID="ddlDepto" runat="server" Width="154px">
                         </asp:DropDownList></td>
                 </tr>
                 <tr>
-                    <td align="right">
+                    <td align="right" style="width: 142px">
                         <asp:Label ID="Label4" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Nivel:"></asp:Label></td>
                     <td align="left"><asp:DropDownList ID="ddlNiveles" runat="server" Width="154px">
                     </asp:DropDownList></td>
                 </tr>
                 <tr>
-                    <td align="right">
+                    <td align="right" style="width: 142px">
                         <asp:Label ID="lblCorreo" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Correo:"></asp:Label></td>
                     <td align="left">
                         <asp:TextBox ID="txtCorreo" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
@@ -66,7 +66,7 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtCorreo">*</asp:RequiredFieldValidator></td>
                 </tr>
                 <tr>
-                    <td align="right">
+                    <td align="right" style="width: 142px">
                         <asp:Label ID="lblEstatus" runat="server" CssClass="letraUsual" Font-Bold="True"
                             Text="Estatus:"></asp:Label></td>
                     <td align="left">
@@ -76,7 +76,7 @@
                         </asp:DropDownList></td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="width: 142px">
                     </td>
                     <td align="left">
                         <asp:Button ID="btnGuardar" runat="server" BackColor="Gray" BorderColor="Black"
@@ -85,7 +85,7 @@
                             BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Nuevo" Width="76px" CausesValidation="False" /></td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="width: 142px">
                     </td>
                     <td align="left">
                     </td>

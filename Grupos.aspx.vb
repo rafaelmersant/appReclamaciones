@@ -105,6 +105,8 @@ Partial Class Grupos
 
                 fillGrupos()
                 fillUsrsGrupos()
+
+                clean()
             End If
         Catch ex As Exception
             lblMensaje.Text = ex.Message
