@@ -622,132 +622,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Sub
 
-    Public Shared Function getProductoSAP(ByVal cod As String) As String
-        'Dim service As New wsProductos.service
-        'Dim prod As New ZsdGetProductos()
-        'Dim resp As New wsProductos.ZsdGetProductosResponse
-        'Dim arr_prod() As wsProductos.ZsdProductos
-
-        'arr_prod = New wsProductos.ZsdProductos(1) {}
-        'arr_prod(0) = New wsProductos.ZsdProductos()
-        'arr_prod(0).Matnr = cod
-
-        'prod.Codigo = ""
-        'prod.CodigoProductos = arr_prod
-
-        'resp = service.ZsdGetProductos(prod)
-
-        Return "Producto Ejemplo" 'resp.Productos(0).Maktx
-
-    End Function
-
-    Public Shared Function getProductosSAP(ByVal cod() As String) As String()
-        'Dim service As New wsProductos.service
-        'Dim prod As New ZsdGetProductos()
-        'Dim resp As New wsProductos.ZsdGetProductosResponse
-        'Dim arr_prod() As wsProductos.ZsdProductos
-
-        'arr_prod = New wsProductos.ZsdProductos(cod.Length) {}
-
-        'For i As Integer = 0 To cod.Length - 1
-        'arr_prod(i) = New wsProductos.ZsdProductos()
-        'arr_prod(i).Matnr = cod(i)
-        'Next
-
-        'prod.Codigo = ""
-        'prod.CodigoProductos = arr_prod
-
-        'resp = service.ZsdGetProductos(prod)
-
-        Return {""} 'resp.Productos
-
-    End Function
-
-
-    Public Shared Function getClienteName(ByVal cod As String) As String
-        'Dim service As New wsClientes.service
-        'Dim cte As New ZsdGetClientes
-        'Dim resp As New ZsdGetClientesResponse
-        'Dim arr_cte() As ZsdCliente
-
-        'If IsNumeric(Left(cod, 1)) And Not Left(cod, 1) = "0" Then
-        'cod = Right("00000" & cod, 10)
-        'End If
-
-        'arr_cte = New ZsdCliente(1) {}
-        'arr_cte(0) = New ZsdCliente()
-        'arr_cte(0).Kunnr = cod
-
-        'cte.Codigo = ""
-        'cte.CodigoClientes = arr_cte
-
-        'resp = service.ZsdGetClientes(cte)
-
-        Return "Cliente Name" 'resp.Clientes(0).Name1
-
-    End Function
-
-    Public Shared Function getClientesSAP(ByVal cod() As String) As String()
-        'Dim service As New wsClientes.service
-        'Dim prod As New ZsdGetClientes()
-        'Dim resp As New wsClientes.ZsdGetClientesResponse
-        'Dim arr_prod() As wsClientes.ZsdCliente
-
-        'arr_prod = New wsClientes.ZsdCliente(cod.Length) {}
-
-        'For i As Integer = 0 To cod.Length - 1
-
-        'If Integer.Parse(cod(i)) < 5000 Then
-        'cod(i) = "ES0" & cod(i)
-        'Else
-        'cod(i) = Right("0000000000" & cod(i), 10)
-        'End If
-
-        'arr_prod(i) = New wsClientes.ZsdCliente()
-        'arr_prod(i).Kunnr = cod(i)
-        'Next
-
-        'prod.Codigo = ""
-        'prod.CodigoClientes = arr_prod
-
-        'resp = service.ZsdGetClientes(prod)
-
-        Return {""} 'resp.Clientes
-
-    End Function
-
-    Public Shared Function getVendedorName(ByVal cod As String) As String
-        'Dim service As New wsVendedores.service
-        'Dim vend As New ZsdGetVendedores
-        'Dim resp As New ZsdGetVendedoresResponse
-        'Dim arr_vend() As ZsdVendedor
-
-        'cod = Right("000" & cod, 3)
-
-        'arr_vend = New ZsdVendedor(1) {}
-        'arr_vend(0) = New ZsdVendedor()
-        'arr_vend(0).Vkgrp = cod
-
-        'vend.Codigo = ""
-        'vend.CodigoVendedores = arr_vend
-
-        'resp = service.ZsdGetVendedores(vend)
-
-        Return "Nombre Vendedor" 'resp.Vendedores(0).Bezei
-
-    End Function
-
     Public Shared Function getFactura(ByVal pFact As String, ByVal idReclamacion As Integer) As Data.DataTable
-        'Dim service As New wsFacturas.service
-        'Dim fact As New ZsdGetFacturas
-        'Dim resp As New ZsdGetFacturasResponse
-        Dim cte As String
-        Dim datos() As String
-        'Dim productos() As wsFacturas.ZsdProductos
-
-        'fact.Codigo = pFact
-        'resp = service.ZsdGetFacturas(fact)
-
         Dim param1 As New SqlParameter("@factura", pFact)
         Dim DataFactura As New Data.DataTable
         Dim DataProductos As New Data.DataTable
@@ -759,8 +634,6 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
             adProductoRecl(idReclamacion, product.Item("codProducto"))
         Next
 
-        cte = "Nombre del Cliente" 'getClienteSAP(resp.Facturas(0).Kunrg)
-
         'Parameters:
         '0-Codigo de Vendedor
         '1-Nombre de Vendedor
@@ -768,8 +641,6 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         '3-Nombre de Cliente
         '4-
         '5-Venta Local / Internacional
-        datos = New String() {"001", "Rafa Vendedor", _
-        "001", "Rafa Cliente", "", "VE"}
 
         Return DataFactura
 

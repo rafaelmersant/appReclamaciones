@@ -709,28 +709,6 @@ Partial Class Reclamacion
         dlist.DataBind()
     End Sub
 
-    Private Sub fillClientes()
-        Dim dtDatos As DataTable = clsReclamaciones.getClientes()
-        ddlCliente.DataSource = dtDatos
-        ddlCliente.DataTextField = "ABALPH"
-        ddlCliente.DataValueField = "ABAN8"
-        ddlCliente.DataBind()
-
-    End Sub
-
-    Private Sub fillVendedores()
-        Dim ningunVEN As New ListItem("0-NINGUNO", "0")
-
-        Dim dtDatos As DataTable = clsReclamaciones.getVendedores()
-        ddlVendedor.DataSource = dtDatos
-        ddlVendedor.DataTextField = "ABALPH"
-        ddlVendedor.DataValueField = "ABAN8"
-        ddlVendedor.DataBind()
-
-        ddlVendedor.Items.Insert(0, ningunVEN)
-
-    End Sub
-
     Private Sub fillAreas()
         'Dim noProcede As New ListItem("NINGUNA", "0")
 
@@ -894,6 +872,9 @@ Partial Class Reclamacion
         Dim sCliente As String
         Dim sVendedor As String
 
+        Dim nCliente As String
+        Dim nVendedor As String
+
         'RECLAMACION EXISTENTE
         If Request.QueryString.Count > 0 Then
             iReclamacion = Integer.Parse(Request.QueryString("id"))
@@ -979,6 +960,9 @@ Partial Class Reclamacion
                 sCliente = dtDatos.Rows(0).Item("cliente").ToString().Trim()
                 sVendedor = dtDatos.Rows(0).Item("vendedor").ToString().Trim()
 
+                nCliente = dtDatos.Rows(0).Item("nCliente").ToString().Trim()
+                nVendedor = dtDatos.Rows(0).Item("nVendedor").ToString().Trim()
+
                 If Not dtDatos.Rows(0).Item("soporte") Is DBNull.Value Then
                     txtSoporteVta.Text = dtDatos.Rows(0).Item("soporte")
                 End If
@@ -987,14 +971,11 @@ Partial Class Reclamacion
                     txtCorreo.Text = dtDatos.Rows(0).Item("correo")
                 End If
 
-                'Condicion para el tipo de cliente ESPORADICO
-                'If Integer.Parse(sCliente) < 5000 Then sCliente = "ES0" & sCliente
-
                 ddlCliente.Items.Clear()
-                ddlCliente.Items.Add(New ListItem(clsReclamaciones.getClienteName(sCliente), sCliente))
+                ddlCliente.Items.Add(New ListItem(nCliente, sCliente))
 
                 ddlVendedor.Items.Clear()
-                ddlVendedor.Items.Add(New ListItem(clsReclamaciones.getVendedorName(sVendedor), sVendedor))
+                ddlVendedor.Items.Add(New ListItem(nVendedor, sVendedor))
 
                 ddlVentas.SelectedValue = dtDatos.Rows(0).Item("ventas").ToString().Trim()
 
