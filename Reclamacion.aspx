@@ -169,7 +169,7 @@
         </tr>
         <tr>
             <td colspan="3">
-                <table style="width: 45%">
+                <table style="width: 75%">
                     <tr>
                         <td>
                             <asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Names="Verdana"
@@ -193,24 +193,24 @@
                                 <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                                 <Columns>
                                     <asp:BoundField DataField="cod_prod" HeaderText="C&#243;digo">
-                                        <HeaderStyle CssClass="LetraH1" Width="7%" />
-                                        <ItemStyle CssClass="gridItems" Width="10%" />
+                                        <HeaderStyle CssClass="LetraH1" Width="6%" HorizontalAlign="Left" />
+                                        <ItemStyle CssClass="gridItems" Width="6%" />
                                     </asp:BoundField>
                                     <asp:BoundField DataField="producto" HeaderText="Producto">
-                                    <HeaderStyle CssClass="LetraH1" />
-                                    <ItemStyle CssClass="gridItems" />
+                                    <HeaderStyle CssClass="LetraH1" HorizontalAlign="Left" Width="35%" />
+                                    <ItemStyle CssClass="gridItems" Width="35%" />
                                     </asp:BoundField>
                                     <asp:TemplateField HeaderText="Quitar">
                                         <ItemTemplate>
                                             <asp:ImageButton ID="imgbtnQuitarProd" runat="server" CommandArgument='<%# bind("id_producto") %>'
                                                 ImageUrl="~/Images/delete.png" OnClick="ImageButton2_Click" />
                                         </ItemTemplate>
-                                        <HeaderStyle CssClass="LetraH1" HorizontalAlign="Center" Width="7%" />
-                                        <ItemStyle CssClass="gridItems" Width="10%" HorizontalAlign="Center" />
+                                        <HeaderStyle CssClass="LetraH1" HorizontalAlign="Center" Width="5%" />
+                                        <ItemStyle CssClass="gridItems" Width="5%" HorizontalAlign="Center" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Guardar">
-                                        <HeaderStyle CssClass="LetraH1" HorizontalAlign="Center" Width="7%" />
-                                        <ItemStyle CssClass="gridItems" HorizontalAlign="Center" />
+                                        <HeaderStyle CssClass="LetraH1" HorizontalAlign="Center" Width="5%" />
+                                        <ItemStyle CssClass="gridItems" HorizontalAlign="Center" Width="5%" />
                                         <ItemTemplate>
                                             <asp:ImageButton ID="imgbtnGuardarComentProd" runat="server" ImageUrl="~/Images/save_small.png" CommandArgument='<%# bind("id_producto") %>' OnClick="imgbtnGuardarComentProd_Click" />
                                         </ItemTemplate>
@@ -218,7 +218,7 @@
                                     <asp:TemplateField HeaderText="Comentario">
                                         <ItemTemplate>
                                             <asp:TextBox ID="txtComentProd" runat="server" BorderColor="Gray" BorderStyle="Solid"
-                                                BorderWidth="1px" Width="214px" CssClass="gridItems" Text='<%# bind("comentario") %>'></asp:TextBox>
+                                                BorderWidth="1px" Width="174px" CssClass="gridItems" Text='<%# bind("comentario") %>'></asp:TextBox>
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="LetraH1" Width="20%" />
                                         <ItemStyle CssClass="gridItems" />
