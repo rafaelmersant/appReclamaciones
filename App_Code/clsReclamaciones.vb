@@ -583,6 +583,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Return SqlHelper.ExecuteScalar(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_setProductoComentario", New SqlParameter() {param1, param2})
 
     End Function
+
 #End Region
 
 
@@ -736,7 +737,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getFactura(ByVal pFact As String, ByVal idReclamacion As Integer) As String()
+    Public Shared Function getFactura(ByVal pFact As String, ByVal idReclamacion As Integer) As Data.DataTable
         'Dim service As New wsFacturas.service
         'Dim fact As New ZsdGetFacturas
         'Dim resp As New ZsdGetFacturasResponse
@@ -747,11 +748,15 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         'fact.Codigo = pFact
         'resp = service.ZsdGetFacturas(fact)
 
-        'productos = resp.Facturas(0).Productos()
-        Dim productos() As String = {"PROD1", "PROD2", "PROD3"}
+        Dim param1 As New SqlParameter("@factura", pFact)
+        Dim DataFactura As New Data.DataTable
+        Dim DataProductos As New Data.DataTable
 
-        For Each product As String In productos
-            adProductoRecl(idReclamacion, product)
+        DataFactura = SqlHelper.ExecuteDataset(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getDatosFacturaAX", New SqlParameter() {param1}).Tables(0)
+        DataProductos = SqlHelper.ExecuteDataset(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getProductosByFacturaAX", New SqlParameter() {param1}).Tables(0)
+
+        For Each product As DataRow In DataProductos.Rows
+            adProductoRecl(idReclamacion, product.Item("codProducto"))
         Next
 
         cte = "Nombre del Cliente" 'getClienteSAP(resp.Facturas(0).Kunrg)
@@ -762,11 +767,11 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         '2-Codigo de Cliente
         '3-Nombre de Cliente
         '4-
-        '5-Venta Loca / Internacional
+        '5-Venta Local / Internacional
         datos = New String() {"001", "Rafa Vendedor", _
         "001", "Rafa Cliente", "", "VE"}
 
-        Return datos
+        Return DataFactura
 
     End Function
 

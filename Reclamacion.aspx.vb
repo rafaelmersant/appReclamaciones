@@ -760,41 +760,6 @@ Partial Class Reclamacion
         grdProdReclam.DataSource = prod
         grdProdReclam.DataBind()
 
-        'Sustituir este procedimiento y poner un inner join que haga un get del nombre del producto
-        'setNameProductosSAP()
-
-    End Sub
-
-    'Este metodo guarda el codigo de cada producto en un arreglo
-    'Para posteriormente buscar la descripcion de cada producto.
-    Private Sub setNameProductosAX()
-        Dim prod() As String
-        Dim i As Integer = 0
-
-        'prod = New String(grdProdReclam.Rows.Count - 1) {}
-
-        'For Each row As GridViewRow In grdProdReclam.Rows
-        'prod(i) = CType(row.FindControl("lblCod_Prod"), Label).Text.Trim()
-        'i += 1
-        'Next
-
-        'findNameFromSAP_Prod(prod)
-    End Sub
-
-    'Este metodo es simplemente para poner la descripcion del producto
-    'una vez que el GridView tiene el codigo del mismo
-    Private Sub findNameFromSAP_Prod(ByVal pProd() As String)
-
-        'Dim productos() As wsProductos.ZsdProductos = clsReclamaciones.getProductosSAP(pProd)
-
-        'For Each row As GridViewRow In grdProdReclam.Rows
-        'For x As Integer = 0 To productos.Length - 1
-        'If productos(x).Matnr = row.Cells(0).Text.Trim() Then
-        'CType(row.FindControl("lblNombreProd"), Label).Text = productos(x).Maktx
-        'End If
-        'Next
-        'Next
-
     End Sub
 
     Private Sub fillPlantas()
@@ -905,16 +870,16 @@ Partial Class Reclamacion
     Private Sub BuscarPorFactura()
         ddlCliente.Items.Clear()
         ddlVendedor.Items.Clear()
-        
+
         txtTipoPedido.Text = String.Empty
 
-        Dim datos() As String = clsReclamaciones.getFactura(txtPedido.Text, lblNoReclamacion.Text)
+        Dim datos As DataTable = clsReclamaciones.getFactura(txtPedido.Text, lblNoReclamacion.Text)
 
-        If datos.Length > 0 Then
-            ddlVendedor.Items.Add(New ListItem(Trim(datos(1)), Trim(datos(0))))
-            ddlCliente.Items.Add(New ListItem(Trim(datos(3)), Trim(datos(2))))
-        
-            If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
+        If datos.Rows.Count > 0 Then
+            ddlVendedor.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreVendedor")), Trim(datos.Rows(0).Item("codVendedor"))))
+            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreCliente")), Trim(datos.Rows(0).Item("codCliente"))))
+
+            'If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
             lblMensaje.Text = String.Empty
             fillProductos(lblNoReclamacion.Text)
         Else
@@ -1027,7 +992,7 @@ Partial Class Reclamacion
 
                 ddlCliente.Items.Clear()
                 ddlCliente.Items.Add(New ListItem(clsReclamaciones.getClienteName(sCliente), sCliente))
-                
+
                 ddlVendedor.Items.Clear()
                 ddlVendedor.Items.Add(New ListItem(clsReclamaciones.getVendedorName(sVendedor), sVendedor))
 
@@ -1103,7 +1068,7 @@ Partial Class Reclamacion
                 'NUEVA MODIFICACION **MAYO 2016
                 ddlChoferes.SelectedValue = dtDatos.Rows(0).Item("chofer").ToString().Trim()
                 ddlTransportista.SelectedValue = dtDatos.Rows(0).Item("transportista").ToString().Trim()
-                
+
             End If
 
             'CONCLUSION
@@ -1325,7 +1290,7 @@ Partial Class Reclamacion
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
-       
+
         End Try
     End Sub
 
@@ -1365,7 +1330,7 @@ Partial Class Reclamacion
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
-        
+
         End Try
     End Sub
 
@@ -1403,7 +1368,7 @@ Partial Class Reclamacion
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
-       
+
         End Try
     End Sub
 
@@ -1441,7 +1406,7 @@ Partial Class Reclamacion
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
-        
+
         End Try
     End Sub
 
@@ -1479,7 +1444,7 @@ Partial Class Reclamacion
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
-        
+
         End Try
     End Sub
 
@@ -1560,7 +1525,7 @@ Partial Class Reclamacion
 
         Catch err As Exception
             lblMensaje.Text = err.Message
-      
+
         End Try
     End Sub
 
@@ -1671,7 +1636,7 @@ Partial Class Reclamacion
     End Sub
 
     Protected Sub btnQuitar_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-       
+
     End Sub
 
     Protected Sub imgbtnRefresh_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles imgbtnRefresh.Click
@@ -1719,7 +1684,7 @@ Partial Class Reclamacion
             archivoPDF = PrintReportTC(rptReportTC, "\PDFs\ReporteACliente.pdf", contacto, cliente)
 
             Response.Redirect(archivoPDF)
-            
+
         Catch err As Exception
             lblMensaje.Text = err.Message
 

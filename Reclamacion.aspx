@@ -196,6 +196,10 @@
                                         <HeaderStyle CssClass="LetraH1" Width="7%" />
                                         <ItemStyle CssClass="gridItems" Width="10%" />
                                     </asp:BoundField>
+                                    <asp:BoundField DataField="producto" HeaderText="Producto">
+                                    <HeaderStyle CssClass="LetraH1" />
+                                    <ItemStyle CssClass="gridItems" />
+                                    </asp:BoundField>
                                     <asp:TemplateField HeaderText="Producto">
                                         <ItemTemplate>
                                             <asp:Label ID="lblNombreProd" runat="server" CssClass="gridItems"></asp:Label>
