@@ -584,6 +584,12 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
+    Public Shared Function getProductoERP(ByVal producto As String) As Data.DataTable
+        Dim param1 As New SqlParameter("@producto", producto)
+
+        Return SqlHelper.ExecuteDataset(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getProductoAX", New SqlParameter() {param1}).Tables(0)
+
+    End Function
 #End Region
 
 

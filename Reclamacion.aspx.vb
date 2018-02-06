@@ -1228,15 +1228,14 @@ Partial Class Reclamacion
         lblMensaje.Text = String.Empty
 
         Try
-            txtNameProducto.Text = clsReclamaciones.getProductoSAP(txtCodProd.Text)
-
-            ''Dim dtDato As DataTable = clsReclamaciones.getProducto(txtCodProd.Text)
-            ''If dtDato.Rows.Count > 0 Then
-            ''    txtNameProducto.Text = dtDato.Rows(0).Item(1)
-            ''    lblMensaje.Text = ""
-            ''Else
-            ''    lblMensaje.Text = "No se encuentra el producto. Verifique que digito el código correcto."
-            ''End If
+            Dim dato As DataTable = clsReclamaciones.getProductoERP(txtCodProd.Text)
+           
+            If dato.Rows.Count > 0 Then
+                txtNameProducto.Text = dato.Rows(0).Item("itemname")
+                lblMensaje.Text = ""
+            Else
+                lblMensaje.Text = "No se encuentra el producto. Verifique que digito el código correcto."
+            End If
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
