@@ -200,14 +200,6 @@
                                     <HeaderStyle CssClass="LetraH1" />
                                     <ItemStyle CssClass="gridItems" />
                                     </asp:BoundField>
-                                    <asp:TemplateField HeaderText="Producto">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblNombreProd" runat="server" CssClass="gridItems"></asp:Label>
-                                            <asp:Label ID="lblCod_prod" runat="server" Text='<%# bind("cod_prod") %>' Visible="False"></asp:Label>
-                                        </ItemTemplate>
-                                        <HeaderStyle CssClass="LetraH1" Width="20%" />
-                                        <ItemStyle CssClass="gridItems" />
-                                    </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Quitar">
                                         <ItemTemplate>
                                             <asp:ImageButton ID="imgbtnQuitarProd" runat="server" CommandArgument='<%# bind("id_producto") %>'
