@@ -185,19 +185,17 @@ Partial Class Reclamacion
 
     Private Sub EnviaCorreoCarta(ByVal Correo As String, ByVal Archivo As String)
 
-        'Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("ServerMail"), _
-        '        Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail")))
-
-        Dim senderMail As New SmtpClient()
-
-        Dim sBody As String = String.Empty
-
-
         Dim obj_mail As New MailMessage()
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
         Dim oCorreos() As String = Correo.Split(";")
         Dim c As String
+        Dim sBody As String = String.Empty
 
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
+        senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
+        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
+        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.EnableSsl = True
 
         For Each c In oCorreos
             If Not c Is String.Empty Then
@@ -208,9 +206,10 @@ Partial Class Reclamacion
         obj_mail.CC.Add(ConfigurationManager.AppSettings.Get("Email2"))
         obj_mail.Attachments.Add(New Attachment(Archivo))
 
+        obj_mail.Subject = ConfigurationManager.AppSettings.Get("ASUNTOCARTA")
+
         If obj_mail.To.Count < 1 Then Exit Sub
 
-        obj_mail.Subject = ConfigurationManager.AppSettings.Get("ASUNTOCARTA")
         obj_mail.IsBodyHtml = True
 
         sBody = ConfigurationManager.AppSettings.Get("BODYCARTA")
@@ -226,13 +225,7 @@ Partial Class Reclamacion
         
         obj_mail.Body = sBody
 
-        Try
-            senderMail.Host = "EXCINCAP01"
-            senderMail.Port = 25
-            senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
-            ConfigurationManager.AppSettings.Get("pwdRECLAM"))
-            senderMail.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory
-            senderMail.PickupDirectoryLocation = ConfigurationManager.AppSettings.Get("DirPickup")
+        Try 
             senderMail.Send(obj_mail)
 
         Catch em As SmtpFailedRecipientException
@@ -242,19 +235,18 @@ Partial Class Reclamacion
             obj_mail.Dispose()
         End Try
         
-        
     End Sub
 
     Private Sub EnviaCorreo()
 
-        'Dim usr_credentials As New System.Net.NetworkCredential("reclamaciones", "", "INCA")
-
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("ServerMail"), _
-                Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail")))
-
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
         Dim obj_mail As New MailMessage()
 
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
+        senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
+        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
+        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.EnableSsl = True
 
         For Each item As ListItem In lbUsrInvolucrados.Items
             obj_mail.To.Add(item.Value.Trim())
@@ -269,7 +261,6 @@ Partial Class Reclamacion
         "<br/> <br/> <b>Descripción de la Reclamación:</b> <br/>" & txtDescripcion.Text & " <br/><br/><b>CLIENTE: " & ddlCliente.SelectedItem.Text & "</b>" & _
         "<br/> <br/>" & "También puede revisarla accediendo a " & ConfigurationManager.AppSettings.Get("Pagina")
 
-        senderMail.UseDefaultCredentials = True
         senderMail.Send(obj_mail)
     End Sub
 
@@ -278,12 +269,14 @@ Partial Class Reclamacion
         Dim sCliente As String
         Dim dtUsuarios As DataTable
 
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("ServerMail"), _
-                Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail")))
-
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
         Dim obj_mail As New MailMessage()
 
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
+        senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
+        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
+        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.EnableSsl = True
 
         dtUsuarios = clsReclamaciones.getUsrEstanReclamacion(Val(lblNoReclamacion.Text))
 
@@ -311,7 +304,6 @@ Partial Class Reclamacion
         "<br/> <br/>" & "También puede revisarla accediendo a " & ConfigurationManager.AppSettings.Get("Pagina")
         'obj_mail.Body = "Se ha modificado con un nuevo comentario la reclamación #" & lblNoReclamacion.Text & ". Puede revisarla accediendo a " & ConfigurationManager.AppSettings.Get("Pagina")
 
-        senderMail.UseDefaultCredentials = True
         senderMail.Send(obj_mail)
     End Sub
 
@@ -319,12 +311,14 @@ Partial Class Reclamacion
 
         Dim dtUsuarios As DataTable
 
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("ServerMail"), _
-                Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail")))
-
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
         Dim obj_mail As New MailMessage()
 
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
+        senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
+        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
+        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.EnableSsl = True
 
         dtUsuarios = clsReclamaciones.getUsrEstanReclamacion(Val(lblNoReclamacion.Text))
 
@@ -340,7 +334,6 @@ Partial Class Reclamacion
         obj_mail.Subject = ConfigurationManager.AppSettings.Get("ASUNTO") & " " & lblNoReclamacion.Text & tipo & " - INF. PARA VENDEDORES"
         obj_mail.Body = "<b>COMENTARIO</b> <br/>" & sComentario & "<br/>" & " por: <b>" & Session.Item("name").ToString().Trim() & "</b> <br/>" & Format(Now, "dd/MM/yyyy hh:mm tt")
 
-        senderMail.UseDefaultCredentials = True
         senderMail.Send(obj_mail)
     End Sub
 
@@ -348,12 +341,14 @@ Partial Class Reclamacion
 
         Dim dtUsuarios As DataTable
 
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("ServerMail"), _
-                Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail")))
-
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
         Dim obj_mail As New MailMessage()
 
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
+        senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
+        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
+        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.EnableSsl = True
 
         dtUsuarios = clsReclamaciones.getUsrEstanReclamacion(Val(lblNoReclamacion.Text))
 
@@ -372,7 +367,6 @@ Partial Class Reclamacion
         txtConclusion.Text & " <br/> <br/> " & _
         "Puede ver mas detalles de la reclamación accediendo a " & ConfigurationManager.AppSettings.Get("Pagina")
 
-        senderMail.UseDefaultCredentials = True
         senderMail.Send(obj_mail)
     End Sub
 #End Region
@@ -827,15 +821,15 @@ Partial Class Reclamacion
 
         txtTipoPedido.Text = String.Empty
 
-        Dim datos() As String = clsReclamaciones.getPedidoERP(txtPedido.Text, lblNoReclamacion.Text)
+        Dim datos As DataTable = clsReclamaciones.getPedidoERP(txtPedido.Text, lblNoReclamacion.Text)
 
-        If datos.Length > 0 Then
-            ddlVendedor.Items.Add(New ListItem(Trim(datos(1)), Trim(datos(0))))
-            ddlCliente.Items.Add(New ListItem(Trim(datos(3)), Trim(datos(2))))
+        If datos.Rows.Count > 0 Then
+            ddlVendedor.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreVendedor")), Trim(datos.Rows(0).Item("codVendedor"))))
+            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreCliente")), Trim(datos.Rows(0).Item("codCliente"))))
 
-            txtTipoPedido.Text = Trim(datos(6))
+            'txtTipoPedido.Text = Trim(datos(6))
 
-            If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
+            'If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
             lblMensaje.Text = String.Empty
             fillProductos(lblNoReclamacion.Text)
         Else
@@ -1677,7 +1671,6 @@ Partial Class Reclamacion
         Dim contacto As String
         Dim cliente As String
         Dim archivoPDF As String
-
 
         Try
             If Not txtSoporteVta.Text = String.Empty Then

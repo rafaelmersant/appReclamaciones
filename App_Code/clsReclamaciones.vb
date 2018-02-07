@@ -652,25 +652,17 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getPedidoERP(ByVal pPed As String, ByVal idReclamacion As Integer) As String()
-        'Dim service As New wsPedidos.service
-        'Dim ped As New ZsdGetPedidos
-        'Dim resp As New ZsdGetPedidosResponse
-        Dim cte As String
-        Dim datos() As String
-        'Dim productos() As wsPedidos.ZsdProductos
+    Public Shared Function getPedidoERP(ByVal pPed As String, ByVal idReclamacion As Integer) As Data.DataTable
+        Dim param1 As New SqlParameter("@pedido", pPed)
+        Dim DataPedido As New Data.DataTable
+        Dim DataProductos As New Data.DataTable
 
-        'ped.Codigo = pPed
-        'resp = service.ZsdGetPedidos(ped)
+        DataPedido = SqlHelper.ExecuteDataset(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getDatosPedidoAX", New SqlParameter() {param1}).Tables(0)
+        DataProductos = SqlHelper.ExecuteDataset(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getProductosByPedidoAX", New SqlParameter() {param1}).Tables(0)
 
-        'productos = resp.Pedidos(0).Productos()
-        Dim productos() As String = {"PROD45", "PROD65", "PROD78"}
-
-        For Each product As String In productos
-            adProductoRecl(idReclamacion, product)
+        For Each product As DataRow In DataProductos.Rows
+            adProductoRecl(idReclamacion, product.Item("codProducto"))
         Next
-
-        cte = "Nombre del Cliente" 'getClienteName(resp.Pedidos(0).Kunnr)
 
         'Parameters:
         '0-Codigo de Vendedor
@@ -680,10 +672,8 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         '4-
         '5-Venta Loca / Internacional
         '6-Motivo (eliminar este parametro)
-        datos = New String() {"005", "Test Vendedor", _
-        "009", cte, "", "VE", ""}
 
-        Return datos
+        Return DataPedido
 
     End Function
 #End Region
