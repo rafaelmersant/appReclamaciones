@@ -277,6 +277,7 @@ Partial Class Reclamacion
         senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
         ConfigurationManager.AppSettings.Get("pwdRECLAM"))
         senderMail.EnableSsl = True
+        senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
 
         dtUsuarios = clsReclamaciones.getUsrEstanReclamacion(Val(lblNoReclamacion.Text))
 
