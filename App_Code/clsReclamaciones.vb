@@ -415,6 +415,13 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
+    Public Shared Function getUsuarioByCorreo(ByVal correo As String) As String
+        Dim param1 As New SqlParameter("@correo", correo)
+        
+        Return SqlHelper.ExecuteScalar(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getUsuarioByCorreo", New SqlParameter() {param1})
+
+    End Function
+
     Public Shared Function getDeptos() As DataTable
         Return SqlHelper.ExecuteDataset(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getDeptos").Tables(0)
 

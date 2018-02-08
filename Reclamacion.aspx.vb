@@ -173,7 +173,7 @@ Partial Class Reclamacion
         Dim usr As String = ""
 
         For Each item As ListItem In lbUsrInvolucrados.Items
-            usr = item.Value.Trim().Split("@")(0)
+            usr = clsReclamaciones.getUsuarioByCorreo(item.Value.Trim())
             clsReclamaciones.setUsuarioReclamacion(Val(lblNoReclamacion.Text), usr)
         Next
 
