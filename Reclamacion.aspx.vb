@@ -197,8 +197,7 @@ Partial Class Reclamacion
         ConfigurationManager.AppSettings.Get("pwdRECLAM"))
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
-        senderMail.UseDefaultCredentials = False
-
+        
         For Each c In oCorreos
             If Not c Is String.Empty Then
                 obj_mail.To.Add(c)
@@ -250,8 +249,7 @@ Partial Class Reclamacion
         ConfigurationManager.AppSettings.Get("pwdRECLAM"))
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
-        senderMail.UseDefaultCredentials = False
-
+        
         For Each item As ListItem In lbUsrInvolucrados.Items
             obj_mail.To.Add(item.Value.Trim())
         Next
@@ -282,8 +280,7 @@ Partial Class Reclamacion
         ConfigurationManager.AppSettings.Get("pwdRECLAM"))
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
-        senderMail.UseDefaultCredentials = False
-
+        
         dtUsuarios = clsReclamaciones.getUsrEstanReclamacion(Val(lblNoReclamacion.Text))
 
         For Each row As DataRow In dtUsuarios.Rows
@@ -326,8 +323,7 @@ Partial Class Reclamacion
         ConfigurationManager.AppSettings.Get("pwdRECLAM"))
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
-        senderMail.UseDefaultCredentials = False
-
+        
         dtUsuarios = clsReclamaciones.getUsrEstanReclamacion(Val(lblNoReclamacion.Text))
 
         For Each row As DataRow In dtUsuarios.Rows
@@ -358,8 +354,7 @@ Partial Class Reclamacion
         ConfigurationManager.AppSettings.Get("pwdRECLAM"))
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
-        senderMail.UseDefaultCredentials = False
-
+        
         dtUsuarios = clsReclamaciones.getUsrEstanReclamacion(Val(lblNoReclamacion.Text))
 
         For Each row As DataRow In dtUsuarios.Rows
