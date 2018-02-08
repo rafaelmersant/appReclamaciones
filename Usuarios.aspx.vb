@@ -32,12 +32,17 @@ Partial Class Usuarios
     End Sub
 
     Private Sub CorreoBienvenida()
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("ServerMail"), _
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"), _
                        Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail")))
 
         Dim obj_mail As New MailMessage()
 
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), "Sistema Reclamaciones de Clientes")
+        senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
+        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
+        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.EnableSsl = True
+        senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
 
         If txtCorreo.Text.Trim() = String.Empty Then Exit Sub
         obj_mail.To.Add(txtCorreo.Text.Trim())
@@ -53,7 +58,6 @@ Partial Class Usuarios
         "<p><br><br> Gracias por usar </p>" & _
         "</br> <p> <b>Sistema de Reclamaciones de Cliente</b> </p>"
 
-        senderMail.UseDefaultCredentials = True
         senderMail.Send(obj_mail)
     End Sub
 
