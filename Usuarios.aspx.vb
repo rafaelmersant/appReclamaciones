@@ -57,7 +57,7 @@ Partial Class Usuarios
         "<b> Usuario: </b>" & txtUsuario.Text.Trim() & "<br/> <br/>" & _
         "<p> Para obtener la <b>contraseña</b> favor comunicarse con el administrador del sistema. </p>" & _
         "<p><br><br> Gracias por usar </p>" & _
-        "</br> <p> <b>Sistema de Reclamaciones de Cliente</b> </p>"
+        "</br> <p> <b>Sistema de Reclamaciones de Clientes</b> </p>"
 
         senderMail.Send(obj_mail)
     End Sub
