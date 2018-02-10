@@ -186,7 +186,7 @@ Partial Class Reclamacion
     Private Sub EnviaCorreoCarta(ByVal Correo As String, ByVal Archivo As String)
 
         Dim obj_mail As New MailMessage()
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
         Dim oCorreos() As String = Correo.Split(";")
         Dim c As String
         Dim sBody As String = String.Empty
@@ -242,7 +242,7 @@ Partial Class Reclamacion
 
     Private Sub EnviaCorreo()
 
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
         Dim obj_mail As New MailMessage()
 
         Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")
@@ -275,7 +275,7 @@ Partial Class Reclamacion
         Dim sCliente As String
         Dim dtUsuarios As DataTable
 
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
         Dim obj_mail As New MailMessage()
 
         Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")

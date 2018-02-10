@@ -32,7 +32,7 @@ Partial Class Usuarios
     End Sub
 
     Private Sub CorreoBienvenida()
-        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
 
         Dim obj_mail As New MailMessage()
 
