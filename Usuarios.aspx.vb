@@ -36,17 +36,19 @@ Partial Class Usuarios
 
         Dim obj_mail As New MailMessage()
 
-        obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), "Sistema Reclamaciones de Clientes")
+        Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")
+        Dim usrPass As String = ConfigurationManager.AppSettings.Get("pwdRECLAM")
+
+        obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
         senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
-        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
-        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.Credentials = New Net.NetworkCredential(usrName, usrPass)
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
 
         If txtCorreo.Text.Trim() = String.Empty Then Exit Sub
         obj_mail.To.Add(txtCorreo.Text.Trim())
 
-        obj_mail.Subject = "Bienvenido(a) al sistema RC"
+        obj_mail.Subject = "Bienvenido(a) al Sistema RC"
         obj_mail.IsBodyHtml = True
 
         obj_mail.Body = "<p><b>" & txtNombre.Text.Trim() & "</b>, le damos la Bienvenida al Sistema de Reclamaciones de Clientes. " & _

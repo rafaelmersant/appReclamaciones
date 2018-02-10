@@ -191,10 +191,12 @@ Partial Class Reclamacion
         Dim c As String
         Dim sBody As String = String.Empty
 
+        Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")
+        Dim usrPass As String = ConfigurationManager.AppSettings.Get("pwdRECLAM")
+
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
         senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
-        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
-        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.Credentials = New Net.NetworkCredential(usrName, usrPass)
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
         
@@ -243,10 +245,12 @@ Partial Class Reclamacion
         Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
         Dim obj_mail As New MailMessage()
 
+        Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")
+        Dim usrPass As String = ConfigurationManager.AppSettings.Get("pwdRECLAM")
+
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
         senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
-        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
-        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.Credentials = New Net.NetworkCredential(usrName, usrPass)
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
         
@@ -274,10 +278,12 @@ Partial Class Reclamacion
         Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smptClient"))
         Dim obj_mail As New MailMessage()
 
+        Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")
+        Dim usrPass As String = ConfigurationManager.AppSettings.Get("pwdRECLAM")
+
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
         senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
-        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
-        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.Credentials = New Net.NetworkCredential(usrName, usrPass)
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
         
@@ -317,10 +323,12 @@ Partial Class Reclamacion
         Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
         Dim obj_mail As New MailMessage()
 
+        Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")
+        Dim usrPass As String = ConfigurationManager.AppSettings.Get("pwdRECLAM")
+
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
         senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
-        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
-        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.Credentials = New Net.NetworkCredential(usrName, usrPass)
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
         
@@ -348,10 +356,12 @@ Partial Class Reclamacion
         Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
         Dim obj_mail As New MailMessage()
 
+        Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")
+        Dim usrPass As String = ConfigurationManager.AppSettings.Get("pwdRECLAM")
+
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
         senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
-        senderMail.Credentials = New Net.NetworkCredential(ConfigurationManager.AppSettings.Get("usrRECLAM"), _
-        ConfigurationManager.AppSettings.Get("pwdRECLAM"))
+        senderMail.Credentials = New Net.NetworkCredential(usrName, usrPass)
         senderMail.EnableSsl = True
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
         
