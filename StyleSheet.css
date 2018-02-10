@@ -70,51 +70,51 @@ body
 .headerPrincipal
 {
 	font-family: Helvetica;
-	font-size:11pt;
-	font-weight:bold;
-	color:White;
+	font-size: 11pt;
+	font-weight: bold;
+	color: White;
 }
 
 .listItems
 {
 	font-family: Helvetica;
-	font-size:12px;
-	font-weight:normal;
-	color:Blue;
+	font-size: 12px;
+	font-weight: normal;
+	color: Blue;
 }
 .LetraH1
 {
 	font-family: Helvetica;
-	font-size:10px;
-	font-weight:bold;
+	font-size: 10px;
+	font-weight: bold;
 }
 .LetraH2
 {
 	font-family: Helvetica;
-	font-size:11px;
-	font-weight:normal;	
+	font-size: 11px;
+	font-weight: normal;	
 }
 
 .LFiltros
 {
 	font-family: Helvetica;
-	font-size:12px;
-	font-weight:bolder;
+	font-size: 12px;
+	font-weight: bolder;
 }
 
 .LAzul
 {
 	font-family: Helvetica;
-	font-size:12px;
-	font-weight:bold;
-	color:SteelBlue;
+	font-size: 12px;
+	font-weight: normal; 
+	color: darkgray;
 }
 
 .CalendarExtenderFI .ajax__calendar_container 
 {
 	background-color: lemonchiffon;
-	color:darkblue;
-	border:1px solid #656565;
+	color: darkblue;
+	border: 1px solid #656565;
 }
 
 .CalendarExtenderFI .ajax__calendar_other .ajax__calendar_day,

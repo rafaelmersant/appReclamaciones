@@ -5,7 +5,7 @@
     <table style="width: 100%;">
         <tr>
             <td>
-                <asp:Label ID="Label1" runat="server" BackColor="Gray" Font-Bold="True" ForeColor="White"
+                <asp:Label ID="Label1" runat="server" BackColor="#666666" Font-Bold="True" ForeColor="White"
                     Text="Lista de Reclamaciones" Width="100%"></asp:Label></td>
         </tr>
         <tr>
@@ -270,7 +270,7 @@
                         <asp:TemplateField HeaderText="Ver">
                             <ItemTemplate>
                                 <asp:ImageButton ID="btnVerRec" runat="server" CommandArgument='<%# bind("id_reclamacion") %>'
-                                    ImageUrl="~/Images/search.gif" OnClick="btnVerRec_Click" OnClientClick="aspnetForm.target='_blank';" />
+                                    ImageUrl="~/Images/search.gif" OnClick="btnVerRec_Click" />
                             </ItemTemplate>
                             <ItemStyle HorizontalAlign="Center" Width="4%" />
                             <HeaderStyle CssClass="gridHeaders" HorizontalAlign="Center" />
