@@ -29,7 +29,7 @@
                                 <td align="left">
                                     <strong><em><span style="font-size: 7pt; font-family: Verdana">Lista de Reclamaciones</span></em></strong></td>
                                 <td align="right">
-                                    <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/Images/user.png" PostBackUrl="~/Login.aspx" CausesValidation="False" /></td>
+                                    <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/Images/userRC.png" PostBackUrl="~/Login.aspx" CausesValidation="False" /></td>
                                 <td align="left">
                                     <strong><em><span style="font-size: 7pt; font-family: Verdana">Cerrar Sesion</span></em></strong></td>
                                 <td align="left">

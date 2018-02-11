@@ -108,10 +108,10 @@
                                 <asp:TextBox ID="txtSoporteVta" runat="server" CssClass="LetraH2" Height="11px" TabIndex="1" Width="290px"></asp:TextBox>
                             </td>
                             <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
-                                <asp:Label ID="Label11" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Ventas" Width="53px"></asp:Label>
+                                <asp:Label ID="Label11" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Ventas" Width="53px" Visible="False"></asp:Label>
                             </td>
                             <td style="width: 40%">
-                                <asp:DropDownList ID="ddlVentas" runat="server" CssClass="LetraH2" TabIndex="5" Width="236px">
+                                <asp:DropDownList ID="ddlVentas" runat="server" CssClass="LetraH2" TabIndex="5" Width="236px" Visible="False">
                                     <asp:ListItem>LOCALES</asp:ListItem>
                                     <asp:ListItem>INTERNACIONALES</asp:ListItem>
                                 </asp:DropDownList>
