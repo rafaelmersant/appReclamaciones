@@ -20,8 +20,8 @@
                     <asp:ListItem>Motivo</asp:ListItem>
                     <asp:ListItem>Area</asp:ListItem>
                     <asp:ListItem>Factura</asp:ListItem>
-                    <asp:ListItem>Chofer</asp:ListItem>
-                    <asp:ListItem>Transportista</asp:ListItem>
+                    <%--<asp:ListItem>Chofer</asp:ListItem>--%>
+                    <%--<asp:ListItem>Transportista</asp:ListItem>--%>
                 </asp:DropDownList>
                 <asp:Label ID="Label10" runat="server" CssClass="LFiltros" Font-Italic="True" Font-Size="10px"
                     ForeColor="Gray" Text="Si desea ver todas las reclamaciones presione ->" Width="272px"></asp:Label>
