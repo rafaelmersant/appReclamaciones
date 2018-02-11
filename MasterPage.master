@@ -25,7 +25,7 @@
                         <table style="width: 30%">
                             <tr>
                                 <td align="right">
-                                    <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/Images/Lista.png" PostBackUrl="~/ListaReclamaciones.aspx" CausesValidation="False" /></td>
+                                    <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/Images/listRC.png" PostBackUrl="~/ListaReclamaciones.aspx" CausesValidation="False" /></td>
                                 <td align="left">
                                     <strong><em><span style="font-size: 7pt; font-family: Verdana">Lista de Reclamaciones</span></em></strong></td>
                                 <td align="right">
