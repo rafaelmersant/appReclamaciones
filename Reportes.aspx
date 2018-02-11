@@ -12,7 +12,7 @@
                     <asp:ListItem>Excedidas</asp:ListItem>
                     <asp:ListItem>General</asp:ListItem>
                     <asp:ListItem Value="AreaMotivos">Areas/Motivos</asp:ListItem>
-                    <asp:ListItem Value="Mensual">Mensual RDLRP</asp:ListItem>
+                    <%--<asp:ListItem Value="Mensual">Mensual RDLRP</asp:ListItem>--%>
                     <asp:ListItem Value="15Dias">&gt; 15 Dias</asp:ListItem>
                     <asp:ListItem Value="RRM">Reclamaciones Mensual</asp:ListItem>
                 </asp:DropDownList></td>
