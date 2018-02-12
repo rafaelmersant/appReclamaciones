@@ -21,14 +21,14 @@
                     <asp:Label ID="Label1" runat="server" Font-Bold="True" Text="Usuario:" CssClass="letraUsual"></asp:Label></td>
                 <td align="left">
                     <asp:TextBox ID="txtUsuario" runat="server" BorderColor="steelblue" BorderStyle="Solid"
-                        Font-Bold="True" ForeColor="steelblue" Width="147px"></asp:TextBox></td>
+                        Font-Bold="True" ForeColor="DarkGray" Width="147px"></asp:TextBox></td>
             </tr>
             <tr>
                 <td align="right">
                     <asp:Label ID="Label2" runat="server" Font-Bold="True" Text="Contraseña:" CssClass="letraUsual"></asp:Label></td>
                 <td align="left">
                     <asp:TextBox ID="txtContrasena" runat="server" BorderColor="steelblue" BorderStyle="Solid"
-                        Font-Bold="True" ForeColor="steelblue" TextMode="Password" Width="147px"></asp:TextBox></td>
+                        Font-Bold="True" ForeColor="DarkGray" TextMode="Password" Width="147px"></asp:TextBox></td>
             </tr>
             <tr>
                 <td>

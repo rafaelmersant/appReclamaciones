@@ -142,7 +142,7 @@ Partial Class Reclamacion
                 Factura = txtPedido.Text
                 Pedido = String.Empty
             Else
-                Pedido = txtPedido.Text.Trim() & "-" & txtTipoPedido.Text.Trim()
+                Pedido = txtPedido.Text.Trim() '& "-" & txtTipoPedido.Text.Trim()
                 Factura = String.Empty
             End If
 
