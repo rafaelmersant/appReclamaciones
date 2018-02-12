@@ -306,7 +306,7 @@
         </tr>
         <tr>
             <td colspan="3" valign="top">
-                <asp:TextBox ID="txtDescripcion" runat="server" Height="80px" TextMode="MultiLine" Width="99%" CssClass="headerSimples" ForeColor="DarkGray"></asp:TextBox>
+                <asp:TextBox ID="txtDescripcion" runat="server" Height="80px" TextMode="MultiLine" Width="99%" CssClass="headerSimples" ForeColor="Black"></asp:TextBox>
                 <asp:Button ID="btnGDescrp" runat="server" Text="Guardar Descripción" BackColor="SteelBlue" BorderColor="Gray" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="155px" Visible="False" />
         </tr>
         <tr>
@@ -691,7 +691,7 @@
         <tr>
             <td colspan="3" valign="top">
                 <asp:Panel ID="panelConclusion" runat="server" Width="100%">
-                    <asp:TextBox ID="txtConclusion" runat="server" Height="60px" TextMode="MultiLine" Width="99%" ReadOnly="True" CssClass="headerSimples" ForeColor="DarkGray"></asp:TextBox>
+                    <asp:TextBox ID="txtConclusion" runat="server" Height="60px" TextMode="MultiLine" Width="99%" ReadOnly="True" CssClass="headerSimples" ForeColor="Black"></asp:TextBox>
                 </asp:Panel>
 
                 <table style="width: 40%">
