@@ -155,7 +155,7 @@ Partial Class Reclamacion
 
             clsReclamaciones.guardaReclamacion(Pedido, _
             txtDescripcion.Text.Trim(), ddlCliente.SelectedValue, txtContacto.Text.Trim(), _
-            Factura, ddlVentas.SelectedValue, txtTelefono.Text, Decimal.Parse(ddlVendedor.SelectedValue), _
+            Factura, ddlVentas.SelectedValue, txtTelefono.Text, ddlVendedor.SelectedValue, _
             0, txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text, _
             ddlTipoDoc.SelectedValue, ddlChoferes.SelectedValue, ddlTransportista.SelectedValue)
 
@@ -1255,10 +1255,13 @@ Partial Class Reclamacion
 
     Protected Sub btnInvolucrar_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnInvolucrar.Click
         Try
+            Dim paramReclamacion As Integer = Val(lblNoReclamacion.Text)
             UsuariosReclamacion()
-            getUsuariosInv(Val(lblNoReclamacion.Text))
+            getUsuariosInv(paramReclamacion)
             lblInvolucradosMsg.Text = "Ya los usuarios fueron involucrados en esta reclamación!"
             lblInvolucradosMsg.Visible = True
+
+            MostrarUsuariosInv(paramReclamacion)
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
