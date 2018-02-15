@@ -16,7 +16,7 @@ Public Class clsReclamaciones
 #Region "INSERT's"
 
     Public Shared Function guardaReclamacion(ByVal pedido As String, ByVal descripcion As String, ByVal cliente As String, _
-ByVal contacto As String, ByVal factura As String, ByVal ventas As String, ByVal telefono As String, ByVal vendedor As Decimal, ByVal planta As Integer, _
+ByVal contacto As String, ByVal factura As String, ByVal ventas As String, ByVal telefono As String, ByVal vendedor As String, ByVal planta As Integer, _
 ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As String, ByVal correo As String, ByVal tipoDoc As String, ByVal chofer As String, _
     ByVal transportista As String) As Integer
         Dim param1 As New SqlParameter("@pedido", pedido)
