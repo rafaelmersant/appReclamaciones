@@ -1262,6 +1262,7 @@ Partial Class Reclamacion
             lblInvolucradosMsg.Visible = True
 
             MostrarUsuariosInv(paramReclamacion)
+            lbUsrInvolucrados.Items.Clear()
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
