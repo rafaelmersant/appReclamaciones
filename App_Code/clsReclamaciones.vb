@@ -3,6 +3,7 @@ Imports CrystalDecisions.Shared
 Imports Microsoft.VisualBasic
 Imports System.Data.SqlClient
 Imports System.Data
+Imports System.Data.Odbc
 Imports Microsoft.ApplicationBlocks.Data
 Imports wsClientes
 Imports wsFacturas
@@ -12,6 +13,58 @@ Imports wsVendedores
 
 
 Public Class clsReclamaciones
+
+
+    Public Function ExecuteNonQueryODBC(sConn As String, type As Data.CommandType, procedure As String, parameters() As Odbc.OdbcParameter) As Integer
+        Dim oconn = New System.Data.Odbc.OdbcConnection(sConn)
+        Dim ocmd = New System.Data.Odbc.OdbcCommand(procedure, oconn)
+
+
+        ocmd.CommandType = type
+
+        For Each param As OdbcParameter In parameters
+            ocmd.Parameters.Add(param)
+        Next
+
+        ocmd.Connection.Open()
+        Dim value = ocmd.ExecuteNonQuery()
+        ocmd.Connection.Close()
+
+        Return value
+    End Function
+
+    Public Function ExecuteScalarODBC(sConn As String, type As Data.CommandType, procedure As String, parameters() As Odbc.OdbcParameter) As Integer
+        Dim oconn = New System.Data.Odbc.OdbcConnection(sConn)
+        Dim ocmd = New System.Data.Odbc.OdbcCommand(procedure, oconn)
+        Dim pa = New System.Data.Odbc.OdbcParameter
+
+        ocmd.CommandType = type
+
+        For Each param As OdbcParameter In parameters
+            ocmd.Parameters.Add(param)
+        Next
+
+        ocmd.Connection.Open()
+        Dim value = ocmd.ExecuteScalar()
+        ocmd.Connection.Close()
+
+        Return value
+    End Function
+
+    Public Function ExecuteDataSetODBC(sConn As String, type As Data.CommandType, procedure As String, parameters() As Odbc.OdbcParameter) As DataTable
+        Dim oconn = New System.Data.Odbc.OdbcConnection(sConn)
+        Dim ocmd = New System.Data.Odbc.OdbcCommand(procedure, oconn)
+        Dim adapter As OdbcDataAdapter
+        Dim dtData = New DataTable
+
+        ocmd.CommandType = type
+        adapter = New OdbcDataAdapter(ocmd)
+
+        adapter.Fill(dtData)
+
+        Return dtData
+    End Function
+
 
 #Region "INSERT's"
 
@@ -36,6 +89,7 @@ ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As Strin
         Dim param15 As New SqlParameter("@chofer", chofer)
         Dim param16 As New SqlParameter("@transportista", transportista)
 
+
         Return SqlHelper.ExecuteNonQuery(clsAccessData.getConnection(clsAccessData.eConn.SQL), _
         CommandType.StoredProcedure, "sp_guardaReclamacion", New SqlParameter() {param1, param2, _
                                                                     param3, param4, param5, param6, _
@@ -57,7 +111,7 @@ ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As Strin
     Public Shared Function guardaDescrpRecl(ByVal id_recla As Integer, ByVal descrp As String) As Integer
         Dim param1 As New SqlParameter("@id_reclamacion", id_recla)
         Dim param2 As New SqlParameter("@descripcion", descrp)
-    
+
         Return SqlHelper.ExecuteScalar(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_guardaReclDescrp", New SqlParameter() {param1, param2})
 
     End Function
@@ -370,7 +424,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getReclamacionByChofer(ByVal chofer As String, ByVal usuario As String) As DataSet
         Dim param1 As New SqlParameter("@chofer", chofer)
         Dim param2 As New SqlParameter("@usuario", usuario)
-        
+
         Return SqlHelper.ExecuteDataset(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getReclamacionByChofer", New SqlParameter() {param1, param2})
 
     End Function
@@ -378,7 +432,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getReclamacionByTransportista(ByVal transportista As Integer, ByVal usuario As String) As DataSet
         Dim param1 As New SqlParameter("@transportista", transportista)
         Dim param2 As New SqlParameter("@usuario", usuario)
-        
+
         Return SqlHelper.ExecuteDataset(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getReclamacionByTransportista", New SqlParameter() {param1, param2})
 
     End Function
@@ -417,7 +471,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     Public Shared Function getUsuarioByCorreo(ByVal correo As String) As String
         Dim param1 As New SqlParameter("@correo", correo)
-        
+
         Return SqlHelper.ExecuteScalar(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "sp_getUsuarioByCorreo", New SqlParameter() {param1})
 
     End Function
