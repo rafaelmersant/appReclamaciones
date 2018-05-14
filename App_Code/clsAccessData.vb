@@ -2,7 +2,8 @@ Imports Microsoft.VisualBasic
 
 Public Class clsAccessData
     'Private Shared sConnJDE As String = ConfigurationManager.ConnectionStrings("sConnJDE").ConnectionString
-    Private Shared sConnSQL As String = ConfigurationManager.ConnectionStrings("sConnSQL").ConnectionString
+    'Private Shared sConnSQL As String = ConfigurationManager.ConnectionStrings("sConnSQL").ConnectionString
+    Private Shared sConnSQL As String = ConfigurationManager.AppSettings.Get("sConnSQLODBC")
 
     Enum eConn
         SQL = 1
