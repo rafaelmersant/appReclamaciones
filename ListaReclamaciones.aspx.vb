@@ -98,6 +98,9 @@ Partial Class ListaReclamaciones
                 btnToExcel.Visible = True
                 ''End If
 
+            Catch exq As SqlClient.SqlException
+                lblMensaje.Text = exq.Message
+
             Catch ex As Exception
                 lblMensaje.Text = ex.Message
             End Try

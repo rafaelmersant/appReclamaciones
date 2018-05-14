@@ -18,7 +18,6 @@ Public Class clsReclamaciones
         Dim oconn = New System.Data.Odbc.OdbcConnection(sConn)
         Dim ocmd = New System.Data.Odbc.OdbcCommand(procedure, oconn)
 
-
         ocmd.CommandType = type
 
         For Each param As OdbcParameter In parameters
@@ -41,10 +40,13 @@ Public Class clsReclamaciones
 
         ocmd.CommandType = type
 
-        For Each param As OdbcParameter In parameters
-            ocmd.Parameters.Add(param)
-        Next
+        If Not parameters Is Nothing Then
+            For Each param As OdbcParameter In parameters
+                ocmd.Parameters.Add(param)
+            Next
 
+        End If
+        
         ocmd.Connection.Open()
         Dim value = ocmd.ExecuteScalar()
         ocmd.Connection.Close()
@@ -62,9 +64,11 @@ Public Class clsReclamaciones
 
         ocmd.CommandType = type
 
-        For Each param As OdbcParameter In parameters
-            ocmd.Parameters.Add(param)
-        Next
+        If Not parameters Is Nothing Then
+            For Each param As OdbcParameter In parameters
+                ocmd.Parameters.Add(param)
+            Next
+        End If
 
         adapter = New OdbcDataAdapter(ocmd)
 
