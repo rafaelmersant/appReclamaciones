@@ -65,6 +65,8 @@ Public Class clsReclamaciones
         ocmd.CommandType = type
 
         If Not parameters Is Nothing Then
+            ocmd.Parameters.Clear()
+
             For Each param As OdbcParameter In parameters
                 ocmd.Parameters.Add(param)
             Next
@@ -73,9 +75,7 @@ Public Class clsReclamaciones
         adapter = New OdbcDataAdapter(ocmd)
 
         adapter.Fill(dsData)
-        adapter.Dispose()
-        ocmd.Dispose()
-
+        
         Return dsData
     End Function
 
@@ -789,11 +789,13 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     Public Shared Function getFactura(ByVal pFact As String, ByVal idReclamacion As Integer) As Data.DataTable
         Dim param1 As New OdbcParameter("@factura", pFact)
+        Dim param2 As New OdbcParameter("@factura", pFact)
         Dim DataFactura As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
-        DataFactura = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getDatosFacturaAX (?)}", New OdbcParameter() {param1}).Tables(0)
-        DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call p_getProductosByFacturaAX (?)}", New OdbcParameter() {param1}).Tables(0)
+        DataFactura = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getDatosFacturaAX (?)}", {param1}).Tables(0)
+
+        DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getProductosByFacturaAX (?)}", {param2}).Tables(0)
 
         For Each product As DataRow In DataProductos.Rows
             adProductoRecl(idReclamacion, product.Item("codProducto"))
@@ -813,11 +815,13 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     Public Shared Function getPedidoERP(ByVal pPed As String, ByVal idReclamacion As Integer) As Data.DataTable
         Dim param1 As New OdbcParameter("@pedido", pPed)
+        Dim param2 As New OdbcParameter("@pedido", pPed)
         Dim DataPedido As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
-        DataPedido = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getDatosPedidoAX (?)}", New OdbcParameter() {param1}).Tables(0)
-        DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getProductosByPedidoAX (?)}", New OdbcParameter() {param1}).Tables(0)
+        DataPedido = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getDatosPedidoAX (?)}", {param1}).Tables(0)
+
+        DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getProductosByPedidoAX (?)}", {param2}).Tables(0)
 
         For Each product As DataRow In DataProductos.Rows
             adProductoRecl(idReclamacion, product.Item("codProducto"))
