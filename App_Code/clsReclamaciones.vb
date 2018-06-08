@@ -33,7 +33,7 @@ Public Class clsReclamaciones
         Return value
     End Function
 
-    Private Shared Function ExecuteScalarODBC(sConn As String, type As Data.CommandType, procedure As String, Optional parameters() As Odbc.OdbcParameter = Nothing) As Integer
+    Private Shared Function ExecuteScalarODBC(sConn As String, type As Data.CommandType, procedure As String, Optional parameters() As Odbc.OdbcParameter = Nothing) As Object
         Dim oconn = New System.Data.Odbc.OdbcConnection(sConn)
         Dim ocmd = New System.Data.Odbc.OdbcCommand(procedure, oconn)
         Dim pa = New System.Data.Odbc.OdbcParameter
@@ -46,7 +46,7 @@ Public Class clsReclamaciones
             Next
 
         End If
-        
+
         ocmd.Connection.Open()
         Dim value = ocmd.ExecuteScalar()
         ocmd.Connection.Close()

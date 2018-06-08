@@ -21,6 +21,7 @@ Partial Class Reclamacion
 
         If Not Page.IsPostBack Then
             Try
+
                 'Configurar RECLAMACION por defecto
                 ddlTipoDoc.SelectedIndex = 1
 
@@ -98,19 +99,34 @@ Partial Class Reclamacion
     End Sub
 
     Private Sub WhoDepto()
-        Select Case Session.Item("depto")
-            Case 1
-                btnAgregarV.Visible = True
-            Case 2
-                btnAgregarP.Visible = True
-            Case 3
-                btnAgregarL.Visible = True
-            Case 4
-                btnAgregarF.Visible = True
-            Case 5
-                btnAgregarC.Visible = True
-        End Select
-        
+
+        Dim usr As String = ConfigurationManager.AppSettings.Get("SuperUsr")
+
+        If usr.Contains(Session.Item("usuario")) Then
+
+            btnAgregarV.Visible = True
+            btnAgregarP.Visible = True
+            btnAgregarL.Visible = True
+            btnAgregarF.Visible = True
+            btnAgregarC.Visible = True
+
+        Else
+
+            Select Case Session.Item("depto")
+                Case 1
+                    btnAgregarV.Visible = True
+                Case 2
+                    btnAgregarP.Visible = True
+                Case 3
+                    btnAgregarL.Visible = True
+                Case 4
+                    btnAgregarF.Visible = True
+                Case 5
+                    btnAgregarC.Visible = True
+            End Select
+
+        End If
+
     End Sub
 
     Private Sub CERRADA()
@@ -409,7 +425,7 @@ Partial Class Reclamacion
             Dim iVentasDepto As Integer = ConfigurationManager.AppSettings.Get("deptoVENTAS")
 
             If txtComentarioV.Text.Trim() <> String.Empty Then
-                intComentario = guardaComentario(txtComentarioV.Text.Trim())
+                intComentario = guardaComentario(txtComentarioV.Text.Trim(), iVentasDepto)
             Else : Exit Try
             End If
 
@@ -472,7 +488,7 @@ Partial Class Reclamacion
             Dim iPRODDepto As Integer = ConfigurationManager.AppSettings.Get("deptoPRODUCCION")
 
             If txtComentarioP.Text.Trim() <> String.Empty Then
-                intComentario = guardaComentario(txtComentarioP.Text.Trim())
+                intComentario = guardaComentario(txtComentarioP.Text.Trim(), iPRODDepto)
             Else : Exit Try
             End If
 
@@ -535,7 +551,7 @@ Partial Class Reclamacion
             Dim iLogisticaDepto As Integer = ConfigurationManager.AppSettings.Get("deptoLOGISTICA")
 
             If txtComentarioL.Text.Trim() <> String.Empty Then
-                intComentario = guardaComentario(txtComentarioL.Text.Trim())
+                intComentario = guardaComentario(txtComentarioL.Text.Trim(), iLogisticaDepto)
             Else : Exit Try
             End If
 
@@ -598,7 +614,7 @@ Partial Class Reclamacion
             Dim iFinanzasDepto As Integer = ConfigurationManager.AppSettings.Get("deptoFINANZAS")
 
             If txtComentarioF.Text.Trim() <> String.Empty Then
-                intComentario = guardaComentario(txtComentarioF.Text.Trim())
+                intComentario = guardaComentario(txtComentarioF.Text.Trim(), iFinanzasDepto)
             Else : Exit Try
             End If
 
@@ -661,7 +677,7 @@ Partial Class Reclamacion
             Dim iCalidadDepto As Integer = ConfigurationManager.AppSettings.Get("deptoCALIDAD")
 
             If txtComentarioC.Text.Trim() <> String.Empty Then
-                intComentario = guardaComentario(txtComentarioC.Text.Trim())
+                intComentario = guardaComentario(txtComentarioC.Text.Trim(), iCalidadDepto)
             Else : Exit Try
             End If
 
@@ -706,8 +722,8 @@ Partial Class Reclamacion
 
 #Region "FILL objects"
 
-    Private Function guardaComentario(ByVal sComentario As String) As Integer
-        Return clsReclamaciones.guardaComentario(Val(lblNoReclamacion.Text), sComentario, Session.Item("usuario"), Session.Item("depto"))
+    Private Function guardaComentario(ByVal sComentario As String, depto As Integer) As Integer
+        Return clsReclamaciones.guardaComentario(Val(lblNoReclamacion.Text), sComentario, Session.Item("usuario"), depto)
     End Function
 
     Private Sub ListaComentarios(ByRef dlist As DataList, ByVal depto As Integer)
@@ -1660,11 +1676,11 @@ Partial Class Reclamacion
 
 
         Try
-            If Not txtSoporteVta.Text = String.Empty Then
-                contacto = txtSoporteVta.Text
-            Else
-                contacto = ddlVendedor.SelectedItem.Text
-            End If
+            'If Not txtSoporteVta.Text = String.Empty Then
+            'contacto = txtSoporteVta.Text
+            'Else
+            contacto = ddlVendedor.SelectedItem.Text
+            'End If
 
             If Not txtContacto.Text = String.Empty Then
                 cliente = txtContacto.Text

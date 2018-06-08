@@ -9,7 +9,7 @@ Partial Class Login
             Dim dtdata As Data.DataTable = clsReclamaciones.validaUsr(txtUsuario.Text.Trim(), Left(FormsAuthentication.HashPasswordForStoringInConfigFile(txtContrasena.Text.Trim(), "md5").Trim(), 35))
 
             If dtdata.Rows.Count > 0 Then
-                Session.Item("usuario") = txtUsuario.Text.Trim()
+                Session.Item("usuario") = dtdata.Rows(0).Item("usuario").ToString().Trim()
 
                 If dtdata.Rows(0).Item("nivel") = 0 Then Session.Item("depto") = 1 Else Session.Item("depto") = dtdata.Rows(0).Item("departamento")
 
