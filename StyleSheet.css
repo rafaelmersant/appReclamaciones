@@ -18,25 +18,24 @@ body
 {
 	font-size: 18px;
 }
-.acHeader
-{
-	background-color:lightslategray;
-	color:white;
-	text-align:left;
-	font-weight:bold;
-	border-color:white;
-	cursor:pointer;
-	font-family: Helvetica;
+
+.acHeader {
+    background-color: #FF2D2D;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    border-color: white;
+    cursor: pointer;
+    font-family: Helvetica;
 }
 
-.acContent
-{
-	background-color:lightSteelBlue;
-	color:black;
-	text-align:left;
-	font-weight:normal;
-	font-family: Helvetica;
-	font-size: 12px;
+.acContent {
+    background-color: lightgray;
+    color: black;
+    text-align: left;
+    font-weight: normal;
+    font-family: Helvetica;
+    font-size: 12px;
 }
 .gridHeader
 {
@@ -46,13 +45,12 @@ body
 	font-weight:bold;
 	font-family: Helvetica;
 }
-.gridItems
-{
-	font-family:Helvetica;
-	font-size:10px;
-	font-style:italic;
-	color:SteelBlue;
-	font-family: Helvetica;
+.gridItems {
+    font-family: Helvetica;
+    font-size: 10px;
+    font-style: italic;
+    color: black;
+    font-family: Helvetica;
 }
 .LetraUsual
 {
@@ -83,12 +81,11 @@ body
 	color: White;
 }
 
-.listItems
-{
-	font-family: Helvetica;
-	font-size: 12px;
-	font-weight: normal;
-	color: Blue;
+.listItems {
+    font-family: Helvetica;
+    font-size: 12px;
+    font-weight: normal;
+    color: black;
 }
 .LetraH1
 {
@@ -118,11 +115,10 @@ body
 	color: darkgray;
 }
 
-.CalendarExtenderFI .ajax__calendar_container 
-{
-	background-color: lemonchiffon;
-	color: darkblue;
-	border: 1px solid #656565;
+.CalendarExtenderFI .ajax__calendar_container {
+    background-color: lemonchiffon;
+    color: #FF2D2D;
+    border: 1px solid #656565;
 }
 
 .CalendarExtenderFI .ajax__calendar_other .ajax__calendar_day,
@@ -148,11 +144,10 @@ body
 	font-weight:bold;
 }
 
-.CalendarExtenderFF .ajax__calendar_container 
-{
-	background-color: lemonchiffon;
-	color:darkblue;
-	border:1px solid #656565;
+.CalendarExtenderFF .ajax__calendar_container {
+    background-color: lemonchiffon;
+    color: #FF2D2D;
+    border: 1px solid #656565;
 }
 
 .CalendarExtenderFF .ajax__calendar_other .ajax__calendar_day,

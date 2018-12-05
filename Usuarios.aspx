@@ -9,38 +9,38 @@
         <asp:Panel ID="Panel1" runat="server" DefaultButton="btnGuardar" Height="310px" Width="321px" BorderColor="SteelBlue" BorderWidth="1px">
             <table style="width: 100%">
                 <tr>
-                    <td align="left" colspan="2" style="background-color: lightsteelblue">
-                        <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Usuario::."></asp:Label></td>
+                    <td align="left" colspan="2" style="background-color: #FF2D2D">
+                        <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="True" Text=".::Usuario::." ForeColor="White"></asp:Label></td>
                 </tr>
                 <tr>
                     <td align="right" style="width: 142px">
                         <asp:Label ID="Label1" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Usuario:"></asp:Label></td>
                     <td align="left">
-                        <asp:TextBox ID="txtUsuario" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
-                            Font-Bold="True" ForeColor="SteelBlue" Width="147px"></asp:TextBox>
+                        <asp:TextBox ID="txtUsuario" runat="server" BorderColor="Black" BorderStyle="Solid"
+                            Font-Bold="True" ForeColor="Black" Width="147px"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtUsuario">*</asp:RequiredFieldValidator></td>
                 </tr>
                 <tr>
                     <td align="right" style="width: 142px">
                         <asp:Label ID="Label2" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Contraseña:"></asp:Label></td>
                     <td align="left">
-                        <asp:TextBox ID="txtContrasena" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
-                            Font-Bold="True" ForeColor="SteelBlue" TextMode="Password" Width="147px"></asp:TextBox>
+                        <asp:TextBox ID="txtContrasena" runat="server" BorderColor="Black" BorderStyle="Solid"
+                            Font-Bold="True" ForeColor="Black" TextMode="Password" Width="147px"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtContrasena">*</asp:RequiredFieldValidator></td>
                 </tr>
                 <tr>
                     <td align="right" style="width: 142px">
                         <asp:Label ID="lbl_idempleado" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Id_Empleado:" Width="105px"></asp:Label></td>
                     <td align="left">
-                        <asp:TextBox ID="txtidEmpleado" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
-                            Font-Bold="True" ForeColor="SteelBlue" Width="147px"></asp:TextBox></td>
+                        <asp:TextBox ID="txtidEmpleado" runat="server" BorderColor="Black" BorderStyle="Solid"
+                            Font-Bold="True" ForeColor="Black" Width="147px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td align="right" style="width: 142px">
                         <asp:Label ID="lblNombre" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Nombre:"></asp:Label></td>
                     <td align="left">
-                        <asp:TextBox ID="txtNombre" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
-                            Font-Bold="True" ForeColor="SteelBlue" Width="147px"></asp:TextBox>
+                        <asp:TextBox ID="txtNombre" runat="server" BorderColor="Black" BorderStyle="Solid"
+                            Font-Bold="True" ForeColor="Black" Width="147px"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtNombre"
                             ErrorMessage="RequiredFieldValidator">*</asp:RequiredFieldValidator></td>
                 </tr>
@@ -61,8 +61,8 @@
                     <td align="right" style="width: 142px">
                         <asp:Label ID="lblCorreo" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Correo:"></asp:Label></td>
                     <td align="left">
-                        <asp:TextBox ID="txtCorreo" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
-                            Font-Bold="True" ForeColor="SteelBlue" Width="147px"></asp:TextBox>
+                        <asp:TextBox ID="txtCorreo" runat="server" BorderColor="Black" BorderStyle="Solid"
+                            Font-Bold="True" ForeColor="Black" Width="147px"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtCorreo">*</asp:RequiredFieldValidator></td>
                 </tr>
                 <tr>
@@ -103,8 +103,8 @@
             <td>
                 <asp:GridView ID="grdUsuarios" runat="server" AutoGenerateColumns="False" CellPadding="4"
                     ForeColor="#333333" GridLines="None" Width="60%" AllowPaging="True" PageSize="30">
-                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                    <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                    <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
                     <Columns>
                         <asp:BoundField DataField="usuario" HeaderText="Usuario">
                             <ItemStyle CssClass="gridItems" Width="15%" />
@@ -147,11 +147,14 @@
                             <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
-                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="LetraUsual" />
-                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <EditRowStyle BackColor="#999999" />
-                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                    <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" CssClass="LetraUsual" />
+                    <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="Navy" />
+                    <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                    <AlternatingRowStyle BackColor="White" />
+                    <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                    <SortedAscendingHeaderStyle BackColor="#4D0000" />
+                    <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                    <SortedDescendingHeaderStyle BackColor="#820000" />
                 </asp:GridView>
             </td>
         </tr>

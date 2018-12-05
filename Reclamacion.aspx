@@ -153,7 +153,7 @@
                             <asp:TextBox ID="txtCorreo" runat="server" CssClass="LetraH2"
                                 TabIndex="1" Width="358px"></asp:TextBox></td>
                         <td>
-                            <asp:Button ID="btnSaveMail" runat="server" BackColor="SteelBlue" BorderColor="LightSlateGray"
+                            <asp:Button ID="btnSaveMail" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                 BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_producto") %>'
                                 CssClass="gridItems" Font-Bold="True" ForeColor="White"
                                 Text="Guardar" Visible="False" /></td>
@@ -189,8 +189,8 @@
                         <td colspan="6">
                             <asp:GridView ID="grdProdReclam" runat="server" AutoGenerateColumns="False" CellPadding="4"
                                 ForeColor="#333333" GridLines="None" Width="100%">
-                                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                                <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                                <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
                                 <Columns>
                                     <asp:BoundField DataField="cod_prod" HeaderText="C&#243;digo">
                                         <HeaderStyle CssClass="LetraH1" Width="6%" HorizontalAlign="Left" />
@@ -224,11 +224,14 @@
                                         <ItemStyle CssClass="gridItems" />
                                     </asp:TemplateField>
                                 </Columns>
-                                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                                <EditRowStyle BackColor="#999999" />
-                                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                                <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
+                                <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="Navy" />
+                                <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                                <AlternatingRowStyle BackColor="White" />
+                                <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                                <SortedAscendingHeaderStyle BackColor="#4D0000" />
+                                <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                                <SortedDescendingHeaderStyle BackColor="#820000" />
                             </asp:GridView>
                         </td>
                     </tr>
@@ -274,7 +277,7 @@
                                 <td rowspan="2" valign="top">
                                     <asp:ListBox ID="lbUsuarios" runat="server" CssClass="listItems" Rows="10" Width="100%" SelectionMode="Multiple"></asp:ListBox></td>
                                 <td align="center">
-                                    <asp:Button ID="btnAgregarUsr" runat="server" Text=">>" BackColor="SteelBlue" BorderColor="Gray" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="62px" /></td>
+                                    <asp:Button ID="btnAgregarUsr" runat="server" Text=">>" BackColor="#FF2D2D" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="62px" /></td>
                                 <td rowspan="2" valign="top">
                                     <asp:ListBox ID="lbUsrInvolucrados" runat="server" CssClass="listItems" Rows="10" Width="100%" SelectionMode="Multiple"></asp:ListBox></td>
                                 <td rowspan="2"></td>
@@ -285,7 +288,7 @@
 
                             <tr>
                                 <td align="center">
-                                    <asp:Button ID="btnQuitarUsr" runat="server" Text="<<" BackColor="SteelBlue" BorderColor="Gray" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="62px" /></td>
+                                    <asp:Button ID="btnQuitarUsr" runat="server" Text="<<" BackColor="#FF2D2D" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="62px" /></td>
                             </tr>
                             <tr>
                                 <td style="height: 5px" colspan="5"></td>
@@ -295,7 +298,7 @@
                     </ContentTemplate>
 
                 </asp:UpdatePanel>
-                <asp:Button ID="btnInvolucrar" runat="server" Text="Involucrar" BackColor="SteelBlue" BorderColor="Gray" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="96px" Visible="False" />
+                <asp:Button ID="btnInvolucrar" runat="server" Text="Involucrar" BackColor="#FF2D2D" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="96px" Visible="False" />
                 <asp:Label ID="lblInvolucradosMsg" runat="server" Font-Bold="True" Font-Italic="True"
                     ForeColor="#0000C0" Visible="False" Font-Names="Verdana" Font-Size="10px"></asp:Label></td>
         </tr>
@@ -307,7 +310,7 @@
         <tr>
             <td colspan="3" valign="top">
                 <asp:TextBox ID="txtDescripcion" runat="server" Height="80px" TextMode="MultiLine" Width="99%" CssClass="headerSimples" ForeColor="Black"></asp:TextBox>
-                <asp:Button ID="btnGDescrp" runat="server" Text="Guardar Descripción" BackColor="SteelBlue" BorderColor="Gray" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="155px" Visible="False" />
+                <asp:Button ID="btnGDescrp" runat="server" Text="Guardar Descripción" BackColor="#FF2D2D" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="155px" Visible="False" />
         </tr>
         <tr>
             <td colspan="3">
@@ -685,7 +688,7 @@
         </tr>
         <tr>
             <td colspan="3" align="left">
-                <asp:Label ID="lblConclusion" runat="server" BackColor="SteelBlue" Font-Bold="True" ForeColor="White"
+                <asp:Label ID="lblConclusion" runat="server" BackColor="#FF2D2D" Font-Bold="True" ForeColor="White"
                     Text="::Conclusión" Width="100%" CssClass="headerSimples" Height="17px"></asp:Label></td>
         </tr>
         <tr>
@@ -758,8 +761,8 @@
 
         <tr>
             <td align="right" colspan="3">
-                <asp:Button ID="btnGuardar" runat="server" Text="Guardar" BackColor="SteelBlue" BorderColor="Gray" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="96px" />
-                <asp:Button ID="btnCerrar" runat="server" Text="Cerrar Reclamación" BackColor="SteelBlue" BorderColor="Gray" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Visible="False" Width="138px" /></td>
+                <asp:Button ID="btnGuardar" runat="server" Text="Guardar" BackColor="#FF2D2D" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="96px" Height="36px" />
+                <asp:Button ID="btnCerrar" runat="server" Text="Cerrar Reclamación" BackColor="#FF2D2D" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Visible="False" Width="138px" Height="36px" /></td>
         </tr>
         <tr>
             <td>

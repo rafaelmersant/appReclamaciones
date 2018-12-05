@@ -21,8 +21,8 @@
                             <td align="right">
                                 <asp:Label ID="Label1" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Motivo"></asp:Label></td>
                             <td align="left">
-                                <asp:TextBox ID="txtMotivo" runat="server" BorderColor="SteelBlue" BorderStyle="Solid"
-                                    Font-Bold="True" ForeColor="SteelBlue" Width="236px"></asp:TextBox>
+                                <asp:TextBox ID="txtMotivo" runat="server" BorderColor="Black" BorderStyle="Solid"
+                                    Font-Bold="True" ForeColor="Black" Width="236px"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtMotivo"
                                     ErrorMessage="RequiredFieldValidator">*</asp:RequiredFieldValidator></td>
                         </tr>
@@ -48,8 +48,8 @@
             <td>
                 <asp:GridView ID="grdMotivos" runat="server" AutoGenerateColumns="False" CellPadding="4"
                     ForeColor="#333333" GridLines="None" Width="40%" PageSize="20">
-                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                    <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                    <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
                     <Columns>
                         <asp:BoundField HeaderText="Motivo" DataField="descripcion">
                             <HeaderStyle HorizontalAlign="Left" />
@@ -73,11 +73,14 @@
                             <ItemStyle Width="7%" HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
-                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <EditRowStyle BackColor="#999999" />
-                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                    <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
+                    <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="Navy" />
+                    <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                    <AlternatingRowStyle BackColor="White" />
+                    <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                    <SortedAscendingHeaderStyle BackColor="#4D0000" />
+                    <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                    <SortedDescendingHeaderStyle BackColor="#820000" />
                 </asp:GridView>
             </td>
         </tr>

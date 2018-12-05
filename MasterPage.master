@@ -14,14 +14,14 @@
 <body style="background-color: lightgray">
     <form id="form1" runat="server">
 
-        <div style="display: block;">
+        <div>
 
             <asp:ScriptManager ID="ScriptMAjax" runat="server">
             </asp:ScriptManager>
 
-            <table width="80%">
+            <table style="width: 80%; margin: 0 auto;">
                 <tr>
-                    <td align="right" style="background-color: white; background-image: url(Images/TermoEnvasesLogo.png); background-repeat: no-repeat; height: 57px" valign="bottom">
+                    <td align="right" style="background-color: white; background-image: url(Images/radiocentrosaslogoL.jpeg); background-repeat: no-repeat; height: 57px" valign="bottom">
                         <table style="width: 30%">
                             <tr>
                                 <td align="right">
@@ -41,11 +41,11 @@
                             Font-Size="10px"></asp:Label></td>
                 </tr>
                 <tr>
-                    <td style="background: steelBlue; color: white; font-weight: bold; text-align: left; margin: 0; padding: 0.3em">::Reclamaciones de Clientes</td>
+                    <td style="background: #FF2D2D; color: white; font-weight: bold; text-align: left; margin: 0; padding: 0.3em">::Reclamaciones de Clientes</td>
                 </tr>
             </table>
 
-            <table style="width: 80%; background-color: White">
+            <table style="width: 80%; margin: 0 auto; background-color: white">
                 <tr>
                     <td align="left" valign="top" style="border-right: #3e6677 thin dotted; border-top: #3e6677 thin dotted; border-left: #3e6677 thin dotted; border-bottom: #3e6677 thin dotted">
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

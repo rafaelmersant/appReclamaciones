@@ -285,8 +285,8 @@
                     Visible="False" Width="100%">No existen reclamaciones con los parámetros especificados.</asp:Label></td>
         </tr>
         <tr>
-            <td>
-                <asp:Button ID="btnNuevaRecl" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+            <td style="height: 38px">
+                <asp:Button ID="btnNuevaRecl" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                     PostBackUrl="~/Reclamacion.aspx" Text="Nueva Reclamación" Width="146px" Visible="False" Height="34px" />
                 <asp:Image ID="imgUtil" runat="server" Height="1px" ImageUrl="~/Images/LineaG.gif"
