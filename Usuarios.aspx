@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <td align="right" style="width: 142px">
-                        <asp:Label ID="lbl_idempleado" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Id_Empleado:" Width="105px"></asp:Label></td>
+                        <asp:Label ID="lbl_idempleado" runat="server" CssClass="letraUsual" Font-Bold="True" Text="Id Empleado:" Width="105px"></asp:Label></td>
                     <td align="left">
                         <asp:TextBox ID="txtidEmpleado" runat="server" BorderColor="Black" BorderStyle="Solid"
                             Font-Bold="True" ForeColor="Black" Width="147px"></asp:TextBox></td>

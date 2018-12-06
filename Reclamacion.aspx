@@ -169,21 +169,28 @@
         </tr>
         <tr>
             <td colspan="3">
-                <table style="width: 75%">
+                <table style="width: 65%">
                     <tr>
                         <td>
-                            <asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Names="Verdana"
-                                Text="Cod. Producto" Width="80px" CssClass="LetraH1"></asp:Label></td>
-                        <td>
-                            <asp:TextBox ID="txtCodProd" runat="server" Height="11px" TabIndex="1" Width="45px" CssClass="LetraH2"></asp:TextBox></td>
-                        <td>
-                            <asp:ImageButton ID="btnBProd" runat="server" ImageUrl="~/Images/search.png" /></td>
-                        <td>
-                            <asp:TextBox ID="txtNameProducto" runat="server" Height="11px" ReadOnly="True" TabIndex="3" Width="213px" CssClass="LetraH2"></asp:TextBox></td>
-                        <td>
-                            <asp:ImageButton ID="imgbtnSaveProd" runat="server" ImageUrl="~/Images/Save.png" ToolTip="Agregar" /></td>
-                        <td>
-                            <asp:ImageButton ID="imgbtnRefresh" runat="server" ImageUrl="~/Images/refresh.png" ToolTip="Refrescar" Visible="False" /></td>
+                            <table>
+                                <tr>
+                                    <td><asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Names="Verdana"
+                                Text="Cod. Producto" Width="80px" CssClass="LetraH1"></asp:Label> </td>
+                                    <td>
+                                        <asp:TextBox ID="txtCodProd" runat="server" Height="11px" TabIndex="1" Width="69px" CssClass="LetraH2"></asp:TextBox></td>
+                                    <td>
+                                        <asp:ImageButton ID="btnBProd" runat="server" ImageUrl="~/Images/search.png" /></td>
+                                    <td>
+                                        <asp:TextBox ID="txtNameProducto" runat="server" Height="11px" ReadOnly="True" TabIndex="3" Width="213px" CssClass="LetraH2"></asp:TextBox></td>
+                                    <td>
+                                        <asp:ImageButton ID="imgbtnSaveProd" runat="server" ImageUrl="~/Images/Save.png" ToolTip="Agregar" /></td>
+                                    <td>
+                                        <asp:ImageButton ID="imgbtnRefresh" runat="server" ImageUrl="~/Images/refresh.png" ToolTip="Refrescar" Visible="False" /></td>
+                                </tr>
+                            </table>
+
+                        </td>
+                        
                     </tr>
                     <tr>
                         <td colspan="6">
@@ -196,7 +203,7 @@
                                         <HeaderStyle CssClass="LetraH1" Width="6%" HorizontalAlign="Left" />
                                         <ItemStyle CssClass="gridItems" Width="6%" />
                                     </asp:BoundField>
-                                    <asp:BoundField DataField="producto" HeaderText="Producto">
+                                    <asp:BoundField DataField="descripcion" HeaderText="Producto">
                                     <HeaderStyle CssClass="LetraH1" HorizontalAlign="Left" Width="35%" />
                                     <ItemStyle CssClass="gridItems" Width="35%" />
                                     </asp:BoundField>
@@ -362,10 +369,10 @@
                                                 <asp:Panel ID="pnComentarioV" runat="server" EnableViewState="true" Width="100%">
                                                     <asp:TextBox ID="txtComentarioV" runat="server" EnableViewState="true" Height="46px"
                                                         TextMode="MultiLine" Visible="false" Width="99%"></asp:TextBox>
-                                                    <asp:Button ID="btnGuardaV" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnGuardaV" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         Text="Guardar" Visible="false" Width="86px" />
-                                                    <asp:Button ID="btnCancelarV" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnCancelarV" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         OnClick="btnCancelarV_Click" Text="Cancelar" Visible="false" Width="86px" />
                                                 </asp:Panel>
@@ -381,13 +388,13 @@
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileV" runat="server" CssClass="LetraFiles" Visible="False"
                                                     Width="522px" />
-                                                <asp:Button ID="btnAgregarFileV" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnAgregarFileV" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                     Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
                                                 <asp:Literal ID="LiteralFileV" runat="server" Visible="False"></asp:Literal>
-                                                <asp:Button ID="btnEliminarAdjV" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnEliminarAdjV" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="104px" /></td>
+                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="112px" /></td>
                                         </tr>
                                     </table>
                                 </asp:Panel>
@@ -434,10 +441,10 @@
                                                 <asp:Panel ID="Panel2" runat="server" Width="100%">
                                                     <asp:TextBox ID="txtComentarioP" runat="server" Height="46px" TextMode="MultiLine"
                                                         Visible="false" Width="99%"></asp:TextBox>
-                                                    <asp:Button ID="btnGuardaP" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnGuardaP" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         Text="Guardar" Visible="false" Width="86px" />
-                                                    <asp:Button ID="btnCancelarP" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnCancelarP" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         OnClick="btnCancelarP_Click" Text="Cancelar" Visible="false" Width="86px" />
                                                 </asp:Panel>
@@ -453,13 +460,13 @@
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileP" runat="server" CssClass="LetraFiles" Visible="False"
                                                     Width="522px" />
-                                                <asp:Button ID="btnAgregarFileP" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnAgregarFileP" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                     Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
                                                 <asp:Literal ID="LiteralFileP" runat="server" Visible="False"></asp:Literal>
-                                                <asp:Button ID="btnEliminarAdjP" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnEliminarAdjP" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="104px" /></td>
+                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="112px" /></td>
                                         </tr>
                                     </table>
                                 </asp:Panel>
@@ -506,10 +513,10 @@
                                                 <asp:Panel ID="Panel3" runat="server" Width="100%">
                                                     <asp:TextBox ID="txtComentarioL" runat="server" Height="46px" TextMode="MultiLine"
                                                         Visible="false" Width="99%"></asp:TextBox>
-                                                    <asp:Button ID="btnGuardaL" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnGuardaL" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         Text="Guardar" Visible="false" Width="86px" />
-                                                    <asp:Button ID="btnCancelarL" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnCancelarL" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         OnClick="btnCancelarL_Click" Text="Cancelar" Visible="false" Width="86px" />
                                                 </asp:Panel>
@@ -525,13 +532,13 @@
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileL" runat="server" CssClass="LetraFiles" Visible="False"
                                                     Width="522px" />
-                                                <asp:Button ID="btnAgregarFileL" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnAgregarFileL" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                     Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
                                                 <asp:Literal ID="LiteralFileL" runat="server" Visible="False"></asp:Literal>
-                                                <asp:Button ID="btnEliminarAdjL" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnEliminarAdjL" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="104px" /></td>
+                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="112px" /></td>
                                         </tr>
                                     </table>
                                 </asp:Panel>
@@ -577,10 +584,10 @@
                                                 <asp:Panel ID="Panel4" runat="server" Width="100%">
                                                     <asp:TextBox ID="txtComentarioF" runat="server" Height="46px" TextMode="MultiLine"
                                                         Visible="false" Width="99%"></asp:TextBox>
-                                                    <asp:Button ID="btnGuardaF" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnGuardaF" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         Text="Guardar" Visible="false" Width="86px" />
-                                                    <asp:Button ID="btnCancelarF" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnCancelarF" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         OnClick="btnCancelarF_Click" Text="Cancelar" Visible="false" Width="86px" />
                                                 </asp:Panel>
@@ -596,13 +603,13 @@
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileF" runat="server" CssClass="LetraFiles" Visible="False"
                                                     Width="522px" />
-                                                <asp:Button ID="btnAgregarFileF" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnAgregarFileF" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                     Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
                                                 <asp:Literal ID="LiteralFileF" runat="server" Visible="False"></asp:Literal>
-                                                <asp:Button ID="btnEliminarAdjF" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnEliminarAdjF" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="104px" /></td>
+                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="112px" /></td>
                                         </tr>
                                     </table>
                                 </asp:Panel>
@@ -649,10 +656,10 @@
                                                 <asp:Panel ID="Panel5" runat="server" Width="100%">
                                                     <asp:TextBox ID="txtComentarioC" runat="server" Height="46px" TextMode="MultiLine"
                                                         Visible="false" Width="99%"></asp:TextBox>
-                                                    <asp:Button ID="btnGuardaC" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnGuardaC" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         Text="Guardar" Visible="false" Width="86px" />
-                                                    <asp:Button ID="btnCancelarC" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                    <asp:Button ID="btnCancelarC" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                         BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                         OnClick="btnCancelarC_Click" Text="Cancelar" Visible="false" Width="86px" />
                                                 </asp:Panel>
@@ -668,13 +675,13 @@
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileC" runat="server" CssClass="LetraFiles" Visible="False"
                                                     Width="522px" />
-                                                <asp:Button ID="btnAgregarFileC" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnAgregarFileC" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
                                                     Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
                                                 <asp:Literal ID="LiteralFileC" runat="server" Visible="False"></asp:Literal>
-                                                <asp:Button ID="btnEliminarAdjC" runat="server" BackColor="SteelBlue" BorderColor="Gray"
+                                                <asp:Button ID="btnEliminarAdjC" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="104px" /></td>
+                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="112px" /></td>
                                         </tr>
                                     </table>
                                 </asp:Panel>

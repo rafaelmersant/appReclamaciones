@@ -853,10 +853,11 @@ Partial Class Reclamacion
         txtTipoPedido.Text = String.Empty
 
         Dim datos As DataTable = clsReclamaciones.getPedidoERP(txtPedido.Text, lblNoReclamacion.Text)
+        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("PDVENFACTU"))
 
         If datos.Rows.Count > 0 Then
-            ddlVendedor.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreVendedor")), Trim(datos.Rows(0).Item("codVendedor"))))
-            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreCliente")), Trim(datos.Rows(0).Item("codCliente"))))
+            ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("PDVENFACTU"))))
+            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("PDNOMBRECL")), Trim(datos.Rows(0).Item("PDNUMCLIEN"))))
 
             'txtTipoPedido.Text = Trim(datos(6))
 
@@ -876,11 +877,12 @@ Partial Class Reclamacion
 
         txtTipoPedido.Text = String.Empty
 
-        Dim datos As DataTable = clsReclamaciones.getFactura(txtPedido.Text, lblNoReclamacion.Text)
+        Dim datos As DataTable = clsReclamaciones.getFacturaERP(txtPedido.Text, lblNoReclamacion.Text)
+        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("MFVENFACTU"))
 
         If datos.Rows.Count > 0 Then
-            ddlVendedor.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreVendedor")), Trim(datos.Rows(0).Item("codVendedor"))))
-            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreCliente")), Trim(datos.Rows(0).Item("codCliente"))))
+            ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("MFVENFACTU"))))
+            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("MFNOMBRECL")), Trim(datos.Rows(0).Item("MFNUMCLIEN"))))
 
             'If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
             lblMensaje.Text = String.Empty

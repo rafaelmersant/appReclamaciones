@@ -45,7 +45,7 @@ Partial Class Login
     Protected Sub btnEntrar0_Click(sender As Object, e As EventArgs) Handles btnEntrar0.Click
         Try
             Dim oconn = New System.Data.Odbc.OdbcConnection(TextBox1.Text)
-            Dim ocmd = New System.Data.Odbc.OdbcCommand("select count(0) from tb_Reclamaciones", oconn)
+            Dim ocmd = New System.Data.Odbc.OdbcCommand(TextBox2.Text, oconn)
 
             ocmd.CommandType = Data.CommandType.Text
             ocmd.Connection.Open()

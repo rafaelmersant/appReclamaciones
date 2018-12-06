@@ -787,18 +787,29 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Sub
 
-    Public Shared Function getFactura(ByVal pFact As String, ByVal idReclamacion As Integer) As Data.DataTable
-        Dim param1 As New OdbcParameter("@factura", pFact)
-        Dim param2 As New OdbcParameter("@factura", pFact)
+    Public Shared Function getVendedorNombreERP(ByVal codVendedor As String) As String
+
+        Dim sQueryVendedor As String = "SELECT * FROM Z_RCFAVD00_VENDEDORES WHERE VECOEM = " & codVendedor
+
+        Dim Vendedor As DataTable = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryVendedor).Tables(0)
+        Dim VendedorNombre = Vendedor.Rows(0).Item("VENOMB")
+
+        Return VendedorNombre
+
+    End Function
+
+    Public Shared Function getFacturaERP(ByVal pFact As String, ByVal idReclamacion As Integer) As Data.DataTable
         Dim DataFactura As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
-        DataFactura = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getDatosFacturaAX (?)}", {param1}).Tables(0)
+        Dim sQueryFactura As String = "SELECT * FROM Z_RCFAMF00_FACH WHERE MFNUMFACT = " & pFact
+        Dim sQueryProductos As String = "SELECT c1, c2 as CodProducto FROM Z_XXXXX_FACD WHERE c1 =" & pFact
 
-        DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getProductosByFacturaAX (?)}", {param2}).Tables(0)
+        DataFactura = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryFactura).Tables(0)
+        DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryProductos).Tables(0)
 
         For Each product As DataRow In DataProductos.Rows
-            adProductoRecl(idReclamacion, product.Item("codProducto"))
+            adProductoRecl(idReclamacion, product.Item("CodProducto"))
         Next
 
         'Parameters:
@@ -814,17 +825,17 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     End Function
 
     Public Shared Function getPedidoERP(ByVal pPed As String, ByVal idReclamacion As Integer) As Data.DataTable
-        Dim param1 As New OdbcParameter("@pedido", pPed)
-        Dim param2 As New OdbcParameter("@pedido", pPed)
         Dim DataPedido As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
-        DataPedido = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getDatosPedidoAX (?)}", {param1}).Tables(0)
+        Dim sQueryPedido As String = "SELECT * FROM Z_RCPDMP00_PEDH WHERE PDNUMPEDI = " & pPed
+        Dim sQueryProductos As String = "SELECT MMNUMPEDI, MMNUMARTIC as CodProducto FROM Z_RCPDMM00_PEDD WHERE MMNUMPEDI =" & pPed
 
-        DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, "{call sp_getProductosByPedidoAX (?)}", {param2}).Tables(0)
+        DataPedido = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryPedido).Tables(0)
+        DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryProductos).Tables(0)
 
         For Each product As DataRow In DataProductos.Rows
-            adProductoRecl(idReclamacion, product.Item("codProducto"))
+            adProductoRecl(idReclamacion, product.Item("CodProducto"))
         Next
 
         'Parameters:

@@ -49,13 +49,14 @@
             Color="#FF2D2D" Radius="6" TargetControlID="Panel1">
         </cc1:RoundedCornersExtender>
         &nbsp;<br />
-        <asp:TextBox ID="TextBox1" runat="server" Width="464px" Visible="False"></asp:TextBox>
+        <asp:TextBox ID="TextBox1" runat="server" Width="464px"></asp:TextBox>
                     <asp:Button ID="btnEntrar0" runat="server" BackColor="steelblue" BorderColor="LightSlateGray"
-                        BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Probar ODBC" Width="114px" Visible="False" />
+                        BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Probar ODBC" Width="114px" />
         <br />
-                    <asp:Label ID="Label4" runat="server" Font-Bold="True" Text="Reclamaciones: @total" CssClass="letraUsual" Visible="False"></asp:Label>
+                    <asp:Label ID="Label4" runat="server" Font-Bold="True" Text="Reclamaciones: @total" CssClass="letraUsual"></asp:Label>
         <br />
         <br />
+        <asp:TextBox ID="TextBox2" runat="server" Width="464px"></asp:TextBox>
         </div>
 </asp:Content>
 
