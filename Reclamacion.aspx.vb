@@ -136,7 +136,9 @@ Partial Class Reclamacion
             btnAgregarL.Visible = False
             btnAgregarF.Visible = False
             btnAgregarC.Visible = False
-           
+
+            btnAgregarMotivoFast.Visible = False
+
             txtCerradaFecha.Visible = True
             lblCerrada.Visible = True
 
@@ -166,7 +168,8 @@ Partial Class Reclamacion
                 Throw New Exception("Debe seleccionar el tipo de documento: RECLAMACION o DEVOLUCION.")
             End If
 
-            If txtDescripcion.Text.Trim() = String.Empty Then lblMensaje.Text = "debe especificar la descripcion" : Exit Try
+            If txtPedido.Text.Trim() = String.Empty Then lblMensaje.Text = "Debe digitar una factura/pedido." : Exit Try
+            If txtDescripcion.Text.Trim() = String.Empty Then lblMensaje.Text = "Debe especificar la descripción de la reclamación" : Exit Try
             If lbUsrInvolucrados.Items.Count < 1 Then lblMensaje.Text = "debe incluir por lo menos un usuario en la reclamación" : Exit Try
 
             clsReclamaciones.guardaReclamacion(Pedido, _
@@ -441,7 +444,7 @@ Partial Class Reclamacion
 
             'Si existen archivos para adjuntar
             If arrFiles.Count > 0 Then
-                AgregarFile(intComentario)
+                AgregarFile(intComentario, iVentasDepto)
                 CleanVentas()
             End If
 
@@ -504,7 +507,7 @@ Partial Class Reclamacion
 
             'Si existen archivos para adjuntar
             If arrFiles.Count > 0 Then
-                AgregarFile(intComentario)
+                AgregarFile(intComentario, iPRODDepto)
                 CleanProduccion()
             End If
 
@@ -567,7 +570,7 @@ Partial Class Reclamacion
 
             'Si existen archivos para adjuntar
             If arrFiles.Count > 0 Then
-                AgregarFile(intComentario)
+                AgregarFile(intComentario, iLogisticaDepto)
                 CleanLogistica()
             End If
 
@@ -630,7 +633,7 @@ Partial Class Reclamacion
 
             'Si existen archivos para adjuntar
             If arrFiles.Count > 0 Then
-                AgregarFile(intComentario)
+                AgregarFile(intComentario, iFinanzasDepto)
                 CleanFinanzas()
             End If
 
@@ -693,7 +696,7 @@ Partial Class Reclamacion
 
             'Si existen archivos para adjuntar
             If arrFiles.Count > 0 Then
-                AgregarFile(intComentario)
+                AgregarFile(intComentario, iCalidadDepto)
                 CleanCalidad()
             End If
 
@@ -735,7 +738,6 @@ Partial Class Reclamacion
     End Sub
 
     Private Sub fillAreas()
-        'Dim noProcede As New ListItem("NINGUNA", "0")
 
         Dim dtDatos As DataTable = clsReclamaciones.getAreas()
         ddlAreas.DataSource = dtDatos
@@ -743,7 +745,8 @@ Partial Class Reclamacion
         ddlAreas.DataValueField = "id_area"
         ddlAreas.DataBind()
 
-        'ddlAreas.Items.Insert(0, noProcede)
+        ddlAreas.Items.Insert(0, New ListItem("Seleccionar area...", "0"))
+
     End Sub
 
     Private Sub fillMotivos()
@@ -752,6 +755,8 @@ Partial Class Reclamacion
         ddlMotivos.DataTextField = "descripcion"
         ddlMotivos.DataValueField = "id_motivo"
         ddlMotivos.DataBind()
+
+        ddlMotivos.Items.Insert(0, New ListItem("Seleccionar motivo...", "0"))
 
     End Sub
 
@@ -926,6 +931,7 @@ Partial Class Reclamacion
             ddlAreas.Visible = True
             lblMotivo.Visible = True
             ddlMotivos.Visible = True
+            btnAgregarMotivoFast.Visible = True
 
             lblMonto.Visible = True
             txtMonto.Visible = True
@@ -1029,6 +1035,7 @@ Partial Class Reclamacion
                 If dtDatos.Rows(0).Item("motivo") Is DBNull.Value Then
                     lblMotivo.Visible = False
                     ddlMotivos.Visible = False
+                    btnAgregarMotivoFast.Visible = False
                 Else
                     ddlMotivos.SelectedValue = dtDatos.Rows(0).Item("motivo")
                 End If
@@ -1087,6 +1094,7 @@ Partial Class Reclamacion
 
                 lblMotivo.Visible = True
                 ddlMotivos.Visible = True
+                btnAgregarMotivoFast.Visible = True
 
                 lblArea.Visible = True
                 ddlAreas.Visible = True
@@ -1157,6 +1165,7 @@ Partial Class Reclamacion
             ddlAreas.Visible = False
             lblMotivo.Visible = False
             ddlMotivos.Visible = False
+            btnAgregarMotivoFast.Visible = False
 
             lblMonto.Visible = False
             txtMonto.Visible = False
@@ -1309,7 +1318,9 @@ Partial Class Reclamacion
     Protected Sub dlVentas_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataListItemEventArgs) Handles dlVentas.ItemDataBound
 
         Dim dtArchivos As New DataTable
-        dtArchivos = clsReclamaciones.getArchivos(1, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
+        Dim deptoVentas As Integer = Integer.Parse(ConfigurationManager.AppSettings.Get("deptoVENTAS"))
+
+        dtArchivos = clsReclamaciones.getArchivos(deptoVentas, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
 
         If dtArchivos.Rows.Count > 0 Then
             CType(e.Item.FindControl("lFiles"), Literal).Text = "<div Class=""LetraFiles""><b>Adjuntos:</b>"
@@ -1348,7 +1359,9 @@ Partial Class Reclamacion
     Protected Sub dlProduccion_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataListItemEventArgs) Handles dlProduccion.ItemDataBound
 
         Dim dtArchivos As New DataTable
-        dtArchivos = clsReclamaciones.getArchivos(2, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
+        Dim deptoProd As Integer = Integer.Parse(ConfigurationManager.AppSettings.Get("deptoPRODUCCION"))
+
+        dtArchivos = clsReclamaciones.getArchivos(deptoProd, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
 
         If dtArchivos.Rows.Count > 0 Then
             CType(e.Item.FindControl("lFilesP"), Literal).Text = "<div Class=""LetraFiles""><b>Adjuntos:</b>"
@@ -1386,7 +1399,9 @@ Partial Class Reclamacion
     Protected Sub dlLogistica_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataListItemEventArgs) Handles dlLogistica.ItemDataBound
 
         Dim dtArchivos As New DataTable
-        dtArchivos = clsReclamaciones.getArchivos(3, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
+        Dim deptoLogistica As Integer = Integer.Parse(ConfigurationManager.AppSettings.Get("deptoLOGISTICA"))
+
+        dtArchivos = clsReclamaciones.getArchivos(deptoLogistica, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
 
         If dtArchivos.Rows.Count > 0 Then
             CType(e.Item.FindControl("lFilesL"), Literal).Text = "<div Class=""LetraFiles""><b>Adjuntos:</b>"
@@ -1424,7 +1439,9 @@ Partial Class Reclamacion
     Protected Sub dlFinanzas_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataListItemEventArgs) Handles dlFinanzas.ItemDataBound
 
         Dim dtArchivos As New DataTable
-        dtArchivos = clsReclamaciones.getArchivos(4, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
+        Dim deptoFinanzas As Integer = Integer.Parse(ConfigurationManager.AppSettings.Get("deptoFINANZAS"))
+
+        dtArchivos = clsReclamaciones.getArchivos(deptoFinanzas, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
 
         If dtArchivos.Rows.Count > 0 Then
             CType(e.Item.FindControl("lFilesF"), Literal).Text = "<div Class=""LetraFiles""><b>Adjuntos:</b>"
@@ -1462,7 +1479,9 @@ Partial Class Reclamacion
     Protected Sub dlCalidad_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataListItemEventArgs) Handles dlCalidad.ItemDataBound
 
         Dim dtArchivos As New DataTable
-        dtArchivos = clsReclamaciones.getArchivos(5, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
+        Dim deptoCalidad As Integer = Integer.Parse(ConfigurationManager.AppSettings.Get("deptoCALIDAD"))
+
+        dtArchivos = clsReclamaciones.getArchivos(deptoCalidad, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
 
         If dtArchivos.Rows.Count > 0 Then
             CType(e.Item.FindControl("lFilesC"), Literal).Text = "<div Class=""LetraFiles""><b>Adjuntos:</b>"
@@ -1511,10 +1530,10 @@ Partial Class Reclamacion
         Next
     End Sub
 
-    Private Sub AgregarFile(ByVal icomentario As Integer)
+    Private Sub AgregarFile(ByVal icomentario As Integer, depto As Integer)
 
         For i As Integer = 0 To arrFiles.Count - 1
-            clsReclamaciones.setArchivo(arrFiles(i), Path.GetFileName(arrFiles(i)), Integer.Parse(Session.Item("depto")), _
+            clsReclamaciones.setArchivo(arrFiles(i), Path.GetFileName(arrFiles(i)), depto,
             Val(lblNoReclamacion.Text), icomentario)
         Next
 
@@ -1749,8 +1768,13 @@ Partial Class Reclamacion
         Dim obj As ImageButton = sender
 
         Try
-            clsReclamaciones.delProducto(Integer.Parse(obj.CommandArgument))
-            fillProductos(Val(lblNoReclamacion.Text))
+            If grdProdReclam.Rows.Count > 1 Then
+                clsReclamaciones.delProducto(Integer.Parse(obj.CommandArgument))
+                fillProductos(Val(lblNoReclamacion.Text))
+
+            Else
+                Throw New Exception("Debe al menos tener un producto en la reclamación.")
+            End If
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
@@ -1772,6 +1796,27 @@ Partial Class Reclamacion
                 End If
             Next
 
+        Catch ex As Exception
+            lblMensaje.Text = ex.Message
+        End Try
+    End Sub
+    Protected Sub btnAgregarMotivoFast_Click(sender As Object, e As EventArgs) Handles btnAgregarMotivoFast.Click
+
+        txtMotivoFast.Visible = True
+        btnGuardarMotivoFast.Visible = True
+        btnAgregarMotivoFast.Visible = False
+
+    End Sub
+    Protected Sub btnGuardarMotivoFast_Click(sender As Object, e As EventArgs) Handles btnGuardarMotivoFast.Click
+        Try
+            clsReclamaciones.insertMotivo(txtMotivoFast.Text.Trim(), "0")
+
+            fillMotivos()
+
+            btnGuardarMotivoFast.Visible = False
+            txtMotivoFast.Visible = False
+
+            ddlMotivos.SelectedItem.Text = txtMotivoFast.Text
         Catch ex As Exception
             lblMensaje.Text = ex.Message
         End Try

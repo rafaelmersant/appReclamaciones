@@ -72,4 +72,18 @@ Partial Class AdministrarReclam
             lblMensaje.Text = ex.Message
         End Try
     End Sub
+
+    Protected Sub btnAbrirRecl_Click(sender As Object, e As EventArgs)
+
+        Dim obj As Button = sender
+
+        Try
+            clsReclamaciones.abrirReclamacion(Integer.Parse(obj.CommandArgument))
+            fillRecl()
+
+        Catch ex As Exception
+            lblMensaje.Text = ex.Message
+        End Try
+
+    End Sub
 End Class

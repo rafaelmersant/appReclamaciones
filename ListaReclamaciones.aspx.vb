@@ -52,29 +52,29 @@ Partial Class ListaReclamaciones
         clsReclamaciones.TieButton(Page, txtDescrp, imgbtnBDescrp)
         clsReclamaciones.TieButton(Page, txtCliente, imgbtnBCliente)
 
-        imgUtil.Attributes.Add("onload", "porfecha.style.display='none';pordescrp.style.display='none'; pornumero.style.display='none';porcliente.style.display='none';" & _
-        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Fecha') {porfecha.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Numero') {pornumero.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Cliente') {porcliente.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Motivo') {pormotivo.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Area') {porarea.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Factura') {porfactura.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Descripcion') {pordescrp.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Chofer') {porchofer.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Transportista') {portransportista.style.display='';}")
+        imgUtil.Attributes.Add("onload", "porfecha.style.display='none';pordescrp.style.display='none'; pornumero.style.display='none';porcliente.style.display='none';" &
+        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Fecha') {porfecha.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Numero') {pornumero.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Cliente') {porcliente.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Motivo') {pormotivo.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Area') {porarea.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Factura') {porfactura.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Descripcion') {pordescrp.style.display='';}")
+        '"if(" & ddlBuscaPor.UniqueID & ".value == 'Chofer') {porchofer.style.display='';}" & _
+        '"if(" & ddlBuscaPor.UniqueID & ".value == 'Transportista') {portransportista.style.display='';}")
 
-        ddlBuscaPor.Attributes.Add("onchange", "porfecha.style.display='none';pordescrp.style.display='none'; pornumero.style.display='none';porcliente.style.display='none';" & _
-        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Fecha') {porfecha.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Numero') {pornumero.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Cliente') {porcliente.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Motivo') {pormotivo.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Area') {porarea.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Factura') {porfactura.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Descripcion') {pordescrp.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Chofer') {porchofer.style.display='';}" & _
-          "if(" & ddlBuscaPor.UniqueID & ".value == 'Transportista') {portransportista.style.display='';}")
+        ddlBuscaPor.Attributes.Add("onchange", "porfecha.style.display='none';pordescrp.style.display='none'; pornumero.style.display='none';porcliente.style.display='none';" &
+        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Fecha') {porfecha.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Numero') {pornumero.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Cliente') {porcliente.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Motivo') {pormotivo.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Area') {porarea.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Factura') {porfactura.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Descripcion') {pordescrp.style.display='';}")
+        '"if(" & ddlBuscaPor.UniqueID & ".value == 'Chofer') {porchofer.style.display='';}" & _
+        '"if(" & ddlBuscaPor.UniqueID & ".value == 'Transportista') {portransportista.style.display='';}")
 
         If Not Page.IsPostBack() Then
             Dim usuarios As String = ConfigurationManager.AppSettings.Get("UsrsToExcel")
@@ -87,16 +87,14 @@ Partial Class ListaReclamaciones
                 fillMotivos()
                 fillAreas()
 
-                fillChoferes("")
-                fillTransportistas("")
+                'fillChoferes("")
+                'fillTransportistas("")
 
                 If Session.Item("nivel") = 2 Then
                     btnNuevaRecl.Visible = True
                 End If
 
-                ''If usuarios.Contains(User.Identity.Name.Substring(5)) = True Then
                 btnToExcel.Visible = True
-                ''End If
 
             Catch exq As SqlClient.SqlException
                 lblMensaje.Text = exq.Message

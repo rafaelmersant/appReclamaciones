@@ -47,6 +47,12 @@
                                         Font-Bold="True" ForeColor="MistyRose" OnClick="btnQuitarRecl_Click" Text="X" Width="34px" />
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Estatus">
+                                <ItemTemplate>
+                                    <asp:Button ID="btnAbrirRecl" runat="server" BackColor="#009933" BorderColor="#006600" BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_reclamacion") %>' Font-Bold="True" ForeColor="MistyRose" OnClick="btnAbrirRecl_Click" Text='<%# bind("shortStatus") %>' />
+                                </ItemTemplate>
+                                <ItemStyle HorizontalAlign="Center" />
+                            </asp:TemplateField>
                         </Columns>
                         <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
                         <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />

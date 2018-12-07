@@ -6,7 +6,7 @@
         <tr>
             <td>
                 <asp:Label ID="Label1" runat="server" BackColor="#666666" Font-Bold="True" ForeColor="White"
-                    Text="Lista de Reclamaciones" Width="100%"></asp:Label></td>
+                    Text="&amp;nbsp; Lista de Reclamaciones" Width="100%"></asp:Label></td>
         </tr>
         <tr>
             <td>
@@ -204,7 +204,7 @@
                 <asp:GridView ID="grdReclamaciones" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="False" Width="100%" AllowPaging="True" PageSize="15">
                     <FooterStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
                     <RowStyle BackColor="WhiteSmoke" ForeColor="#333333" />
-                    <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" Font-Names="Verdana" Font-Size="11px" />
+                    <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" Font-Names="Verdana" Font-Size="14px" Font-Bold="False" />
                     <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
                     <HeaderStyle BackColor="#666666" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" />
                     <EditRowStyle BackColor="#999999" />

@@ -48,7 +48,7 @@
         <tr>
             <td colspan="3">
                 <asp:Label ID="Label1" runat="server" BackColor="Gray" Font-Bold="True" ForeColor="White"
-                    Text="Formulario de Reclamaciones de Clientes (RC)" Width="100%" CssClass="headerPrincipal" Height="19px"></asp:Label></td>
+                    Text="::Formulario de Reclamaciones de Clientes (RC)" Width="100%" CssClass="headerPrincipal" Height="19px"></asp:Label></td>
         </tr>
         <tr>
             <td colspan="3">
@@ -199,14 +199,6 @@
                                 <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
                                 <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
                                 <Columns>
-                                    <asp:BoundField DataField="cod_prod" HeaderText="C&#243;digo">
-                                        <HeaderStyle CssClass="LetraH1" Width="6%" HorizontalAlign="Left" />
-                                        <ItemStyle CssClass="gridItems" Width="6%" />
-                                    </asp:BoundField>
-                                    <asp:BoundField DataField="descripcion" HeaderText="Producto">
-                                    <HeaderStyle CssClass="LetraH1" HorizontalAlign="Left" Width="35%" />
-                                    <ItemStyle CssClass="gridItems" Width="35%" />
-                                    </asp:BoundField>
                                     <asp:TemplateField HeaderText="Quitar">
                                         <ItemTemplate>
                                             <asp:ImageButton ID="imgbtnQuitarProd" runat="server" CommandArgument='<%# bind("id_producto") %>'
@@ -215,6 +207,14 @@
                                         <HeaderStyle CssClass="LetraH1" HorizontalAlign="Center" Width="5%" />
                                         <ItemStyle CssClass="gridItems" Width="5%" HorizontalAlign="Center" />
                                     </asp:TemplateField>
+                                    <asp:BoundField DataField="cod_prod" HeaderText="C&#243;digo">
+                                        <HeaderStyle CssClass="LetraH1" Width="6%" HorizontalAlign="Left" />
+                                        <ItemStyle CssClass="gridItems" Width="6%" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="descripcion" HeaderText="Producto">
+                                    <HeaderStyle CssClass="LetraH1" HorizontalAlign="Left" Width="35%" />
+                                    <ItemStyle CssClass="gridItems" Width="35%" />
+                                    </asp:BoundField>
                                     <asp:TemplateField HeaderText="Guardar">
                                         <HeaderStyle CssClass="LetraH1" HorizontalAlign="Center" Width="5%" />
                                         <ItemStyle CssClass="gridItems" HorizontalAlign="Center" Width="5%" />
@@ -228,7 +228,7 @@
                                                 BorderWidth="1px" Width="174px" CssClass="gridItems" Text='<%# bind("comentario") %>'></asp:TextBox>
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="LetraH1" Width="20%" />
-                                        <ItemStyle CssClass="gridItems" />
+                                        <ItemStyle CssClass="gridItems" HorizontalAlign="Center" />
                                     </asp:TemplateField>
                                 </Columns>
                                 <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
@@ -704,7 +704,7 @@
                     <asp:TextBox ID="txtConclusion" runat="server" Height="60px" TextMode="MultiLine" Width="99%" ReadOnly="True" CssClass="headerSimples" ForeColor="Black"></asp:TextBox>
                 </asp:Panel>
 
-                <table style="width: 40%">
+                <table>
                     <tr>
                         <td valign="top">
                             <asp:Label ID="lblArea" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
@@ -713,12 +713,22 @@
                             <asp:DropDownList ID="ddlAreas" runat="server" Width="236px" TabIndex="5" Enabled="False">
                             </asp:DropDownList></td>
 
-                        <td valign="top">
+                        <td valign="top" style="margin-left: 80px">
                             <asp:Label ID="lblMotivo" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
                                 Text="Motivo"></asp:Label></td>
                         <td valign="top" style="width: 254px">
                             <asp:DropDownList ID="ddlMotivos" runat="server" Width="350px" TabIndex="5" Enabled="False">
                             </asp:DropDownList></td>
+                        <td valign="top">
+                            <span>
+                                                <asp:Button ID="btnAgregarMotivoFast" runat="server" BackColor="#FF2D2D" BorderColor="Black"
+                                                    BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
+                                                    Height="20px" Text="Agregar un motivo nuevo" Visible="False" Width="184px" />
+                            <asp:TextBox ID="txtMotivoFast" runat="server" CssClass="LetraH2 NuevosCampos"
+                                TabIndex="1" Width="229px" AutoCompleteType="Disabled" Visible="False"></asp:TextBox>
+                                                <asp:Button ID="btnGuardarMotivoFast" runat="server" BackColor="#FF2D2D" BorderColor="Black"
+                                                    BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
+                                                    Height="20px" Text="Guardar motivo" Visible="False" Width="124px" /></span></td>
                     </tr>
                     <tr>
                         <td valign="top">
@@ -741,6 +751,8 @@
                                 <asp:ListItem>USD</asp:ListItem>
                                 <asp:ListItem>CRC</asp:ListItem>
                             </asp:DropDownList></td>
+                        <td valign="top">
+                            &nbsp;</td>
                     </tr>
                     <tr>
                         <td valign="top">
@@ -759,6 +771,8 @@
                                 <asp:ListItem>USD</asp:ListItem>
                                 <asp:ListItem>CRC</asp:ListItem>
                             </asp:DropDownList></td>
+                        <td valign="top">
+                            &nbsp;</td>
                     </tr>
                 </table>
 

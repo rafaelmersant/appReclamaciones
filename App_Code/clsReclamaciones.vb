@@ -304,8 +304,16 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function delComentario(ByVal id_comentario As Integer) As Integer
         Dim param1 As New OdbcParameter("@id_comentario", id_comentario)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_delComentario (?)}", New OdbcParameter() {param1})
+
+    End Function
+
+    Public Shared Function abrirReclamacion(ByVal id_reclamacion As Integer) As Integer
+        Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
+
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
+                                   "{call sp_AbrirReclamacion (?)}", New OdbcParameter() {param1})
 
     End Function
 
@@ -803,7 +811,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim DataProductos As New Data.DataTable
 
         Dim sQueryFactura As String = "SELECT * FROM Z_RCFAMF00_FACH WHERE MFNUMFACT = " & pFact
-        Dim sQueryProductos As String = "SELECT c1, c2 as CodProducto FROM Z_XXXXX_FACD WHERE c1 =" & pFact
+        Dim sQueryProductos As String = "SELECT c1 as CodProducto, c2 FROM Z_XXXXX_FACD WHERE c2 =" & pFact
 
         DataFactura = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryFactura).Tables(0)
         DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryProductos).Tables(0)
