@@ -201,7 +201,7 @@
                                 <Columns>
                                     <asp:TemplateField HeaderText="Quitar">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="imgbtnQuitarProd" runat="server" CommandArgument='<%# bind("id_producto") %>'
+                                            <asp:ImageButton ID="imgbtnQuitarProd" runat="server" CommandArgument='<%#Bind("id_producto") %>'
                                                 ImageUrl="~/Images/delete.png" OnClick="ImageButton2_Click" />
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="LetraH1" HorizontalAlign="Center" Width="5%" />
@@ -327,6 +327,44 @@
         </tr>
         <tr>
             <td colspan="3">
+                <asp:Button ID="btnVerComentarios" runat="server" Text="Comentarios en orden cronológico" BackColor="Black" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="230px" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">Aqui los comentarios<asp:GridView ID="grdComentariosCron" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" Visible="False" Width="100%">
+                <AlternatingRowStyle BackColor="White" />
+                <Columns>
+                    <asp:BoundField DataField="comentario" HeaderText="Comentario">
+                    <ItemStyle Font-Size="11px" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="area" HeaderText="Area">
+                    <ItemStyle Font-Size="11px" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="usuario" HeaderText="Usuario">
+                    <ItemStyle Font-Size="11px" />
+                    </asp:BoundField>
+                    <asp:TemplateField HeaderText="Tiempo">
+                        <ItemTemplate>
+                            <asp:Label ID="lblTimeAgo" runat="server"></asp:Label>
+                            <asp:Label ID="lblTime" runat="server" ForeColor="White" Text='<%# bind("fecha") %>' Visible="False" Width="20px"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+                <FooterStyle BackColor="#CCCC99" />
+                <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
+                <RowStyle BackColor="#F7F7DE" />
+                <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
+                <SortedAscendingCellStyle BackColor="#FBFBF2" />
+                <SortedAscendingHeaderStyle BackColor="#848384" />
+                <SortedDescendingCellStyle BackColor="#EAEAD3" />
+                <SortedDescendingHeaderStyle BackColor="#575357" />
+                </asp:GridView>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
                 <cc1:Accordion EnableViewState="true" ID="Accordion1" runat="server" HeaderCssClass="acHeader" BorderColor="White" ContentCssClass="acContent" FadeTransitions="true">
                     <Panes>
 
@@ -387,10 +425,10 @@
                                         <tr>
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileV" runat="server" CssClass="LetraFiles" Visible="False"
-                                                    Width="522px" />
+                                                    Width="522px" /> <br />
                                                 <asp:Button ID="btnAgregarFileV" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
+                                                    Height="20px" Text="Agregar archivo" Visible="False"/><br />
                                                 <asp:Literal ID="LiteralFileV" runat="server" Visible="False"></asp:Literal>
                                                 <asp:Button ID="btnEliminarAdjV" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
@@ -459,10 +497,10 @@
                                         <tr>
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileP" runat="server" CssClass="LetraFiles" Visible="False"
-                                                    Width="522px" />
+                                                    Width="522px" /> <br />
                                                 <asp:Button ID="btnAgregarFileP" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
+                                                    Height="20px" Text="Agregar archivo" Visible="False" /><br />
                                                 <asp:Literal ID="LiteralFileP" runat="server" Visible="False"></asp:Literal>
                                                 <asp:Button ID="btnEliminarAdjP" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
@@ -531,10 +569,10 @@
                                         <tr>
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileL" runat="server" CssClass="LetraFiles" Visible="False"
-                                                    Width="522px" />
+                                                    Width="522px" /> <br />
                                                 <asp:Button ID="btnAgregarFileL" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
+                                                    Height="20px" Text="Agregar archivo" Visible="False" /><br />
                                                 <asp:Literal ID="LiteralFileL" runat="server" Visible="False"></asp:Literal>
                                                 <asp:Button ID="btnEliminarAdjL" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
@@ -602,10 +640,10 @@
                                         <tr>
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileF" runat="server" CssClass="LetraFiles" Visible="False"
-                                                    Width="522px" />
+                                                    Width="522px" /> <br />
                                                 <asp:Button ID="btnAgregarFileF" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
+                                                    Height="20px" Text="Agregar archivo" Visible="False" /><br />
                                                 <asp:Literal ID="LiteralFileF" runat="server" Visible="False"></asp:Literal>
                                                 <asp:Button ID="btnEliminarAdjF" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
@@ -674,10 +712,10 @@
                                         <tr>
                                             <td align="left">
                                                 <asp:FileUpload ID="fuFileC" runat="server" CssClass="LetraFiles" Visible="False"
-                                                    Width="522px" />
+                                                    Width="522px" /> <br />
                                                 <asp:Button ID="btnAgregarFileC" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Agregar" Visible="False" Width="72px" /><br />
+                                                    Height="20px" Text="Agregar archivo" Visible="False" /><br />
                                                 <asp:Literal ID="LiteralFileC" runat="server" Visible="False"></asp:Literal>
                                                 <asp:Button ID="btnEliminarAdjC" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
@@ -717,7 +755,7 @@
                             <asp:Label ID="lblMotivo" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
                                 Text="Motivo"></asp:Label></td>
                         <td valign="top" style="width: 254px">
-                            <asp:DropDownList ID="ddlMotivos" runat="server" Width="350px" TabIndex="5" Enabled="False">
+                            <asp:DropDownList ID="ddlMotivos" runat="server" Width="320px" TabIndex="5" Enabled="False">
                             </asp:DropDownList></td>
                         <td valign="top">
                             <span>

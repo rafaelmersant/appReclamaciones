@@ -858,6 +858,14 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Return DataPedido
 
     End Function
+
+    Public Shared Function getComentariosCronologico(ByVal id_reclamacion As Integer) As DataTable
+        Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
+
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
+                                  "{call sp_getComentariosCronologico (?)}", New OdbcParameter() {param1}).Tables(0)
+
+    End Function
 #End Region
 
 End Class

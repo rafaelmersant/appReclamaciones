@@ -66,26 +66,81 @@ Partial Class Reclamacion
 
     End Sub
 
-    Private Sub fillChoferes(ByVal chofer As String)
-        Dim dtDatos As DataTable = clsReclamaciones.getChofer(chofer).Tables(0)
-        ddlChoferes.DataSource = dtDatos
-        ddlChoferes.DataTextField = "NOMBRE_CLIENTE"
-        ddlChoferes.DataValueField = "COD_CLIENTE"
-        ddlChoferes.DataBind()
+    Public Shared Function ToLongString(time As TimeSpan) As String
+        Dim output As String = String.Empty
 
-        ddlChoferes.Items.Insert(0, New ListItem("...", ""))
+        If time.Days > 0 Then
+            output += time.Days.ToString() + " dias"
+        End If
+
+        If (time.Days = 0 Or time.Days = 1) And time.Hours > 0 Then
+            output += time.Hours.ToString() + " horas "
+        End If
+
+        If (time.Days = 0 And time.Minutes > 0) Then
+            output += time.Minutes.ToString() + " minutos "
+        End If
+
+        If output.Length = 0 Then
+            output += time.Seconds.ToString() + " segundos"
+        End If
+
+        Return output
+    End Function
+
+    Private Sub fillComentariosCrono(id_reclamacion As Integer)
+
+        Dim dtdatos As DataTable = clsReclamaciones.getComentariosCronologico(id_reclamacion)
+
+        grdComentariosCron.DataSource = dtdatos
+        grdComentariosCron.DataBind()
+
+        Dim index = 0
+
+        If grdComentariosCron.Rows.Count > 1 Then
+
+            For Each row As GridViewRow In grdComentariosCron.Rows
+
+                If index >= 1 Then
+                    Dim firstFecha As String = CType(grdComentariosCron.Rows(index - 1).Cells(3).FindControl("lblTime"), Label).Text
+                    Dim firstTime As DateTime = DateTime.Parse(firstFecha)
+
+                    Dim secondFecha As String = CType(row.Cells(3).FindControl("lblTime"), Label).Text
+                    Dim secondTime As DateTime = DateTime.Parse(secondFecha)
+                    Dim timeResult = secondTime - firstTime
+
+                    Dim result = ToLongString(timeResult)
+
+                    CType(row.Cells(3).FindControl("lblTimeAgo"), Label).Text = result
+                End If
+
+                index += 1
+            Next
+
+        End If
 
     End Sub
 
-    Private Sub fillTransportistas(ByVal suplidor As String)
-        Dim dtDatos As DataTable = clsReclamaciones.getTransportista(suplidor).Tables(0)
-        ddlTransportista.DataSource = dtDatos
-        ddlTransportista.DataTextField = "NOMBRE_SUPLIDOR"
-        ddlTransportista.DataValueField = "COD_SUPLIDOR"
-        ddlTransportista.DataBind()
+    'Private Sub fillChoferes(ByVal chofer As String)
+    '    Dim dtDatos As DataTable = clsReclamaciones.getChofer(chofer).Tables(0)
+    '    ddlChoferes.DataSource = dtDatos
+    '    ddlChoferes.DataTextField = "NOMBRE_CLIENTE"
+    '    ddlChoferes.DataValueField = "COD_CLIENTE"
+    '    ddlChoferes.DataBind()
 
-        ddlTransportista.Items.Insert(0, New ListItem("...", ""))
-    End Sub
+    '    ddlChoferes.Items.Insert(0, New ListItem("...", ""))
+
+    'End Sub
+
+    'Private Sub fillTransportistas(ByVal suplidor As String)
+    '    Dim dtDatos As DataTable = clsReclamaciones.getTransportista(suplidor).Tables(0)
+    '    ddlTransportista.DataSource = dtDatos
+    '    ddlTransportista.DataTextField = "NOMBRE_SUPLIDOR"
+    '    ddlTransportista.DataValueField = "COD_SUPLIDOR"
+    '    ddlTransportista.DataBind()
+
+    '    ddlTransportista.Items.Insert(0, New ListItem("...", ""))
+    'End Sub
 
     Private Sub fillGruposDDL()
         Dim dtDatos As DataTable = clsReclamaciones.getGrupos()
@@ -915,6 +970,8 @@ Partial Class Reclamacion
             fillMotivos()
             MostrarUsuariosInv(iReclamacion)
             fillProductos(iReclamacion)
+
+            fillComentariosCrono(iReclamacion)
 
             'VISIBLES******
             pnDetalles.Enabled = False
@@ -1820,5 +1877,15 @@ Partial Class Reclamacion
         Catch ex As Exception
             lblMensaje.Text = ex.Message
         End Try
+    End Sub
+    Protected Sub btnVerComentarios_Click(sender As Object, e As EventArgs) Handles btnVerComentarios.Click
+
+        If Accordion1.Visible = True Then
+            Accordion1.Visible = False
+            grdComentariosCron.Visible = True
+        Else
+            Accordion1.Visible = True
+            grdComentariosCron.Visible = False
+        End If
     End Sub
 End Class
