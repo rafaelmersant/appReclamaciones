@@ -174,6 +174,11 @@
                         <td>
                             <table>
                                 <tr>
+                                    <td>
+                            <asp:Button ID="btnSelProductos" runat="server" BackColor="#FF2D2D" BorderColor="Black"
+                                BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_producto") %>'
+                                CssClass="gridItems" Font-Bold="True" ForeColor="White"
+                                Text="Seleccionar todos" Visible="False" Height="24px" Width="117px" /></td>
                                     <td><asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Names="Verdana"
                                 Text="Cod. Producto" Width="80px" CssClass="LetraH1"></asp:Label> </td>
                                     <td>
@@ -183,7 +188,10 @@
                                     <td>
                                         <asp:TextBox ID="txtNameProducto" runat="server" Height="11px" ReadOnly="True" TabIndex="3" Width="213px" CssClass="LetraH2"></asp:TextBox></td>
                                     <td>
-                                        <asp:ImageButton ID="imgbtnSaveProd" runat="server" ImageUrl="~/Images/Save.png" ToolTip="Agregar" /></td>
+                            <asp:Button ID="btnAgregarProd" runat="server" BackColor="#FF2D2D" BorderColor="Black"
+                                BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_producto") %>'
+                                CssClass="gridItems" Font-Bold="True" ForeColor="White"
+                                Text="Agregar Producto" Visible="False" Height="24px" Width="104px" /></td>
                                     <td>
                                         <asp:ImageButton ID="imgbtnRefresh" runat="server" ImageUrl="~/Images/refresh.png" ToolTip="Refrescar" Visible="False" /></td>
                                 </tr>
@@ -199,7 +207,14 @@
                                 <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
                                 <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
                                 <Columns>
-                                    <asp:TemplateField HeaderText="Quitar">
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="chkProd" runat="server" ToolTip='<%# bind("cod_prod") %>' ValidationGroup="Productos" />
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="LetraH1" Width="3%" />
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Quitar" Visible="False">
                                         <ItemTemplate>
                                             <asp:ImageButton ID="imgbtnQuitarProd" runat="server" CommandArgument='<%#Bind("id_producto") %>'
                                                 ImageUrl="~/Images/delete.png" OnClick="ImageButton2_Click" />
@@ -327,11 +342,12 @@
         </tr>
         <tr>
             <td colspan="3">
-                <asp:Button ID="btnVerComentarios" runat="server" Text="Comentarios en orden cronológico" BackColor="Black" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="230px" />
+                <asp:Button ID="btnVerComentarios" runat="server" Text="Comentarios en orden cronológico" BackColor="Black" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="230px" Height="30px" />
             </td>
         </tr>
         <tr>
-            <td colspan="3">Aqui los comentarios<asp:GridView ID="grdComentariosCron" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" Visible="False" Width="100%">
+            <td colspan="3" id="aboveComentarios">
+                <asp:GridView ID="grdComentariosCron" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" Visible="False" Width="100%">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="comentario" HeaderText="Comentario">
@@ -360,7 +376,6 @@
                 <SortedDescendingCellStyle BackColor="#EAEAD3" />
                 <SortedDescendingHeaderStyle BackColor="#575357" />
                 </asp:GridView>
-                <br />
             </td>
         </tr>
         <tr>
@@ -369,7 +384,7 @@
                     <Panes>
 
                         <cc1:AccordionPane ID="AccordionPane1" runat="server" EnableViewState="true">
-                            <Header> VENTAS </Header>
+                            <Header> <span style="padding-left: 5px;">VENTAS</span></Header>
                             <Content>
                                 <asp:Panel ID="panelVentas" runat="server" EnableViewState="true" Width="100%">
                                     <table width="100%">
@@ -441,7 +456,7 @@
 
 
                         <cc1:AccordionPane ID="AccordionPane2" runat="server">
-                            <Header> PRODUCCION </Header>
+                            <Header> <span style="padding-left: 5px;">PRODUCCION</span> </Header>
                             <Content>
                                 <asp:Panel ID="panelProduccion" runat="server" Width="100%">
                                     <table width="100%">
@@ -513,7 +528,7 @@
 
 
                         <cc1:AccordionPane ID="AccordionPane3" runat="server">
-                            <Header> LOGISTICA </Header>
+                            <Header> <span style="padding-left: 5px;">LOGISTICA</span> </Header>
                             <Content>
                                 <asp:Panel ID="panelLogistica" runat="server" Width="100%">
                                     <table width="100%">
@@ -584,7 +599,7 @@
                         </cc1:AccordionPane>
 
                         <cc1:AccordionPane ID="AccordionPane4" runat="server">
-                            <Header> FINANZAS </Header>
+                            <Header> <span style="padding-left: 5px;">FINANZAS</span> </Header>
                             <Content>
                                 <asp:Panel ID="panelFinanzas" runat="server" Width="100%">
                                     <table width="100%">
@@ -656,7 +671,7 @@
                         </cc1:AccordionPane>
 
                         <cc1:AccordionPane ID="AccordionPane5" runat="server">
-                            <Header> CALIDAD </Header>
+                            <Header> <span style="padding-left: 5px;">CALIDAD</span> </Header>
                             <Content>
                                 <asp:Panel ID="panelCalidad" runat="server" Width="100%">
                                     <table width="100%">
@@ -719,7 +734,8 @@
                                                 <asp:Literal ID="LiteralFileC" runat="server" Visible="False"></asp:Literal>
                                                 <asp:Button ID="btnEliminarAdjC" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
-                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="112px" /></td>
+                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="112px" />
+                                            </td>
                                         </tr>
                                     </table>
                                 </asp:Panel>
@@ -732,12 +748,12 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3" align="left">
+            <td colspan="3" align="left" id="conclusion2Area">
                 <asp:Label ID="lblConclusion" runat="server" BackColor="#FF2D2D" Font-Bold="True" ForeColor="White"
                     Text="::Conclusión" Width="100%" CssClass="headerSimples" Height="17px"></asp:Label></td>
         </tr>
         <tr>
-            <td colspan="3" valign="top">
+            <td colspan="3" valign="top" id="conclusion3Area">
                 <asp:Panel ID="panelConclusion" runat="server" Width="100%">
                     <asp:TextBox ID="txtConclusion" runat="server" Height="60px" TextMode="MultiLine" Width="99%" ReadOnly="True" CssClass="headerSimples" ForeColor="Black"></asp:TextBox>
                 </asp:Panel>

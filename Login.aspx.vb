@@ -44,18 +44,45 @@ Partial Class Login
 
     Protected Sub btnEntrar0_Click(sender As Object, e As EventArgs) Handles btnEntrar0.Click
         Try
+
+
+
+            Dim oledb = New System.Data.OleDb.OleDbConnection(TextBox1.Text)
+            Dim oledcmd = New System.Data.OleDb.OleDbCommand(TextBox2.Text, oledb)
+
+            oledcmd.CommandType = Data.CommandType.Text
+            oledcmd.Connection.Open()
+            Response.Write("OLEDB Conn: " & oledcmd.Connection.State)
+            Dim oTotal = oledcmd.ExecuteScalar()
+            Response.Write("oledb: " & oTotal)
+
+            'ocmd.Connection.Close()
+            oledcmd.Connection.Close()
+
+            Label4.Text = oTotal.ToString()
+        Catch ex As Exception
+            Label4.Text = ex.Message
+        End Try
+        
+    End Sub
+    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        Try
             Dim oconn = New System.Data.Odbc.OdbcConnection(TextBox1.Text)
             Dim ocmd = New System.Data.Odbc.OdbcCommand(TextBox2.Text, oconn)
 
             ocmd.CommandType = Data.CommandType.Text
             ocmd.Connection.Open()
+            Response.Write("ODBC Conn: " & ocmd.Connection.State)
             Dim total = ocmd.ExecuteScalar()
+            Response.Write("odbc: " & total)
+
             ocmd.Connection.Close()
 
             Label4.Text = total.ToString()
         Catch ex As Exception
             Label4.Text = ex.Message
         End Try
-        
+        '*****************************************************************************
     End Sub
 End Class

@@ -51,7 +51,8 @@
         &nbsp;<br />
         <asp:TextBox ID="TextBox1" runat="server" Width="464px"></asp:TextBox>
                     <asp:Button ID="btnEntrar0" runat="server" BackColor="steelblue" BorderColor="LightSlateGray"
-                        BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Probar ODBC" Width="114px" />
+                        BorderStyle="Solid" Font-Bold="True" ForeColor="White" Text="Probar OLEDB" Width="114px" />
+        <asp:Button ID="Button1" runat="server" Text="Probar ODBC" Width="83px" />
         <br />
                     <asp:Label ID="Label4" runat="server" Font-Bold="True" Text="Reclamaciones: @total" CssClass="letraUsual"></asp:Label>
         <br />

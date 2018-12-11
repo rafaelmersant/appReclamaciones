@@ -201,6 +201,10 @@ Partial Class Reclamacion
                 btnReportToClient.Visible = True
                 btnEnviarMail.Visible = True
             End If
+
+            btnAgregarProd.Enabled = False
+            btnSelProductos.Enabled = False
+            grdProdReclam.Enabled = False
         End If
 
     End Sub
@@ -823,6 +827,15 @@ Partial Class Reclamacion
         grdProdReclam.DataSource = prod
         grdProdReclam.DataBind()
 
+        If grdProdReclam.Rows.Count > 0 Then
+            btnSelProductos.Visible = True
+            btnAgregarProd.Visible = True
+
+            btnSelProductos_Click(Nothing, Nothing)
+        Else
+            btnSelProductos.Visible = False
+        End If
+
     End Sub
 
     Private Sub fillPlantas()
@@ -1010,7 +1023,7 @@ Partial Class Reclamacion
                 Label2.Visible = False
                 txtCodProd.Visible = False
                 txtNameProducto.Visible = False
-                imgbtnSaveProd.Visible = False
+                btnAgregarProd.Visible = False
                 imgbtnRefresh.Visible = False
                 btnBProd.Visible = False
                 grdProdReclam.Columns(2).Visible = False
@@ -1023,6 +1036,9 @@ Partial Class Reclamacion
             dtDatos = clsReclamaciones.getReclamacionDetalle(iReclamacion)
 
             If dtDatos.Rows.Count > 0 Then
+
+                imgbtnRefresh.Attributes.Add("onload", "conclusion2Area.style.display='';conclusion3Area.style.display='';")
+
                 lblNoReclamacion.Text = Right("00000000" & dtDatos.Rows(0).Item("id_reclamacion"), 8)
                 lblStatus.Text = dtDatos.Rows(0).Item("status").ToString().ToUpper()
 
@@ -1206,12 +1222,15 @@ Partial Class Reclamacion
 
         Else
             'RECLAMACION NUEVA
+            imgbtnRefresh.Attributes.Add("onload", "conclusion2Area.style.display='none';conclusion3Area.style.display='none';")
+
             If Not Session.Item("nivel").ToString().Trim() = 2 Then Response.Redirect("ListaReclamaciones.aspx")
 
             lblNoReclamacion.Text = Right("00000000" & clsReclamaciones.getUltimaReclamacion(), 8)
 
             lblDeptosInvolucrados.Visible = False
             Accordion1.Visible = False
+            btnVerComentarios.Visible = False
             panelUsrInvolucrados.Visible = True
             lblInvolucradosUsr.Visible = True
 
@@ -1223,6 +1242,7 @@ Partial Class Reclamacion
             lblMotivo.Visible = False
             ddlMotivos.Visible = False
             btnAgregarMotivoFast.Visible = False
+            panelConclusion.Visible = False
 
             lblMonto.Visible = False
             txtMonto.Visible = False
@@ -1697,24 +1717,6 @@ Partial Class Reclamacion
         Return "~\Reportes" & paramPDF
 
     End Function
-    Protected Sub imgbtnSaveProd_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles imgbtnSaveProd.Click
-        Try
-            btnBProd_Click(Nothing, Nothing)
-
-            If Not txtNameProducto.Text.Trim() = String.Empty Then
-                clsReclamaciones.adProductoRecl(Val(lblNoReclamacion.Text), txtCodProd.Text.Trim().ToUpper())
-                fillProductos(Val(lblNoReclamacion.Text))
-                CleanProd()
-                lblMensProd.Visible = False
-            Else
-                lblMensProd.Visible = True
-            End If
-
-        Catch ex As Exception
-            lblMensaje.Text = ex.Message
-
-        End Try
-    End Sub
 
     Private Sub CleanProd()
         txtCodProd.Text = String.Empty
@@ -1883,9 +1885,46 @@ Partial Class Reclamacion
         If Accordion1.Visible = True Then
             Accordion1.Visible = False
             grdComentariosCron.Visible = True
+            btnVerComentarios.Text = "Comentarios en orden cronológico"
         Else
             Accordion1.Visible = True
             grdComentariosCron.Visible = False
+            btnVerComentarios.Text = "Comentarios por departamento"
         End If
+    End Sub
+
+    Protected Sub btnSelProductos_Click(sender As Object, e As EventArgs) Handles btnSelProductos.Click
+
+        If grdProdReclam.Rows.Count > 0 Then
+
+            For Each row As GridViewRow In grdProdReclam.Rows
+
+                CType(row.Cells(0).FindControl("chkProd"), CheckBox).Checked = IIf(btnSelProductos.Text = "Seleccionar todos", True, False)
+
+            Next
+
+            btnSelProductos.Text = IIf(btnSelProductos.Text = "Seleccionar todos", "Deseleccionar todos", "Seleccionar todos")
+
+        End If
+
+    End Sub
+
+    Protected Sub btnAgregarProd_Click(sender As Object, e As EventArgs) Handles btnAgregarProd.Click
+        Try
+            btnBProd_Click(Nothing, Nothing)
+
+            If Not txtNameProducto.Text.Trim() = String.Empty Then
+                clsReclamaciones.adProductoRecl(Val(lblNoReclamacion.Text), txtCodProd.Text.Trim().ToUpper())
+                fillProductos(Val(lblNoReclamacion.Text))
+                CleanProd()
+                lblMensProd.Visible = False
+            Else
+                lblMensProd.Visible = True
+            End If
+
+        Catch ex As Exception
+            lblMensaje.Text = ex.Message
+
+        End Try
     End Sub
 End Class
