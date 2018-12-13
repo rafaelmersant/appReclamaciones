@@ -40,12 +40,24 @@ Partial Class Login
 
         ClientScript.RegisterStartupScript(Me.GetType(), "theFocus", "<script> document.getElementById('" & txtUsuario.ClientID & "').focus();</script>")
 
+        'Testing mode
+        Dim testVisible = False
+
+        If ConfigurationManager.AppSettings.Get("Environment") = "DEV" Then
+            testVisible = True
+        End If
+
+        GridView1.Visible = testVisible
+        TextBox1.Visible = testVisible
+        TextBox2.Visible = testVisible
+        Label4.Visible = testVisible
+        btnEntrar0.Visible = testVisible
+        Button1.Visible = testVisible
+
     End Sub
 
     Protected Sub btnEntrar0_Click(sender As Object, e As EventArgs) Handles btnEntrar0.Click
         Try
-
-
 
             Dim oledb = New System.Data.OleDb.OleDbConnection(TextBox1.Text)
             Dim oledcmd = New System.Data.OleDb.OleDbCommand(TextBox2.Text, oledb)
@@ -76,6 +88,10 @@ Partial Class Login
             Response.Write("ODBC Conn: " & ocmd.Connection.State)
             Dim total = ocmd.ExecuteScalar()
             Response.Write("odbc: " & total)
+
+            Dim dat = clsReclamaciones.TestingERP(TextBox2.Text)
+            GridView1.DataSource = dat
+            GridView1.DataBind()
 
             ocmd.Connection.Close()
 

@@ -237,6 +237,8 @@ Partial Class Reclamacion
             0, txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text, _
             ddlTipoDoc.SelectedValue, ddlChoferes.SelectedValue, ddlTransportista.SelectedValue)
 
+            updateProductos() 'Aqui dentro se verifica si productos fueron deseleccionados para ser eliminados
+
             UsuariosReclamacion() 'Aqui dentro se envia el correo
 
             Response.Redirect("Reclamacion.aspx?id=" & Val(lblNoReclamacion.Text))
@@ -244,6 +246,24 @@ Partial Class Reclamacion
         Catch ex As Exception
             lblMensaje.Text = ex.Message
         End Try
+
+    End Sub
+
+    Private Sub updateProductos()
+        Dim indexDeleted = 1
+
+        For Each row As GridViewRow In grdProdReclam.Rows
+            Dim chkProd = CType(row.Cells(0).FindControl("chkProd"), CheckBox)
+
+            If chkProd.Checked = False Then
+                clsReclamaciones.delProducto(chkProd.CssClass) 'En este caso el id_producto esta contenido en la propiedad CssClass
+                indexDeleted += 1
+            End If
+
+            If indexDeleted = grdProdReclam.Rows.Count Then
+                Throw New Exception("Debe al menos tener un producto en la reclamación.")
+            End If
+        Next
 
     End Sub
 
@@ -820,7 +840,7 @@ Partial Class Reclamacion
     End Sub
 
     'Este metodo llena el GridView, solo la columna de codigo de producto.
-    Private Sub fillProductos(ByVal irecl As Integer)
+    Private Sub fillProductos(ByVal irecl As Integer, Optional selectAll As Boolean = True)
         Dim prod As New DataTable
 
         prod = clsReclamaciones.getProductosRecl(irecl)
@@ -828,12 +848,19 @@ Partial Class Reclamacion
         grdProdReclam.DataBind()
 
         If grdProdReclam.Rows.Count > 0 Then
-            btnSelProductos.Visible = True
-            btnAgregarProd.Visible = True
 
+            btnSelProductos.Visible = True
+            lblProdMessage.Visible = True
+            btnAgregarProd.Visible = True
+            imgbtnRefresh.Visible = True
+
+            btnSelProductos.Text = "Seleccionar todos"
             btnSelProductos_Click(Nothing, Nothing)
+
         Else
             btnSelProductos.Visible = False
+            lblProdMessage.Visible = False
+            imgbtnRefresh.Visible = False
         End If
 
     End Sub
@@ -926,11 +953,11 @@ Partial Class Reclamacion
         txtTipoPedido.Text = String.Empty
 
         Dim datos As DataTable = clsReclamaciones.getPedidoERP(txtPedido.Text, lblNoReclamacion.Text)
-        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("PDVENFACTU"))
+        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("CodigoVendedor"))
 
         If datos.Rows.Count > 0 Then
-            ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("PDVENFACTU"))))
-            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("PDNOMBRECL")), Trim(datos.Rows(0).Item("PDNUMCLIEN"))))
+            ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("codigoVendedor"))))
+            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreCte")), Trim(datos.Rows(0).Item("codigoCte"))))
 
             'txtTipoPedido.Text = Trim(datos(6))
 
@@ -951,11 +978,11 @@ Partial Class Reclamacion
         txtTipoPedido.Text = String.Empty
 
         Dim datos As DataTable = clsReclamaciones.getFacturaERP(txtPedido.Text, lblNoReclamacion.Text)
-        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("MFVENFACTU"))
+        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("codigoVendedor"))
 
         If datos.Rows.Count > 0 Then
-            ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("MFVENFACTU"))))
-            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("MFNOMBRECL")), Trim(datos.Rows(0).Item("MFNUMCLIEN"))))
+            ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("codigoVendedor"))))
+            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("NombreCte")), Trim(datos.Rows(0).Item("codigoCte"))))
 
             'If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
             lblMensaje.Text = String.Empty
@@ -1344,7 +1371,7 @@ Partial Class Reclamacion
             Dim dato As DataTable = clsReclamaciones.getProductoERP(txtCodProd.Text)
            
             If dato.Rows.Count > 0 Then
-                txtNameProducto.Text = dato.Rows(0).Item("itemname")
+                txtNameProducto.Text = dato.Rows(0).Item("MPDESCRIPC")
                 lblMensaje.Text = ""
             Else
                 lblMensaje.Text = "No se encuentra el producto. Verifique que digito el código correcto."
@@ -1729,6 +1756,15 @@ Partial Class Reclamacion
     End Sub
 
     Protected Sub imgbtnRefresh_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles imgbtnRefresh.Click
+
+        Try
+            updateProductos()
+
+            fillProductos(Val(lblNoReclamacion.Text), False)
+
+        Catch ex As Exception
+            lblMensaje.Text = ex.Message
+        End Try
 
     End Sub
 

@@ -193,7 +193,12 @@
                                 CssClass="gridItems" Font-Bold="True" ForeColor="White"
                                 Text="Agregar Producto" Visible="False" Height="24px" Width="104px" /></td>
                                     <td>
-                                        <asp:ImageButton ID="imgbtnRefresh" runat="server" ImageUrl="~/Images/refresh.png" ToolTip="Refrescar" Visible="False" /></td>
+                                        <asp:ImageButton ID="imgbtnRefresh" runat="server" ImageUrl="~/Images/refresh.png" ToolTip="Guardar cambios en productos" Visible="False" /></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <asp:Label ID="lblProdMessage" runat="server" Font-Bold="True" Font-Names="Verdana"
+                                Text="Seleccionar productos para que permanezcan en la reclamación." CssClass="LetraH2"></asp:Label> </td>
                                 </tr>
                             </table>
 
@@ -209,7 +214,7 @@
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>
-                                            <asp:CheckBox ID="chkProd" runat="server" ToolTip='<%# bind("cod_prod") %>' ValidationGroup="Productos" />
+                                            <asp:CheckBox ID="chkProd" runat="server" ValidationGroup="Productos" CssClass='<%# bind("id_producto") %>' />
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="LetraH1" Width="3%" />
                                         <ItemStyle HorizontalAlign="Center" />
@@ -320,7 +325,7 @@
                     </ContentTemplate>
 
                 </asp:UpdatePanel>
-                <asp:Button ID="btnInvolucrar" runat="server" Text="Involucrar" BackColor="#FF2D2D" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="96px" Visible="False" />
+                <asp:Button ID="btnInvolucrar" runat="server" Text="Involucrar" BackColor="#FF2D2D" BorderColor="Black" BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White" Width="155px" Visible="False" />
                 <asp:Label ID="lblInvolucradosMsg" runat="server" Font-Bold="True" Font-Italic="True"
                     ForeColor="#0000C0" Visible="False" Font-Names="Verdana" Font-Size="10px"></asp:Label></td>
         </tr>

@@ -201,11 +201,34 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function insertProducto(ByVal producto As String) As Integer
-        Dim param1 As New OdbcParameter("@descripcion", producto)
+    Public Shared Function insertProductoFromAS400(ByVal codProducto As String, descripcion As String, modelo As String, codParte As String) As Integer
+        Dim param1 As New OdbcParameter("@codProducto", codProducto)
+        Dim param2 As New OdbcParameter("@descripcion", descripcion)
+        Dim param3 As New OdbcParameter("@modelo", modelo)
+        Dim param4 As New OdbcParameter("@codParte", codParte)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
-                                   "{call sp_insertProducto (?)}", New OdbcParameter() {param1})
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
+                                   "{call sp_insertProductoFromAS400 (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
+
+    End Function
+
+    Public Shared Function insertClienteFromAS400(ByVal codigo As String, nombre As String, telefono As String, email As String) As Integer
+        Dim param1 As New OdbcParameter("@codigo", codigo)
+        Dim param2 As New OdbcParameter("@nombre", nombre)
+        Dim param3 As New OdbcParameter("@telefono", telefono)
+        Dim param4 As New OdbcParameter("@email", email)
+
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
+                                   "{call sp_insertClienteFromAS400 (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
+
+    End Function
+
+    Public Shared Function insertVendedorFromAS400(ByVal codigo As Integer, nombre As String) As Integer
+        Dim param1 As New OdbcParameter("@codigo", codigo)
+        Dim param2 As New OdbcParameter("@nombre", nombre)
+
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
+                                   "{call sp_insertVendedorFromAS400 (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
 
@@ -750,11 +773,31 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getProductoERP(ByVal producto As String) As Data.DataTable
-        Dim param1 As New OdbcParameter("@producto", producto)
+    Public Shared Function getProductoERP(ByVal cod_producto As String) As Data.DataTable
+        Dim param1 As New OdbcParameter("@producto", cod_producto)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
-                                  "{call sp_getProductoAX (?)}", New OdbcParameter() {param1}).Tables(0)
+        Dim data = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
+                                  "{call sp_getProducto (?)}", New OdbcParameter() {param1}).Tables(0)
+
+        If data.Rows.Count = 0 And ConfigurationManager.AppSettings.Get("Environment") <> "DEV" Then
+
+            Dim dataAS400 = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text,
+                                 "SELECT MPNARTICUL, MPDESCRIPC, MPMODELO, MPCODPARTE FROM RCFAMP00 WHERE MPNARTICUL = " & cod_producto).Tables(0)
+
+            If dataAS400.Rows.Count > 0 Then
+                Dim param2 As New OdbcParameter("@descripcion", dataAS400.Rows.Item(1))
+                Dim param3 As New OdbcParameter("@modelo", dataAS400.Rows.Item(2))
+                Dim param4 As New OdbcParameter("@codparte", dataAS400.Rows.Item(3))
+
+                ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
+                                     "{call sp_insertProductoFromAS400 (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
+            End If
+
+            Return dataAS400
+        Else
+
+            Return data
+        End If
 
     End Function
 #End Region
@@ -797,10 +840,23 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     Public Shared Function getVendedorNombreERP(ByVal codVendedor As String) As String
 
-        Dim sQueryVendedor As String = "SELECT * FROM Z_RCFAVD00_VENDEDORES WHERE VECOEM = " & codVendedor
+        Dim VendedorNombre = ""
+        Dim sQueryVendedor As String = "SELECT VENOMB FROM @VENDEDORES WHERE VECOEM = " & codVendedor
 
-        Dim Vendedor As DataTable = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryVendedor).Tables(0)
-        Dim VendedorNombre = Vendedor.Rows(0).Item("VENOMB")
+        'Testing or Production Environment
+        If ConfigurationManager.AppSettings.Get("Environment") = "DEV" Then
+            sQueryVendedor = sQueryVendedor.Replace("@VENDEDORES", "Z_RCFAVD00_VENDEDORES")
+            VendedorNombre = "Testing Vendedor " & codVendedor
+        Else
+            sQueryVendedor = sQueryVendedor.Replace("@VENDEDORES", "QS36F.RCFAVD00")
+
+            Dim Vendedor As DataTable = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryVendedor).Tables(0)
+            VendedorNombre = Vendedor.Rows(0).Item("VENOMB")
+
+            'Insertar Vendedor desde AS400 si no existe
+            insertVendedorFromAS400(Integer.Parse(codVendedor), VendedorNombre)
+
+        End If
 
         Return VendedorNombre
 
@@ -810,14 +866,33 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim DataFactura As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
-        Dim sQueryFactura As String = "SELECT * FROM Z_RCFAMF00_FACH WHERE MFNUMFACT = " & pFact
-        Dim sQueryProductos As String = "SELECT c1 as CodProducto, c2 FROM Z_XXXXX_FACD WHERE c2 =" & pFact
+        Dim sQueryFactura As String = "SELECT MFNUMCLIEN as codigoCte, MFNOMBRECL as NombreCte, MFTELEFONO as TelefonoCte, " &
+                                        " MFVENFACTU as codigoVendedor FROM @FACTURA_CABECERA WHERE MFNUMFACT = " & pFact
+        Dim sQueryProductos As String = "SELECT c1 as CodProducto, c2 FROM @FACTURA_DETALLE WHERE c2 =" & pFact
+
+        'Testing or Production Environment
+        If ConfigurationManager.AppSettings.Get("Environment") = "DEV" Then
+            sQueryFactura = sQueryFactura.Replace("@FACTURA_CABECERA", "Z_RCFAMF00_FACH")
+            sQueryProductos = sQueryProductos.Replace("@FACTURA_DETALLE", "Z_XXXXX_FACD") 'pendiente agregar original
+        Else
+            sQueryFactura = sQueryFactura.Replace("@FACTURA_CABECERA", "QS36F.RCFAMF00")
+            sQueryProductos = sQueryProductos.Replace("@FACTURA_DETALLE", "Z_XXXXX_FACD") 'pendiente agregar original
+        End If
 
         DataFactura = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryFactura).Tables(0)
         DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryProductos).Tables(0)
 
+        'Insertar Cliente desde AS400 si no existe
+        If DataFactura.Rows.Count > 0 Then
+            insertClienteFromAS400(DataFactura.Rows(0).Item("codigoCte"), DataFactura.Rows(0).Item("NombreCte"), DataFactura.Rows(0).Item("TelefonoCte"), "")
+        End If
+
         For Each product As DataRow In DataProductos.Rows
             adProductoRecl(idReclamacion, product.Item("CodProducto"))
+
+            'Insertar producto desde AS400 si no existe
+            getProductoERP(product.Item("CodProducto"))
+
         Next
 
         'Parameters:
@@ -836,14 +911,33 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim DataPedido As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
-        Dim sQueryPedido As String = "SELECT * FROM Z_RCPDMP00_PEDH WHERE PDNUMPEDI = " & pPed
-        Dim sQueryProductos As String = "SELECT MMNUMPEDI, MMNUMARTIC as CodProducto FROM Z_RCPDMM00_PEDD WHERE MMNUMPEDI =" & pPed
+        Dim sQueryPedido As String = "SELECT PDNUMCLIEN as codigoCte, PDNOMBRECL as NombreCte, PDTELEFONO as TelefonoCte, PDVENFACTU as " &
+                                     "codigoVendedor FROM @PEDIDO_CABECERA WHERE PDNUMPEDI = " & pPed
+        Dim sQueryProductos As String = "SELECT MMNUMPEDI NoPedido, MMNUMARTIC as CodProducto FROM @PEDIDO_DETALLE WHERE MMNUMPEDI =" & pPed
+
+        'Testing or Production Environment
+        If ConfigurationManager.AppSettings.Get("Environment") = "DEV" Then
+            sQueryPedido = sQueryPedido.Replace("@PEDIDO_CABECERA", "Z_RCPDMP00_PEDH")
+            sQueryProductos = sQueryProductos.Replace("@PEDIDO_DETALLE", "Z_RCPDMM00_PEDD")
+        Else
+            sQueryPedido = sQueryPedido.Replace("@PEDIDO_CABECERA", "QS36F.RCPDMP00")
+            sQueryProductos = sQueryProductos.Replace("@FACTURA_DETALLE", "QS36F.RCPDMM00")
+        End If
 
         DataPedido = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryPedido).Tables(0)
         DataProductos = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryProductos).Tables(0)
 
+        'Insertar Cliente desde AS400 si no existe
+        If DataPedido.Rows.Count > 0 Then
+            insertClienteFromAS400(DataPedido.Rows(0).Item("codigoCte"), DataPedido.Rows(0).Item("NombreCte"), DataPedido.Rows(0).Item("TelefonoCte"), "")
+        End If
+
         For Each product As DataRow In DataProductos.Rows
             adProductoRecl(idReclamacion, product.Item("CodProducto"))
+
+            'Insertar producto desde AS400 si no existe
+            getProductoERP(product.Item("CodProducto"))
+
         Next
 
         'Parameters:
@@ -866,6 +960,16 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
                                   "{call sp_getComentariosCronologico (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
+
+    Public Shared Function TestingERP(ByVal query As String) As Data.DataTable
+        Dim DataTest As New Data.DataTable
+
+        DataTest = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, query).Tables(0)
+
+        Return DataTest
+
+    End Function
+
 #End Region
 
 End Class
