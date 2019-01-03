@@ -774,20 +774,23 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     End Function
 
     Public Shared Function getProductoERP(ByVal cod_producto As String) As Data.DataTable
-        Dim param1 As New OdbcParameter("@producto", cod_producto)
+
+        Dim codigo As New OdbcParameter("@producto", cod_producto)
+        Dim tablaProductoAS400 = ConfigurationManager.AppSettings.Get("tablaProductoAS400")
 
         Dim data = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
-                                  "{call sp_getProducto (?)}", New OdbcParameter() {param1}).Tables(0)
+                                  "{call sp_getProducto (?)}", New OdbcParameter() {codigo}).Tables(0)
 
         If data.Rows.Count = 0 And ConfigurationManager.AppSettings.Get("Environment") <> "DEV" Then
 
             Dim dataAS400 = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text,
-                                 "SELECT MPNARTICUL, MPDESCRIPC, MPMODELO, MPCODPARTE FROM RCFAMP00 WHERE MPNARTICUL = " & cod_producto).Tables(0)
+                                 "SELECT MPNARTICUL, MPDESCRIPC, MPMODELO, MPCODPARTE FROM @TABLA_PRODUCTO WHERE MPNARTICUL = ".Replace("@TABLA_PRODUCTO", tablaProductoAS400) & cod_producto).Tables(0)
 
             If dataAS400.Rows.Count > 0 Then
-                Dim param2 As New OdbcParameter("@descripcion", dataAS400.Rows.Item(1))
-                Dim param3 As New OdbcParameter("@modelo", dataAS400.Rows.Item(2))
-                Dim param4 As New OdbcParameter("@codparte", dataAS400.Rows.Item(3))
+                Dim param1 As New OdbcParameter("@producto", cod_producto)
+                Dim param2 As New OdbcParameter("@descripcion", dataAS400.Rows(0).Item(1))
+                Dim param3 As New OdbcParameter("@modelo", dataAS400.Rows(0).Item(2))
+                Dim param4 As New OdbcParameter("@codparte", dataAS400.Rows(0).Item(3))
 
                 ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                      "{call sp_insertProductoFromAS400 (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
@@ -840,6 +843,8 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     Public Shared Function getVendedorNombreERP(ByVal codVendedor As String) As String
 
+        Dim tablaVendedoresAS400 = ConfigurationManager.AppSettings.Get("tablaVendedoresAS400")
+
         Dim VendedorNombre = ""
         Dim sQueryVendedor As String = "SELECT VENOMB FROM @VENDEDORES WHERE VECOEM = " & codVendedor
 
@@ -848,7 +853,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
             sQueryVendedor = sQueryVendedor.Replace("@VENDEDORES", "Z_RCFAVD00_VENDEDORES")
             VendedorNombre = "Testing Vendedor " & codVendedor
         Else
-            sQueryVendedor = sQueryVendedor.Replace("@VENDEDORES", "QS36F.RCFAVD00")
+            sQueryVendedor = sQueryVendedor.Replace("@VENDEDORES", tablaVendedoresAS400)
 
             Dim Vendedor As DataTable = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryVendedor).Tables(0)
             VendedorNombre = Vendedor.Rows(0).Item("VENOMB")
@@ -866,17 +871,20 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim DataFactura As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
+        Dim tablaFacturaCabeceraAS400 = ConfigurationManager.AppSettings.Get("tablaFacturaCabeceraAS400")
+        Dim tablaFacturaDetalleAS400 = ConfigurationManager.AppSettings.Get("tablaFacturaDetalleAS400")
+
         Dim sQueryFactura As String = "SELECT MFNUMCLIEN as codigoCte, MFNOMBRECL as NombreCte, MFTELEFONO as TelefonoCte, " &
                                         " MFVENFACTU as codigoVendedor FROM @FACTURA_CABECERA WHERE MFNUMFACT = " & pFact
-        Dim sQueryProductos As String = "SELECT c1 as CodProducto, c2 FROM @FACTURA_DETALLE WHERE c2 =" & pFact
+        Dim sQueryProductos As String = "SELECT MMNUMPRODU as CodProducto, MMNUMFACTU FROM @FACTURA_DETALLE WHERE MMNUMFACTU =" & pFact
 
         'Testing or Production Environment
         If ConfigurationManager.AppSettings.Get("Environment") = "DEV" Then
             sQueryFactura = sQueryFactura.Replace("@FACTURA_CABECERA", "Z_RCFAMF00_FACH")
-            sQueryProductos = sQueryProductos.Replace("@FACTURA_DETALLE", "Z_XXXXX_FACD") 'pendiente agregar original
+            sQueryProductos = sQueryProductos.Replace("@FACTURA_DETALLE", "Z_RCFAMM00_FACD")
         Else
-            sQueryFactura = sQueryFactura.Replace("@FACTURA_CABECERA", "QS36F.RCFAMF00")
-            sQueryProductos = sQueryProductos.Replace("@FACTURA_DETALLE", "Z_XXXXX_FACD") 'pendiente agregar original
+            sQueryFactura = sQueryFactura.Replace("@FACTURA_CABECERA", tablaFacturaCabeceraAS400)
+            sQueryProductos = sQueryProductos.Replace("@FACTURA_DETALLE", tablaFacturaDetalleAS400)
         End If
 
         DataFactura = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryFactura).Tables(0)
@@ -911,6 +919,9 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim DataPedido As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
+        Dim tablaPedidoCabeceraAS400 = ConfigurationManager.AppSettings.Get("tablaPedidoCabeceraAS400")
+        Dim tablaPedidoDetalleAS400 = ConfigurationManager.AppSettings.Get("tablaPedidoDetalleAS400")
+
         Dim sQueryPedido As String = "SELECT PDNUMCLIEN as codigoCte, PDNOMBRECL as NombreCte, PDTELEFONO as TelefonoCte, PDVENFACTU as " &
                                      "codigoVendedor FROM @PEDIDO_CABECERA WHERE PDNUMPEDI = " & pPed
         Dim sQueryProductos As String = "SELECT MMNUMPEDI NoPedido, MMNUMARTIC as CodProducto FROM @PEDIDO_DETALLE WHERE MMNUMPEDI =" & pPed
@@ -920,8 +931,8 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
             sQueryPedido = sQueryPedido.Replace("@PEDIDO_CABECERA", "Z_RCPDMP00_PEDH")
             sQueryProductos = sQueryProductos.Replace("@PEDIDO_DETALLE", "Z_RCPDMM00_PEDD")
         Else
-            sQueryPedido = sQueryPedido.Replace("@PEDIDO_CABECERA", "QS36F.RCPDMP00")
-            sQueryProductos = sQueryProductos.Replace("@FACTURA_DETALLE", "QS36F.RCPDMM00")
+            sQueryPedido = sQueryPedido.Replace("@PEDIDO_CABECERA", tablaPedidoCabeceraAS400)
+            sQueryProductos = sQueryProductos.Replace("@PEDIDO_DETALLE", tablaPedidoDetalleAS400)
         End If
 
         DataPedido = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryPedido).Tables(0)

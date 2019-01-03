@@ -59,7 +59,7 @@ Partial Class Reclamacion
                 CERRADA()
 
             Catch ex As Exception
-                lblMensaje.Text = ex.Message
+                lblMensaje.Text = "Exception details: " & ex.ToString()
             End Try
 
         End If
@@ -231,10 +231,10 @@ Partial Class Reclamacion
             If txtDescripcion.Text.Trim() = String.Empty Then lblMensaje.Text = "Debe especificar la descripción de la reclamación" : Exit Try
             If lbUsrInvolucrados.Items.Count < 1 Then lblMensaje.Text = "debe incluir por lo menos un usuario en la reclamación" : Exit Try
 
-            clsReclamaciones.guardaReclamacion(Pedido, _
-            txtDescripcion.Text.Trim(), ddlCliente.SelectedValue, txtContacto.Text.Trim(), _
-            Factura, ddlVentas.SelectedValue, txtTelefono.Text, ddlVendedor.SelectedValue, _
-            0, txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text, _
+            clsReclamaciones.guardaReclamacion(Pedido,
+            txtDescripcion.Text.Trim(), ddlCliente.SelectedValue, txtContacto.Text.Trim(),
+            Factura, ddlVentas.SelectedValue, txtTelefono.Text, ddlVendedor.SelectedValue,
+            0, txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text,
             ddlTipoDoc.SelectedValue, ddlChoferes.SelectedValue, ddlTransportista.SelectedValue)
 
             updateProductos() 'Aqui dentro se verifica si productos fueron deseleccionados para ser eliminados
@@ -244,7 +244,7 @@ Partial Class Reclamacion
             Response.Redirect("Reclamacion.aspx?id=" & Val(lblNoReclamacion.Text))
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
 
     End Sub
@@ -533,7 +533,7 @@ Partial Class Reclamacion
             ListaComentarios(dlVentas, iVentasDepto)
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
 
     End Sub
@@ -596,7 +596,7 @@ Partial Class Reclamacion
             EnviaCorreoNuevoInvolucradosVENDEDORES(pComentario, " NUEVO COMENTARIO - por" & Session.Item("name").ToString().Trim())
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
 
     End Sub
@@ -659,7 +659,7 @@ Partial Class Reclamacion
             EnviaCorreoNuevoInvolucradosVENDEDORES(pComentario, " NUEVO COMENTARIO - por" & Session.Item("name").ToString().Trim())
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
 
     End Sub
@@ -722,7 +722,7 @@ Partial Class Reclamacion
             EnviaCorreoNuevoInvolucradosVENDEDORES(pComentario, " NUEVO COMENTARIO - por" & Session.Item("name").ToString().Trim())
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
 
     End Sub
@@ -785,7 +785,7 @@ Partial Class Reclamacion
             EnviaCorreoNuevoInvolucradosVENDEDORES(pComentario, " NUEVO COMENTARIO - por" & Session.Item("name").ToString().Trim())
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
 
     End Sub
@@ -941,7 +941,7 @@ Partial Class Reclamacion
             End If
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
             If ex.Message = "Index was outside the bounds of the array." Then lblMensaje.Text = sMens
         End Try
     End Sub
@@ -1075,8 +1075,8 @@ Partial Class Reclamacion
                     rbFactura.Visible = True
                     rbPedido.Visible = False
                 Else
-                    txtPedido.Text = Split(dtDatos.Rows(0).Item("pedido"), "-")(0)
-                    txtTipoPedido.Text = Split(dtDatos.Rows(0).Item("pedido"), "-")(1).ToUpper()
+                    txtPedido.Text = dtDatos.Rows(0).Item("pedido")
+                    txtTipoPedido.Text = dtDatos.Rows(0).Item("pedido")
                     rbPedido.Visible = True
                     rbFactura.Visible = False
                 End If
@@ -1316,7 +1316,7 @@ Partial Class Reclamacion
             lbUsrInvolucrados.SelectedIndex = lbUsrInvolucrados.Items.Count
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
 
     End Sub
@@ -1337,7 +1337,7 @@ Partial Class Reclamacion
             lbUsuarios.SelectedIndex = lbUsuarios.Items.Count
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
     End Sub
 
@@ -1360,7 +1360,7 @@ Partial Class Reclamacion
             Response.Redirect("Reclamacion.aspx?id=" & Val(lblNoReclamacion.Text))
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
     End Sub
 
@@ -1378,7 +1378,7 @@ Partial Class Reclamacion
             End If
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
 
         End Try
 
@@ -1396,7 +1396,7 @@ Partial Class Reclamacion
             lbUsrInvolucrados.Items.Clear()
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
     End Sub
 
@@ -1413,7 +1413,7 @@ Partial Class Reclamacion
             If arrFiles.Count > 0 Then btnEliminarAdjV.Visible = True
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
 
         End Try
     End Sub
@@ -1455,7 +1455,7 @@ Partial Class Reclamacion
             If arrFiles.Count > 0 Then btnEliminarAdjP.Visible = True
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
 
         End Try
     End Sub
@@ -1495,7 +1495,7 @@ Partial Class Reclamacion
             If arrFiles.Count > 0 Then btnEliminarAdjL.Visible = True
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
 
         End Try
     End Sub
@@ -1535,7 +1535,7 @@ Partial Class Reclamacion
             If arrFiles.Count > 0 Then btnEliminarAdjF.Visible = True
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
 
         End Try
     End Sub
@@ -1575,7 +1575,7 @@ Partial Class Reclamacion
             If arrFiles.Count > 0 Then btnEliminarAdjC.Visible = True
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
 
         End Try
     End Sub
@@ -1763,7 +1763,7 @@ Partial Class Reclamacion
             fillProductos(Val(lblNoReclamacion.Text), False)
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
 
     End Sub
@@ -1772,7 +1772,7 @@ Partial Class Reclamacion
         Try
             clsReclamaciones.guardaDescrpRecl(lblNoReclamacion.Text, txtDescripcion.Text)
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
     End Sub
 
@@ -1780,7 +1780,7 @@ Partial Class Reclamacion
         Try
             getUsuariosInvLB(ddlGruposF.SelectedValue)
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
     End Sub
 
@@ -1855,7 +1855,7 @@ Partial Class Reclamacion
         Try
             clsReclamaciones.guardaCorreo(lblNoReclamacion.Text, txtCorreo.Text)
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
     End Sub
 
@@ -1872,7 +1872,7 @@ Partial Class Reclamacion
             End If
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
 
         End Try
     End Sub
@@ -1892,7 +1892,7 @@ Partial Class Reclamacion
             Next
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
     End Sub
     Protected Sub btnAgregarMotivoFast_Click(sender As Object, e As EventArgs) Handles btnAgregarMotivoFast.Click
@@ -1913,7 +1913,7 @@ Partial Class Reclamacion
 
             ddlMotivos.SelectedItem.Text = txtMotivoFast.Text
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
         End Try
     End Sub
     Protected Sub btnVerComentarios_Click(sender As Object, e As EventArgs) Handles btnVerComentarios.Click
@@ -1959,7 +1959,7 @@ Partial Class Reclamacion
             End If
 
         Catch ex As Exception
-            lblMensaje.Text = ex.Message
+            lblMensaje.Text = "Exception details: " & ex.ToString()
 
         End Try
     End Sub
