@@ -461,7 +461,7 @@
 
 
                         <cc1:AccordionPane ID="AccordionPane2" runat="server">
-                            <Header> <span style="padding-left: 5px;">PRODUCCION</span> </Header>
+                            <Header> <span style="padding-left: 5px;">ENSAMBLAJE</span> </Header>
                             <Content>
                                 <asp:Panel ID="panelProduccion" runat="server" Width="100%">
                                     <table width="100%">
@@ -533,7 +533,7 @@
 
 
                         <cc1:AccordionPane ID="AccordionPane3" runat="server">
-                            <Header> <span style="padding-left: 5px;">LOGISTICA</span> </Header>
+                            <Header> <span style="padding-left: 5px;">OPERACIONES</span> </Header>
                             <Content>
                                 <asp:Panel ID="panelLogistica" runat="server" Width="100%">
                                     <table width="100%">

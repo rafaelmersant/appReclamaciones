@@ -41,7 +41,7 @@ Partial Class Areas
         Dim obj As Button = sender
 
         Try
-            clsReclamaciones.delMotivo(Integer.Parse(obj.CommandArgument))
+            clsReclamaciones.delArea(Integer.Parse(obj.CommandArgument))
             fillAreas()
 
         Catch ex As Exception

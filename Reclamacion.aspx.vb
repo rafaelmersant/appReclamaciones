@@ -250,7 +250,7 @@ Partial Class Reclamacion
     End Sub
 
     Private Sub updateProductos()
-        Dim indexDeleted = 1
+        Dim indexDeleted = 0
 
         For Each row As GridViewRow In grdProdReclam.Rows
             Dim chkProd = CType(row.Cells(0).FindControl("chkProd"), CheckBox)
