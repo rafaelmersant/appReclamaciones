@@ -82,10 +82,10 @@ Public Class clsReclamaciones
 
 #Region "INSERT's"
 
-    Public Shared Function guardaReclamacion(ByVal pedido As String, ByVal descripcion As String, ByVal cliente As String, _
-ByVal contacto As String, ByVal factura As String, ByVal ventas As String, ByVal telefono As String, ByVal vendedor As String, ByVal planta As Integer, _
-ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As String, ByVal correo As String, ByVal tipoDoc As String, ByVal chofer As String, _
-    ByVal transportista As String) As Integer
+    Public Shared Function guardaReclamacion(ByVal pedido As String, ByVal descripcion As String, ByVal cliente As String,
+ByVal contacto As String, ByVal factura As String, ByVal ventas As String, ByVal telefono As String, ByVal vendedor As String, ByVal planta As Integer,
+ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As String, ByVal correo As String, ByVal tipoDoc As String, ByVal chofer As String,
+    ByVal transportista As String, nombreCte As String) As Integer
         Dim param1 As New OdbcParameter("@pedido", pedido)
         Dim param2 As New OdbcParameter("@descripcion", descripcion)
         Dim param3 As New OdbcParameter("@cliente", cliente)
@@ -102,13 +102,15 @@ ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As Strin
         Dim param14 As New OdbcParameter("@tipoDoc", tipoDoc)
         Dim param15 As New OdbcParameter("@chofer", chofer)
         Dim param16 As New OdbcParameter("@transportista", transportista)
+        Dim param17 As New OdbcParameter("@nombreCte", nombreCte)
 
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), _
-        CommandType.StoredProcedure, "{call sp_guardaReclamacion (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}", New OdbcParameter() {param1, param2, _
-                                                                    param3, param4, param5, param6, _
-                                                                    param7, param8, param9, param10, _
-                                                                    param11, param12, param13, param14, param15, param16})
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL),
+        CommandType.StoredProcedure, "{call sp_guardaReclamacion (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}", New OdbcParameter() {param1, param2,
+                                                                    param3, param4, param5, param6,
+                                                                    param7, param8, param9, param10,
+                                                                    param11, param12, param13, param14,
+                                                                    param15, param16, param17})
 
     End Function
 

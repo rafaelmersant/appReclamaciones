@@ -236,7 +236,7 @@ Partial Class Reclamacion
             txtDescripcion.Text.Trim(), ddlCliente.SelectedValue, txtContacto.Text.Trim(),
             Factura, ddlVentas.SelectedValue, txtTelefono.Text, ddlVendedor.SelectedValue,
             0, txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text,
-            ddlTipoDoc.SelectedValue, ddlChoferes.SelectedValue, ddlTransportista.SelectedValue)
+            ddlTipoDoc.SelectedValue, ddlChoferes.SelectedValue, ddlTransportista.SelectedValue, ddlCliente.SelectedItem.Text)
 
             updateProductos() 'Aqui dentro se verifica si productos fueron deseleccionados para ser eliminados
 
