@@ -246,9 +246,9 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
 #Region "UPDATE's"
 
-    Public Shared Function closeReclamacion(ByVal id_recla As Integer, ByVal conclusion As String, ByVal area As Integer, _
-    ByVal motivo As Integer, ByVal monto As Decimal, ByVal ncnd As String, ByVal moneda As String, ByVal cantidad As Decimal, _
-    ByVal metrica As String) As Integer
+    Public Shared Function closeReclamacion(ByVal id_recla As Integer, ByVal conclusion As String, ByVal area As Integer,
+    ByVal motivo As Integer, ByVal monto As Decimal, ByVal ncnd As String, ByVal moneda As String, ByVal cantidad As Decimal,
+    ByVal metrica As String, clase_doc As String) As Integer
         Dim param1 As New OdbcParameter("@id_reclamacion", id_recla)
         Dim param2 As New OdbcParameter("@conclusion", conclusion)
         Dim param3 As New OdbcParameter("@area", area)
@@ -258,10 +258,11 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param7 As New OdbcParameter("@moneda", moneda)
         Dim param8 As New OdbcParameter("@cantidad", cantidad)
         Dim param9 As New OdbcParameter("@metrica", metrica)
+        Dim param10 As New OdbcParameter("@clase_doc", clase_doc)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), _
-        CommandType.StoredProcedure, "{call sp_closeReclamacion (?,?,?,?,?,?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4, param5, _
-                                                                                param6, param7, param8, param9})
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL),
+        CommandType.StoredProcedure, "{call sp_closeReclamacion (?,?,?,?,?,?,?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4, param5,
+                                                                                param6, param7, param8, param9, param10})
 
     End Function
 
@@ -798,7 +799,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
                                      "{call sp_insertProductoFromAS400 (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
             End If
 
-            Return dataAS400
+            Return getProducto(cod_producto)
         Else
 
             Return data
@@ -875,9 +876,10 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
         Dim tablaFacturaCabeceraAS400 = ConfigurationManager.AppSettings.Get("tablaFacturaCabeceraAS400")
         Dim tablaFacturaDetalleAS400 = ConfigurationManager.AppSettings.Get("tablaFacturaDetalleAS400")
+        Dim tiposFacturas = ConfigurationManager.AppSettings.Get("tiposFacturas")
 
         Dim sQueryFactura As String = "SELECT MFNUMCLIEN as codigoCte, MFNOMBRECL as NombreCte, MFTELEFONO as TelefonoCte, " &
-                                        " MFVENFACTU as codigoVendedor FROM @FACTURA_CABECERA WHERE MFNUMFACT = " & pFact
+                                        " MFVENFACTU as codigoVendedor FROM @FACTURA_CABECERA WHERE MFTIPOFACT IN " & tiposFacturas & " AND MFNUMFACT = " & pFact
         Dim sQueryProductos As String = "SELECT MMNUMPRODU as CodProducto, MMNUMFACTU FROM @FACTURA_DETALLE WHERE MMNUMFACTU =" & pFact
 
         'Testing or Production Environment
@@ -923,9 +925,10 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
         Dim tablaPedidoCabeceraAS400 = ConfigurationManager.AppSettings.Get("tablaPedidoCabeceraAS400")
         Dim tablaPedidoDetalleAS400 = ConfigurationManager.AppSettings.Get("tablaPedidoDetalleAS400")
+        Dim tiposPedidos = ConfigurationManager.AppSettings.Get("tiposPedidos")
 
         Dim sQueryPedido As String = "SELECT PDNUMCLIEN as codigoCte, PDNOMBRECL as NombreCte, PDTELEFONO as TelefonoCte, PDVENFACTU as " &
-                                     "codigoVendedor FROM @PEDIDO_CABECERA WHERE PDNUMPEDI = " & pPed
+                                     "codigoVendedor FROM @PEDIDO_CABECERA WHERE PDTIPOPEDI IN " & tiposPedidos & " AND PDNUMPEDI = " & pPed
         Dim sQueryProductos As String = "SELECT MMNUMPEDI NoPedido, MMNUMARTIC as CodProducto FROM @PEDIDO_DETALLE WHERE MMNUMPEDI =" & pPed
 
         'Testing or Production Environment

@@ -39,6 +39,13 @@ Partial Class Reclamacion
                     ddlMetrica.Items.Add(New ListItem(m, m))
                 Next
 
+                'Poblar Clase Documento
+                ddlClaseDoc.Items.Clear()
+                For Each m As String In ConfigurationManager.AppSettings.Get("ClaseDoc").Split(";")
+                    ddlClaseDoc.Items.Add(New ListItem(m, m))
+                Next
+
+
                 txtFecha.Text = Format(Now.Date, "dd/MM/yyyy")
                 fillGruposDDL()
 
@@ -165,7 +172,7 @@ Partial Class Reclamacion
             btnAgregarL.Visible = True
             btnAgregarF.Visible = True
             btnAgregarC.Visible = True
-
+            btnAgregarA.Visible = True
         Else
 
             Select Case Session.Item("depto")
@@ -179,6 +186,8 @@ Partial Class Reclamacion
                     btnAgregarF.Visible = True
                 Case 5
                     btnAgregarC.Visible = True
+                Case 6
+                    btnAgregarA.Visible = True
             End Select
 
         End If
@@ -192,6 +201,7 @@ Partial Class Reclamacion
             btnAgregarL.Visible = False
             btnAgregarF.Visible = False
             btnAgregarC.Visible = False
+            btnAgregarA.Visible = False
 
             btnAgregarMotivoFast.Visible = False
 
@@ -256,14 +266,15 @@ Partial Class Reclamacion
         For Each row As GridViewRow In grdProdReclam.Rows
             Dim chkProd = CType(row.Cells(0).FindControl("chkProd"), CheckBox)
 
+            If indexDeleted = grdProdReclam.Rows.Count - 1 Then
+                Throw New Exception("Debe al menos tener un producto en la reclamación.")
+            End If
+
             If chkProd.Checked = False Then
                 clsReclamaciones.delProducto(chkProd.CssClass) 'En este caso el id_producto esta contenido en la propiedad CssClass
                 indexDeleted += 1
             End If
 
-            If indexDeleted = grdProdReclam.Rows.Count Then
-                Throw New Exception("Debe al menos tener un producto en la reclamación.")
-            End If
         Next
 
     End Sub
@@ -752,6 +763,69 @@ Partial Class Reclamacion
     End Sub
 
     '*************************************************************************************************************
+    'AUDITORIA ***************************************************************************************************
+    '*************************************************************************************************************
+    Protected Sub btnAgregarA_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAgregarA.Click
+        txtComentarioA.Visible = True
+        btnGuardaA.Visible = True
+        btnCancelarA.Visible = True
+        btnAgregarA.Enabled = False
+
+        fuFileA.Visible = True
+        btnAgregarFileA.Visible = True
+        LiteralFileA.Visible = True
+
+    End Sub
+
+    Protected Sub btnGuardaA_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnGuardaA.Click
+        Try
+            Dim pComentario As String = txtComentarioA.Text
+            Dim iAUDDepto As Integer = ConfigurationManager.AppSettings.Get("deptoAUDITORIA")
+
+            If txtComentarioA.Text.Trim() <> String.Empty Then
+                intComentario = guardaComentario(txtComentarioA.Text.Trim(), iAUDDepto)
+            Else : Exit Try
+            End If
+
+            txtComentarioA.Visible = False : txtComentarioA.Text = String.Empty
+            btnGuardaA.Visible = False
+            btnCancelarA.Visible = False
+            btnAgregarA.Enabled = True
+
+            fuFileA.Visible = False
+            btnAgregarFileA.Visible = False
+            LiteralFileA.Visible = False
+            btnEliminarAdjA.Visible = False
+
+            'Si existen archivos para adjuntar
+            If arrFiles.Count > 0 Then
+                AgregarFile(intComentario, iAUDDepto)
+                CleanAuditoria()
+            End If
+
+            ListaComentarios(dlAuditoria, iAUDDepto)
+
+            EnviaCorreoNuevoComentario(pComentario, " NUEVO COMENTARIO - por" & Session.Item("name").ToString().Trim())
+            EnviaCorreoNuevoInvolucradosVENDEDORES(pComentario, " NUEVO COMENTARIO - por" & Session.Item("name").ToString().Trim())
+
+        Catch ex As Exception
+            lblMensaje.Text = "Exception details: " & ex.ToString()
+        End Try
+
+    End Sub
+
+    Protected Sub btnCancelarA_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnCancelarA.Click
+        Try
+            txtComentarioA.Text = String.Empty
+            btnGuardaA_Click(Nothing, Nothing)
+            btnEliminarAdjA_Click(Nothing, Nothing)
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    '*************************************************************************************************************
     'CALIDAD *****************************************************************************************************
     '*************************************************************************************************************
     Protected Sub btnAgregarC_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAgregarC.Click
@@ -1053,6 +1127,8 @@ Partial Class Reclamacion
             txtCantidad.Visible = True
             lblMetrica.Visible = True
             ddlMetrica.Visible = True
+            lblClaseDoc.Visible = True
+            ddlClaseDoc.Visible = True
             '--CONCLUSION
 
             If Session.Item("nivel").ToString().Trim() <> 2 Then
@@ -1180,10 +1256,16 @@ Partial Class Reclamacion
                     lblCantidad.Visible = False
                     ddlMetrica.Visible = False
                     lblMetrica.Visible = False
-
                 Else
                     txtCantidad.Text = FormatNumber(dtDatos.Rows(0).Item("cantidad"), 2)
                     ddlMetrica.Text = Trim(dtDatos.Rows(0).Item("metrica"))
+                End If
+
+                If dtDatos.Rows(0).Item("clase_doc") Is DBNull.Value Then
+                    ddlClaseDoc.Visible = False
+                    lblClaseDoc.Visible = False
+                Else
+                    ddlClaseDoc.Text = Trim(dtDatos.Rows(0).Item("clase_doc"))
                 End If
                 '***************************
 
@@ -1233,6 +1315,10 @@ Partial Class Reclamacion
                 ddlMetrica.Visible = True
                 ddlMetrica.Enabled = True
 
+                lblClaseDoc.Visible = True
+                ddlClaseDoc.Visible = True
+                ddlClaseDoc.Enabled = True
+
                 ddlAreas.Enabled = True
                 ddlMotivos.Enabled = True
 
@@ -1257,6 +1343,7 @@ Partial Class Reclamacion
 
                 txtCantidad.ReadOnly = True
                 ddlMetrica.Enabled = False
+                ddlClaseDoc.Enabled = False
             End If
             '--CONCLUSION
 
@@ -1295,6 +1382,9 @@ Partial Class Reclamacion
             txtCantidad.Visible = False
             lblMetrica.Visible = False
             ddlMetrica.Visible = False
+
+            lblClaseDoc.Visible = False
+            ddlClaseDoc.Visible = False
             '--CONCLUSION
 
             getUsuariosInvLB(ddlGruposF.SelectedValue)
@@ -1365,7 +1455,7 @@ Partial Class Reclamacion
 
             clsReclamaciones.closeReclamacion(Val(lblNoReclamacion.Text), txtConclusion.Text.Trim(),
             ddlAreas.SelectedValue, ddlMotivos.SelectedValue, txtMonto.Text, txtNCND.Text, ddlMoneda.SelectedValue,
-            txtCantidad.Text, ddlMetrica.SelectedValue)
+            txtCantidad.Text, ddlMetrica.SelectedValue, ddlClaseDoc.SelectedValue)
 
             EnviaCorreoConclusion()
             EnviaCorreoNuevoInvolucradosVENDEDORES(txtConclusion.Text, " CERRADA")
@@ -1384,7 +1474,7 @@ Partial Class Reclamacion
             Dim dato As DataTable = clsReclamaciones.getProductoERP(txtCodProd.Text)
 
             If dato.Rows.Count > 0 Then
-                txtNameProducto.Text = dato.Rows(0).Item("MPDESCRIPC")
+                txtNameProducto.Text = dato.Rows(0).Item("descripcion")
                 lblMensaje.Text = ""
             Else
                 lblMensaje.Text = "No se encuentra el producto. Verifique que digito el código correcto."
@@ -1575,6 +1665,46 @@ Partial Class Reclamacion
         btnEliminarAdjF.Visible = False
     End Sub
 
+    'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM FINANZAS
+    Protected Sub btnAgregarFileA_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAgregarFileA.Click
+        Try
+            If fuFileA.PostedFile.FileName.Trim() <> String.Empty Then GuardaFilePath(fuFileA, "Auditoria") Else Exit Try
+
+            arrFiles.Add(fuFileA.PostedFile.FileName)
+
+            LiteralFileA.Text &= "<a Class=""LetraFiles"" href=""Adjuntos/Auditoria/" & fuFileA.FileName & """ target=""_blank"" > " & fuFileA.FileName & "</a> |"
+            iFiles += 1
+
+            If arrFiles.Count > 0 Then btnEliminarAdjA.Visible = True
+
+        Catch ex As Exception
+            lblMensaje.Text = "Exception details: " & ex.ToString()
+
+        End Try
+    End Sub
+
+    Protected Sub dlAuditoria_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataListItemEventArgs) Handles dlAuditoria.ItemDataBound
+
+        Dim dtArchivos As New DataTable
+        Dim deptoAuditoria As Integer = Integer.Parse(ConfigurationManager.AppSettings.Get("deptoAUDITORIA"))
+
+        dtArchivos = clsReclamaciones.getArchivos(deptoAuditoria, Integer.Parse(CType(e.Item.FindControl("idcom"), Label).Text))
+
+        If dtArchivos.Rows.Count > 0 Then
+            CType(e.Item.FindControl("lFilesA"), Literal).Text = "<div Class=""LetraFiles""><b>Adjuntos:</b>"
+            For Each row As DataRow In dtArchivos.Rows
+                CType(e.Item.FindControl("lFilesA"), Literal).Text &= " <a Class=""LetraFiles"" href=""Adjuntos/Auditoria/" & row.Item("filen") & """ target=""_blank"" > " & row.Item("filen") & "</a> |"
+            Next
+            CType(e.Item.FindControl("lFilesA"), Literal).Text &= "</div>"
+        End If
+    End Sub
+
+    Protected Sub btnEliminarAdjA_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnEliminarAdjA.Click
+        CleanAuditoria()
+        DeleteFilesPath(arrFiles, "Auditoria")
+        btnEliminarAdjA.Visible = False
+    End Sub
+
     'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM CALIDAD
     Protected Sub btnAgregarFileC_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAgregarFileC.Click
         Try
@@ -1634,6 +1764,11 @@ Partial Class Reclamacion
     Private Sub CleanFinanzas()
         arrFiles = New ArrayList()
         LiteralFileF.Text = ""
+    End Sub
+
+    Private Sub CleanAuditoria()
+        arrFiles = New ArrayList()
+        LiteralFileA.Text = ""
     End Sub
 
     Private Sub CleanCalidad()

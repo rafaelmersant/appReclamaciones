@@ -1,5 +1,5 @@
 Imports System.Data
-
+Imports System.Net
 Imports System.Net.Mail
 
 Partial Class Usuarios
@@ -32,6 +32,9 @@ Partial Class Usuarios
     End Sub
 
     Private Sub CorreoBienvenida()
+
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+
         Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
 
         Dim obj_mail As New MailMessage()
@@ -42,7 +45,7 @@ Partial Class Usuarios
         obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
         senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
         senderMail.Credentials = New Net.NetworkCredential(usrName, usrPass)
-        senderMail.EnableSsl = True
+
         senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
 
         If txtCorreo.Text.Trim() = String.Empty Then Exit Sub
@@ -51,16 +54,30 @@ Partial Class Usuarios
         obj_mail.Subject = "Bienvenido(a) al Sistema RC"
         obj_mail.IsBodyHtml = True
 
-        obj_mail.Body = "<p><b>" & txtNombre.Text.Trim() & "</b>, le damos la Bienvenida al Sistema de Reclamaciones de Clientes. " & _
-        "Usted forma parte del mismo a partir de ahora. </p>" & _
-        "<p>Para accesar solo tiene que presionar el link: " & ConfigurationManager.AppSettings.Get("Pagina") & "</p>" & _
-        "<b> Usuario: </b>" & txtUsuario.Text.Trim() & "<br/> <br/>" & _
-        "<p> Para obtener la <b>contraseña</b> favor comunicarse con el administrador del sistema. </p>" & _
-        "<p><br><br> Gracias por usar </p>" & _
+        obj_mail.Body = "<p><b>" & txtNombre.Text.Trim() & "</b>, le damos la Bienvenida al Sistema de Reclamaciones de Clientes. " &
+        "Usted forma parte del mismo a partir de ahora. </p>" &
+        "<p>Para accesar solo tiene que presionar el link: " & ConfigurationManager.AppSettings.Get("Pagina") & "</p>" &
+        "<b> Usuario: </b>" & txtUsuario.Text.Trim() & "<br/> <br/>" &
+        "<p> Para obtener la <b>contraseña</b> favor comunicarse con el administrador del sistema. </p>" &
+        "<p><br><br> Gracias por usar </p>" &
         "</br> <p> <b>Sistema de Reclamaciones de Clientes</b> </p>"
 
-        senderMail.Send(obj_mail)
+        Try
+            senderMail.Send(obj_mail)
+
+        Catch em As SmtpFailedRecipientException
+            Throw New Exception(em.Source & "|" & em.Message & "|" & em.StatusCode)
+
+        Catch ex As Exception
+            Throw New Exception(ex.ToString())
+
+        Finally
+            obj_mail.Dispose()
+        End Try
+
     End Sub
+
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Session.Item("usuario") <> String.Empty Then Response.Redirect("Login.aspx")

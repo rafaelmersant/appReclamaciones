@@ -178,7 +178,7 @@
                             <asp:Button ID="btnSelProductos" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                 BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_producto") %>'
                                 CssClass="gridItems" Font-Bold="True" ForeColor="White"
-                                Text="Seleccionar todos" Visible="False" Height="24px" Width="117px" /></td>
+                                Text="Seleccionar todos" Height="24px" Width="117px" /></td>
                                     <td><asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Names="Verdana"
                                 Text="Cod. Producto" Width="80px" CssClass="LetraH1"></asp:Label> </td>
                                     <td>
@@ -191,9 +191,9 @@
                             <asp:Button ID="btnAgregarProd" runat="server" BackColor="#FF2D2D" BorderColor="Black"
                                 BorderStyle="Solid" CausesValidation="False" CommandArgument='<%# bind("id_producto") %>'
                                 CssClass="gridItems" Font-Bold="True" ForeColor="White"
-                                Text="Agregar Producto" Visible="False" Height="24px" Width="104px" /></td>
+                                Text="Agregar Producto" Height="24px" Width="104px" /></td>
                                     <td>
-                                        <asp:ImageButton ID="imgbtnRefresh" runat="server" ImageUrl="~/Images/refresh.png" ToolTip="Guardar cambios en productos" Visible="False" /></td>
+                                        <asp:ImageButton ID="imgbtnRefresh" runat="server" ImageUrl="~/Images/refresh.png" ToolTip="Guardar cambios en productos" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="7">
@@ -389,7 +389,7 @@
                     <Panes>
 
                         <cc1:AccordionPane ID="AccordionPane1" runat="server" EnableViewState="true">
-                            <Header> <span style="padding-left: 5px;">VENTAS</span></Header>
+                            <Header> <span style="padding-left: 5px;">COMERCIAL</span></Header>
                             <Content>
                                 <asp:Panel ID="panelVentas" runat="server" EnableViewState="true" Width="100%">
                                     <table width="100%">
@@ -461,7 +461,7 @@
 
 
                         <cc1:AccordionPane ID="AccordionPane2" runat="server">
-                            <Header> <span style="padding-left: 5px;">ENSAMBLAJE</span> </Header>
+                            <Header> <span style="padding-left: 5px;">COMPRAS</span> </Header>
                             <Content>
                                 <asp:Panel ID="panelProduccion" runat="server" Width="100%">
                                     <table width="100%">
@@ -748,6 +748,80 @@
                             </Content>
                         </cc1:AccordionPane>
 
+
+                        <cc1:AccordionPane ID="AccordionPane6" runat="server">
+                            <Header> <span style="padding-left: 5px;">AUDITORIA</span> </Header>
+                            <Content>
+                                <asp:Panel ID="panelAuditoria" runat="server" Width="100%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td align="left">
+                                                <asp:DataList ID="dlAuditoria" runat="server" Width="100%">
+                                                    <ItemTemplate>
+                                                        <table style="width: 100%; border-bottom: gray thin ridge">
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <asp:Label ID="lblComentarioA" runat="server" Font-Names="Verdana" Font-Size="11px"
+                                                                        Text='<%# bind("Comentario") %>'></asp:Label>
+                                                                    <asp:Label ID="idcom" runat="server" Font-Names="Verdana" Font-Size="11px" Text='<%# bind("id_Comentario") %>'
+                                                                        Visible="False"></asp:Label></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="right" colspan="2">
+                                                                    <asp:Label ID="lblUsuarioA" runat="server" Font-Bold="True" Font-Italic="True" Font-Names="Verdana"
+                                                                        Font-Size="10px" Text='<%# bind("Usuario") %>'></asp:Label>
+                                                                    <asp:Label ID="lblFechaA" runat="server" Font-Bold="True" Font-Italic="True" Font-Names="Verdana"
+                                                                        Font-Size="10px" Text='<%# bind("Fecha") %>'></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:Literal ID="lFilesA" runat="server"></asp:Literal></td>
+                                                            </tr>
+                                                        </table>
+                                                    </ItemTemplate>
+                                                </asp:DataList>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Panel ID="Panel1" runat="server" Width="100%">
+                                                    <asp:TextBox ID="txtComentarioA" runat="server" Height="46px" TextMode="MultiLine"
+                                                        Visible="false" Width="99%"></asp:TextBox>
+                                                    <asp:Button ID="btnGuardaA" runat="server" BackColor="#FF2D2D" BorderColor="Black"
+                                                        BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
+                                                        Text="Guardar" Visible="false" Width="86px" />
+                                                    <asp:Button ID="btnCancelarA" runat="server" BackColor="#FF2D2D" BorderColor="Black"
+                                                        BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
+                                                        OnClick="btnCancelarA_Click" Text="Cancelar" Visible="false" Width="86px" />
+                                                </asp:Panel>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                <asp:Button ID="btnAgregarA" runat="server" OnClick="btnAgregarA_Click" Text=" + "
+                                                    Visible="false" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left">
+                                                <asp:FileUpload ID="fuFileA" runat="server" CssClass="LetraFiles" Visible="False"
+                                                    Width="522px" /> <br />
+                                                <asp:Button ID="btnAgregarFileA" runat="server" BackColor="#FF2D2D" BorderColor="Black"
+                                                    BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
+                                                    Height="20px" Text="Agregar archivo" Visible="False" /><br />
+                                                <asp:Literal ID="LiteralFileA" runat="server" Visible="False"></asp:Literal>
+                                                <asp:Button ID="btnEliminarAdjA" runat="server" BackColor="#FF2D2D" BorderColor="Black"
+                                                    BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
+                                                    Height="20px" Text="Quitar Adjuntos" Visible="False" Width="112px" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </asp:Panel>
+
+                            </Content>
+                        </cc1:AccordionPane>
+
                     </Panes>
                 </cc1:Accordion>
             </td>
@@ -798,7 +872,7 @@
                                 TabIndex="1" Width="92px" AutoCompleteType="Disabled"></asp:TextBox></td>
                         <td valign="top">
                             <asp:Label ID="lblNCND" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
-                                Text="NC/ND"></asp:Label></td>
+                                Text="# Doc."></asp:Label></td>
                         <td style="width: 254px" valign="top">
                             <asp:TextBox ID="txtNCND" runat="server" CssClass="LetraH2 NuevosCampos"
                                 TabIndex="1" Width="92px" AutoCompleteType="Disabled"></asp:TextBox>
@@ -825,6 +899,14 @@
                                 Text="Metrica"></asp:Label></td>
                         <td style="width: 254px" valign="top">
                             <asp:DropDownList ID="ddlMetrica" runat="server" Width="86px" TabIndex="9" CssClass="LetraH2 NuevosCampos" Enabled="False">
+                                <asp:ListItem Value="0">...</asp:ListItem>
+                                <asp:ListItem>DOP</asp:ListItem>
+                                <asp:ListItem>USD</asp:ListItem>
+                                <asp:ListItem>CRC</asp:ListItem>
+                            </asp:DropDownList>
+                            <asp:Label ID="lblClaseDoc" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
+                                Text="Clase Doc."></asp:Label>
+                            <asp:DropDownList ID="ddlClaseDoc" runat="server" Width="86px" TabIndex="9" CssClass="LetraH2 NuevosCampos" Enabled="False">
                                 <asp:ListItem Value="0">...</asp:ListItem>
                                 <asp:ListItem>DOP</asp:ListItem>
                                 <asp:ListItem>USD</asp:ListItem>
