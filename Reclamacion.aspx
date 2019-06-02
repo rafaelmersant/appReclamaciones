@@ -61,8 +61,8 @@
                                     Text="Buscar Por" Width="80px" Font-Size="12px"></asp:Label></td>
                             <td valign="bottom">
                                 <asp:RadioButton ID="rbFactura" runat="server" Checked="True" CssClass="LetraH2"
-                                    Text="Factura" GroupName="Find" />
-                                <asp:RadioButton ID="rbPedido" runat="server" CssClass="LetraH2" Text="Pedido" GroupName="Find" /></td>
+                                    Text="Factura" GroupName="Find" AutoPostBack="True" />
+                                <asp:RadioButton ID="rbPedido" runat="server" CssClass="LetraH2" Text="Pedido" GroupName="Find" AutoPostBack="True" /></td>
                             <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
                                 <asp:Label ID="Label7" runat="server" Font-Bold="True" Font-Names="Verdana"
                                     Text="Fecha" Width="53px" CssClass="LetraH1" Font-Size="12px"></asp:Label></td>
@@ -75,6 +75,8 @@
                                     Text="Numero #" Width="80px" CssClass="LetraH1" Font-Size="12px"></asp:Label></td>
                             <td>
                                 <asp:TextBox ID="txtPedido" runat="server" TabIndex="1" Height="11px" Width="87px" CssClass="LetraH2"></asp:TextBox>
+                                <asp:DropDownList ID="ddlTipoFactura" runat="server" CssClass="LetraH2" TabIndex="5" Width="70px">
+                                </asp:DropDownList>
                                 <asp:ImageButton
                                     ID="btnBuscaPedido" runat="server" ImageUrl="~/Images/search.png" />
                                 <asp:Label ID="lblExiste" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="10px"

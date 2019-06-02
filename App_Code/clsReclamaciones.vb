@@ -4,11 +4,14 @@ Imports Microsoft.VisualBasic
 Imports System.Data
 Imports System.Data.Odbc
 Imports Microsoft.ApplicationBlocks.Data
-Imports wsClientes
-Imports wsFacturas
-Imports wsProductos
-Imports wsPedidos
-Imports wsVendedores
+Imports System.Net
+Imports System.Net.Mail
+
+'Imports wsClientes
+'Imports wsFacturas
+'Imports wsProductos
+'Imports wsPedidos
+'Imports wsVendedores
 
 
 Public Class clsReclamaciones
@@ -75,7 +78,7 @@ Public Class clsReclamaciones
         adapter = New OdbcDataAdapter(ocmd)
 
         adapter.Fill(dsData)
-        
+
         Return dsData
     End Function
 
@@ -120,7 +123,7 @@ ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As Strin
         Dim param3 As New OdbcParameter("@id_usuario", id_usuario)
         Dim param4 As New OdbcParameter("@depto", depto)
 
-        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                  "{call sp_guardaComentario (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
 
     End Function
@@ -129,7 +132,7 @@ ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As Strin
         Dim param1 As New OdbcParameter("@id_reclamacion", id_recla)
         Dim param2 As New OdbcParameter("@descripcion", descrp)
 
-        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                  "{call sp_guardaReclDescrp (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -138,7 +141,7 @@ ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As Strin
         Dim param1 As New OdbcParameter("@id_reclamacion", id_recla)
         Dim param2 As New OdbcParameter("@correo", correo)
 
-        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                  "{call sp_guardaCorreo (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -147,12 +150,12 @@ ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As Strin
         Dim param1 As New OdbcParameter("@id_reclamacion", id_recla)
         Dim param2 As New OdbcParameter("@id_usuario", usuario)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_setUsrReclamacion (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
 
-    Public Shared Function guardaUsuario(ByVal usuario As String, ByVal contrasena As String, ByVal idempleado As Decimal, _
+    Public Shared Function guardaUsuario(ByVal usuario As String, ByVal contrasena As String, ByVal idempleado As Decimal,
 ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal nivel As Integer, ByVal status As String) As Integer
         Dim param1 As New OdbcParameter("@usuario", usuario)
         Dim param2 As New OdbcParameter("@contrasena", contrasena)
@@ -163,7 +166,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param7 As New OdbcParameter("@nivel", nivel)
         Dim param8 As New OdbcParameter("@status", status)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_newUsr (?,?,?,?,?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4, param5, param6, param7, param8})
 
     End Function
@@ -172,7 +175,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@descripcion", motivo)
         Dim param2 As New OdbcParameter("@id_motivo", id_motivo)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_insertMotivo (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -181,7 +184,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@grupo", grupo)
         Dim param2 As New OdbcParameter("@id_grupo", id_grupo)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_insertGrupo (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -190,7 +193,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@id_grupo", grupo_id)
         Dim param2 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_insertUsrToGrupo (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -198,7 +201,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function insertArea(ByVal area As String) As Integer
         Dim param1 As New OdbcParameter("@area", area)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_insertArea (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -238,7 +241,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
         Dim param2 As New OdbcParameter("@cod_prod", cod_prod)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_addProductosRecl (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -249,6 +252,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function closeReclamacion(ByVal id_recla As Integer, ByVal conclusion As String, ByVal area As Integer,
     ByVal motivo As Integer, ByVal monto As Decimal, ByVal ncnd As String, ByVal moneda As String, ByVal cantidad As Decimal,
     ByVal metrica As String, clase_doc As String) As Integer
+
         Dim param1 As New OdbcParameter("@id_reclamacion", id_recla)
         Dim param2 As New OdbcParameter("@conclusion", conclusion)
         Dim param3 As New OdbcParameter("@area", area)
@@ -274,7 +278,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@grupo_id", grupo)
         Dim param2 As New OdbcParameter("@usuario", usr)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_delGrupoUsr (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -282,7 +286,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function delUsuario(ByVal codigo As Decimal) As Integer
         Dim param1 As New OdbcParameter("@idempleado", codigo)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_delUsuario (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -290,7 +294,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function delGrupo(ByVal grupo As Integer) As Integer
         Dim param1 As New OdbcParameter("@id_grupo", grupo)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_delGrupo (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -298,7 +302,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function delMotivo(ByVal motivo As Integer) As Integer
         Dim param1 As New OdbcParameter("@id_motivo", motivo)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_delMotivo (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -306,7 +310,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function delArea(ByVal area As Integer) As Integer
         Dim param1 As New OdbcParameter("@id_area", area)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_delArea (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -314,7 +318,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function delProducto(ByVal producto As Integer) As Integer
         Dim param1 As New OdbcParameter("@id_producto", producto)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_delProductosRecl (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -322,7 +326,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function delReclamacion(ByVal id_reclamacion As Integer) As Integer
         Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
 
-        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                    "{call sp_delReclamacion (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -350,7 +354,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getReclamacionToCliente(ByVal id_reclamacion As Integer) As DataTable
         Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_ReporteToCliente (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
@@ -358,8 +362,8 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function validaUsr(ByVal usuario As String, ByVal contrasena As String) As DataTable
         Dim param1 As New OdbcParameter("@usuario", usuario)
         Dim param2 As New OdbcParameter("@contrasena", contrasena)
-        
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_validaUsr (?,?)}", New OdbcParameter() {param1, param2}).Tables(0)
 
     End Function
@@ -383,21 +387,21 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@pedido", pedido)
         Dim param2 As New OdbcParameter("@tipo", tipo)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getPedido (?,?)}", New OdbcParameter() {param1, param2}).Tables(0)
 
     End Function
 
     Public Shared Function getReclamaciones(ByVal usuario As String) As DataSet
         Dim param1 As New OdbcParameter("@usuario", usuario)
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamaciones (?)}", New OdbcParameter() {param1})
 
     End Function
 
     Public Shared Function getReclamacionesForExcel(ByVal usuario As String) As DataSet
         Dim param1 As New OdbcParameter("@usuario", usuario)
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionesForExcel (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -406,7 +410,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
         Dim param2 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacion (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -418,7 +422,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param4 As New OdbcParameter("@ventas", ventas)
         Dim param5 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByFecha (?,?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4, param5})
 
     End Function
@@ -427,7 +431,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@cliente", cliente)
         Dim param2 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByClienteToExcel (?,?)", New OdbcParameter() {param1, param2})
 
     End Function
@@ -439,7 +443,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param4 As New OdbcParameter("@ventas", ventas)
         Dim param5 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByFechaToExcel (?,?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4, param5})
 
     End Function
@@ -448,7 +452,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@descrp", Descrp)
         Dim param2 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByDescrp (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -457,7 +461,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@cliente", Cliente)
         Dim param2 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByCliente (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -468,7 +472,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param3 As New OdbcParameter("@fechaI", fechaI)
         Dim param4 As New OdbcParameter("@fechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByMotivo (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
 
     End Function
@@ -479,7 +483,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param3 As New OdbcParameter("@fechaI", fechaI)
         Dim param4 As New OdbcParameter("@fechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByMotivoToExcel (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
 
     End Function
@@ -490,7 +494,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param3 As New OdbcParameter("@fechaI", fechaI)
         Dim param4 As New OdbcParameter("@fechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByArea (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
 
     End Function
@@ -501,7 +505,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param3 As New OdbcParameter("@fechaI", fechaI)
         Dim param4 As New OdbcParameter("@fechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByAreaToExcel (?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4})
 
     End Function
@@ -511,7 +515,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@factura", factura)
         Dim param2 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByFactura (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -520,7 +524,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@chofer", chofer)
         Dim param2 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByChofer (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -529,7 +533,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@transportista", transportista)
         Dim param2 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionByTransportista (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -537,7 +541,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getReclamacionDetalle(ByVal id_reclamacion As Integer) As DataTable
         Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionDetalle (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
@@ -546,7 +550,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@mes", mes)
         Dim param2 As New OdbcParameter("@pyear", pyear)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionPatron (?,?)}", New OdbcParameter() {param1, param2}).Tables(0)
 
     End Function
@@ -555,7 +559,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
         Dim param2 As New OdbcParameter("@depto", depto)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getComentarios (?,?)}", New OdbcParameter() {param1, param2}).Tables(0)
 
     End Function
@@ -568,7 +572,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getUsuarios(ByVal pGrupo As Integer) As DataTable
         Dim param1 As New OdbcParameter("@id_grupo", pGrupo)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getUsuarios (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
@@ -576,7 +580,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getUsuarioByCorreo(ByVal correo As String) As String
         Dim param1 As New OdbcParameter("@correo", correo)
 
-        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                  "{call sp_getUsuarioByCorreo (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -594,7 +598,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getUsuariosGrid(ByVal usuario As String) As DataTable
         Dim param1 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getUsuariosGrid (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
@@ -627,7 +631,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getProducto(ByVal producto As String) As DataTable
         Dim param1 As New OdbcParameter("@producto", producto)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getProducto (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
@@ -635,7 +639,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getUsrNoEstanReclamacion(ByVal reclamacion As Integer) As DataTable
         Dim param1 As New OdbcParameter("@id_reclamacion", reclamacion)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getUsrNoEstanReclamacion (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
@@ -643,7 +647,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getUsrEstanReclamacion(ByVal reclamacion As Integer) As DataTable
         Dim param1 As New OdbcParameter("@id_reclamacion", reclamacion)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getUsrEstanReclamacion (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
@@ -655,7 +659,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param4 As New OdbcParameter("@id_reclamacion", id_reclamacion)
         Dim param5 As New OdbcParameter("@id_comentario", id_comentario)
 
-        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                  "{call sp_setArchivo (?,?,?,?,?)}", New OdbcParameter() {param1, param2, param3, param4, param5})
 
     End Function
@@ -672,7 +676,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getUsuario(ByVal usuario As String) As Integer
         Dim param1 As New OdbcParameter("@usuario", usuario)
 
-        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                  "{call sp_getUsuario (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -681,7 +685,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@fechaI", fechaI)
         Dim param2 As New OdbcParameter("@fechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamacionesRpt (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -690,7 +694,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@fechaI", fechaI)
         Dim param2 As New OdbcParameter("@fechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getRCByAreaMotivo (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -699,7 +703,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@fechaI", fechaI)
         Dim param2 As New OdbcParameter("@fechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getRCByAreaMotivo_Cerrada (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -708,7 +712,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@pFechaI", fechaI)
         Dim param2 As New OdbcParameter("@pFechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getReclamExcedidas (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -721,7 +725,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getProductosRecl(ByVal id_reclamacion As String) As DataTable
         Dim param1 As New OdbcParameter("@id_reclamacion", id_reclamacion)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getProductosRecl (?)}", New OdbcParameter() {param1}).Tables(0)
 
     End Function
@@ -731,11 +735,11 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
         If tipoDocumento = "F" Then
             param1 = New OdbcParameter("@factura", documento)
-            Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+            Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                      "{call sp_getDocumentoExiste (?)}", New OdbcParameter() {param1})
         Else
             param1 = New OdbcParameter("@pedido", documento)
-            Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+            Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                      "{call sp_getDocumentoExiste (?)}", New OdbcParameter() {param1})
         End If
 
@@ -746,7 +750,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@fechaI", fechaI)
         Dim param2 As New OdbcParameter("@fechaF", fechaF)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_ReporteMensualReclamaciones (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -754,7 +758,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getChofer(ByVal chofer As String) As DataSet
         Dim param1 As New OdbcParameter("@chofer", chofer)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getChoferes (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -762,7 +766,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
     Public Shared Function getTransportista(ByVal suplidor As String) As DataSet
         Dim param1 As New OdbcParameter("@transportista", suplidor)
 
-        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                   "{call sp_getTransportistas (?)}", New OdbcParameter() {param1})
 
     End Function
@@ -771,7 +775,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim param1 As New OdbcParameter("@id_producto", idProd)
         Dim param2 As New OdbcParameter("@comentario", comentario)
 
-        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure, _
+        Return ExecuteScalarODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
                                  "{call sp_setProductoComentario (?,?)}", New OdbcParameter() {param1, param2})
 
     End Function
@@ -870,16 +874,16 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getFacturaERP(ByVal pFact As String, ByVal idReclamacion As Integer) As Data.DataTable
+    Public Shared Function getFacturaERP(ByVal pFact As String, ByVal idReclamacion As Integer, tipoFactura As String) As Data.DataTable
         Dim DataFactura As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
         Dim tablaFacturaCabeceraAS400 = ConfigurationManager.AppSettings.Get("tablaFacturaCabeceraAS400")
         Dim tablaFacturaDetalleAS400 = ConfigurationManager.AppSettings.Get("tablaFacturaDetalleAS400")
-        Dim tiposFacturas = ConfigurationManager.AppSettings.Get("tiposFacturas")
+        'Dim tiposFacturas = ConfigurationManager.AppSettings.Get("tiposFacturas")
 
         Dim sQueryFactura As String = "SELECT MFNUMCLIEN as codigoCte, MFNOMBRECL as NombreCte, MFTELEFONO as TelefonoCte, " &
-                                        " MFVENFACTU as codigoVendedor FROM @FACTURA_CABECERA WHERE MFTIPOFACT IN " & tiposFacturas & " AND MFNUMFACT = " & pFact
+                                        " MFVENFACTU as codigoVendedor FROM @FACTURA_CABECERA WHERE MFTIPOFACT IN ('" & tipoFactura & "') AND MFNUMFACT = " & pFact
         Dim sQueryProductos As String = "SELECT MMNUMPRODU as CodProducto, MMNUMFACTU FROM @FACTURA_DETALLE WHERE MMNUMFACTU =" & pFact
 
         'Testing or Production Environment
@@ -899,6 +903,13 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
             insertClienteFromAS400(DataFactura.Rows(0).Item("codigoCte"), DataFactura.Rows(0).Item("NombreCte"), DataFactura.Rows(0).Item("TelefonoCte"), "")
         End If
 
+        'Limpiar la tabla de productos con Reclamacion temporal
+        Dim productos = getProductosRecl(idReclamacion)
+        For Each p As DataRow In productos.Rows
+            delProducto(p.Item("id_producto"))
+        Next
+
+        'Agregar productos de nuevos resultados encontrados
         For Each product As DataRow In DataProductos.Rows
             adProductoRecl(idReclamacion, product.Item("CodProducto"))
 
@@ -919,16 +930,16 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
-    Public Shared Function getPedidoERP(ByVal pPed As String, ByVal idReclamacion As Integer) As Data.DataTable
+    Public Shared Function getPedidoERP(ByVal pPed As String, ByVal idReclamacion As Integer, tipoPedido As String) As Data.DataTable
         Dim DataPedido As New Data.DataTable
         Dim DataProductos As New Data.DataTable
 
         Dim tablaPedidoCabeceraAS400 = ConfigurationManager.AppSettings.Get("tablaPedidoCabeceraAS400")
         Dim tablaPedidoDetalleAS400 = ConfigurationManager.AppSettings.Get("tablaPedidoDetalleAS400")
-        Dim tiposPedidos = ConfigurationManager.AppSettings.Get("tiposPedidos")
+        'Dim tiposPedidos = ConfigurationManager.AppSettings.Get("tiposPedidos")
 
         Dim sQueryPedido As String = "SELECT PDNUMCLIEN as codigoCte, PDNOMBRECL as NombreCte, PDTELEFONO as TelefonoCte, PDVENFACTU as " &
-                                     "codigoVendedor FROM @PEDIDO_CABECERA WHERE PDTIPOPEDI IN " & tiposPedidos & " AND PDNUMPEDI = " & pPed
+                                     "codigoVendedor FROM @PEDIDO_CABECERA WHERE PDTIPOPEDI IN ('" & tipoPedido & "') AND PDNUMPEDI = " & pPed
         Dim sQueryProductos As String = "SELECT MMNUMPEDI NoPedido, MMNUMARTIC as CodProducto FROM @PEDIDO_DETALLE WHERE MMNUMPEDI =" & pPed
 
         'Testing or Production Environment
@@ -977,6 +988,31 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
+    Public Shared Sub EnviaCorreoException(subject As String, body As String)
+
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+
+        Dim senderMail As New SmtpClient(ConfigurationManager.AppSettings.Get("smtpClient"))
+        Dim obj_mail As New MailMessage()
+
+        Dim usrName As String = ConfigurationManager.AppSettings.Get("usrRECLAM")
+        Dim usrPass As String = ConfigurationManager.AppSettings.Get("pwdRECLAM")
+
+        obj_mail.From = New MailAddress(ConfigurationManager.AppSettings.Get("Email"), ConfigurationManager.AppSettings.Get("EmailName"))
+        senderMail.Port = Integer.Parse(ConfigurationManager.AppSettings.Get("PortMail"))
+        senderMail.Credentials = New Net.NetworkCredential(usrName, usrPass)
+        senderMail.DeliveryMethod = SmtpDeliveryMethod.Network
+
+        Dim SendTo As String = ConfigurationManager.AppSettings.Get("developerEmail")
+        obj_mail.To.Add(SendTo)
+
+        obj_mail.IsBodyHtml = True
+        obj_mail.Subject = subject
+        obj_mail.Body = body
+
+        senderMail.Send(obj_mail)
+    End Sub
+
     Public Shared Function TestingERP(ByVal query As String) As Data.DataTable
         Dim DataTest As New Data.DataTable
 
@@ -985,6 +1021,8 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Return DataTest
 
     End Function
+
+
 
 #End Region
 

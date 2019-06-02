@@ -45,8 +45,9 @@ Partial Class Reclamacion
                     ddlClaseDoc.Items.Add(New ListItem(m, m))
                 Next
 
-
                 txtFecha.Text = Format(Now.Date, "dd/MM/yyyy")
+
+                fillTiposFacturas()
                 fillGruposDDL()
 
                 'fillClientes()
@@ -149,6 +150,28 @@ Partial Class Reclamacion
 
     '    ddlTransportista.Items.Insert(0, New ListItem("...", ""))
     'End Sub
+
+    Private Sub fillTiposFacturas()
+
+        Dim tipos As String = ConfigurationManager.AppSettings.Get("tiposFacturas")
+
+        ddlTipoFactura.Items.Clear()
+        For Each item As String In tipos.Split(";")
+            ddlTipoFactura.Items.Add(New ListItem(item, item))
+        Next
+
+    End Sub
+
+    Private Sub fillTiposPedidos()
+
+        Dim tipos As String = ConfigurationManager.AppSettings.Get("tiposPedidos")
+
+        ddlTipoFactura.Items.Clear()
+        For Each item As String In tipos.Split(";")
+            ddlTipoFactura.Items.Add(New ListItem(item, item))
+        Next
+
+    End Sub
 
     Private Sub fillGruposDDL()
         Dim dtDatos As DataTable = clsReclamaciones.getGrupos()
@@ -1039,7 +1062,7 @@ Partial Class Reclamacion
 
         txtTipoPedido.Text = String.Empty
 
-        Dim datos As DataTable = clsReclamaciones.getPedidoERP(txtPedido.Text, lblNoReclamacion.Text)
+        Dim datos As DataTable = clsReclamaciones.getPedidoERP(txtPedido.Text, lblNoReclamacion.Text, ddlTipoFactura.SelectedValue)
         Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("CodigoVendedor"))
 
         If datos.Rows.Count > 0 Then
@@ -1059,15 +1082,21 @@ Partial Class Reclamacion
     'Este metodo busca la factura para extraer los campos: Vendedor, Cliente, Venta Local/Internacional
     'y extrae el listado de productos de dicha factura
     Private Sub BuscarPorFactura()
+
         ddlCliente.Items.Clear()
         ddlVendedor.Items.Clear()
 
+        grdProdReclam.DataSource = Nothing
+        grdProdReclam.DataBind()
+
+        lblExiste.Text = String.Empty
         txtTipoPedido.Text = String.Empty
 
-        Dim datos As DataTable = clsReclamaciones.getFacturaERP(txtPedido.Text, lblNoReclamacion.Text)
-        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("codigoVendedor"))
+        Dim datos As DataTable = clsReclamaciones.getFacturaERP(txtPedido.Text, lblNoReclamacion.Text, ddlTipoFactura.SelectedValue)
 
         If datos.Rows.Count > 0 Then
+            Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("codigoVendedor"))
+
             ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("codigoVendedor"))))
             ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("NombreCte")), Trim(datos.Rows(0).Item("codigoCte"))))
 
@@ -1075,7 +1104,7 @@ Partial Class Reclamacion
             lblMensaje.Text = String.Empty
             fillProductos(lblNoReclamacion.Text)
         Else
-            lblMensaje.Text = "NO EXISTE LA FACTURA"
+            lblExiste.Text = "NO EXISTE LA FACTURA"
         End If
     End Sub
 
@@ -1446,24 +1475,40 @@ Partial Class Reclamacion
 
     Protected Sub btnCerrar_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnCerrar.Click
         Try
-            If txtConclusion.Text.Trim() = String.Empty Then lblMensaje.Text = "Debe escribir una conclusión." : Exit Try
+            If txtConclusion.Text.Trim() = String.Empty Then Throw New Exception("Debe escribir una conclusión para cerrar la reclamación.")
+            If ddlAreas.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar el AREA para cerrar la reclamación.")
+            If ddlMotivos.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar un MOTIVO para cerrar la reclamación.")
+            If ddlMetrica.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar la METRICA para cerrar la reclamación.")
+            If ddlClaseDoc.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar la CLASE DE DOCUMENTO para cerrar la reclamación.")
 
             If txtCantidad.Text.Trim() = String.Empty Or txtMonto.Text.Trim() = String.Empty Then
                 txtCantidad.Text = "0"
                 txtMonto.Text = "0"
             End If
 
-            clsReclamaciones.closeReclamacion(Val(lblNoReclamacion.Text), txtConclusion.Text.Trim(),
-            ddlAreas.SelectedValue, ddlMotivos.SelectedValue, txtMonto.Text, txtNCND.Text, ddlMoneda.SelectedValue,
-            txtCantidad.Text, ddlMetrica.SelectedValue, ddlClaseDoc.SelectedValue)
+            clsReclamaciones.closeReclamacion(Val(lblNoReclamacion.Text),
+                                                txtConclusion.Text.Trim(),
+                                                ddlAreas.SelectedValue,
+                                                ddlMotivos.SelectedValue,
+                                                txtMonto.Text,
+                                                txtNCND.Text,
+                                                ddlMoneda.SelectedValue,
+                                                txtCantidad.Text,
+                                                ddlMetrica.SelectedValue,
+                                                ddlClaseDoc.SelectedValue)
 
-            EnviaCorreoConclusion()
-            EnviaCorreoNuevoInvolucradosVENDEDORES(txtConclusion.Text, " CERRADA")
-
+            Try
+                EnviaCorreoConclusion()
+                EnviaCorreoNuevoInvolucradosVENDEDORES(txtConclusion.Text, " CERRADA")
+            Catch ex As Exception
+                lblMensaje.Text = ex.Message
+                clsReclamaciones.EnviaCorreoException("Exception in Close Reclamacion", ex.ToString())
+            End Try
+            
             Response.Redirect("Reclamacion.aspx?id=" & Val(lblNoReclamacion.Text))
 
         Catch ex As Exception
-            lblMensaje.Text = "Exception details: " & ex.ToString()
+            lblMensaje.Text = ex.Message
         End Try
     End Sub
 
@@ -2121,4 +2166,13 @@ Partial Class Reclamacion
 
         Return Content
     End Function
+
+    Protected Sub rbFactura_CheckedChanged(sender As Object, e As EventArgs) Handles rbFactura.CheckedChanged
+        fillTiposFacturas()
+    End Sub
+
+    Protected Sub rbPedido_CheckedChanged(sender As Object, e As EventArgs) Handles rbPedido.CheckedChanged
+        fillTiposPedidos()
+    End Sub
+
 End Class
