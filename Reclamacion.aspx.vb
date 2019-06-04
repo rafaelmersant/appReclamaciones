@@ -266,10 +266,22 @@ Partial Class Reclamacion
             If lbUsrInvolucrados.Items.Count < 1 Then lblMensaje.Text = "debe incluir por lo menos un usuario en la reclamación" : Exit Try
 
             clsReclamaciones.guardaReclamacion(Pedido,
-            txtDescripcion.Text.Trim(), ddlCliente.SelectedValue, txtContacto.Text.Trim(),
-            Factura, ddlVentas.SelectedValue, txtTelefono.Text, ddlVendedor.SelectedValue,
-            0, txtConclusion.Text, Session.Item("usuario"), txtSoporteVta.Text, txtCorreo.Text,
-            ddlTipoDoc.SelectedValue, ddlChoferes.SelectedValue, ddlTransportista.SelectedValue, ddlCliente.SelectedItem.Text)
+                                                txtDescripcion.Text.Trim(),
+                                                ddlCliente.SelectedValue,
+                                                txtContacto.Text.Trim(),
+                                                Factura,
+                                                ddlVentas.SelectedValue,
+                                                txtTelefono.Text,
+                                                ddlVendedor.SelectedValue,
+                                                0,
+                                                txtConclusion.Text,
+                                                Session.Item("usuario"),
+                                                txtSoporteVta.Text, txtCorreo.Text,
+                                                ddlTipoDoc.SelectedValue,
+                                                ddlChoferes.SelectedValue,
+                                                ddlTransportista.SelectedValue,
+                                                ddlCliente.SelectedItem.Text,
+                                                ddlTipoFactura.SelectedValue)
 
             updateProductos() 'Aqui dentro se verifica si productos fueron deseleccionados para ser eliminados
 
@@ -1035,18 +1047,16 @@ Partial Class Reclamacion
                 BuscarPorFactura()
 
                 If Not clsReclamaciones.getDocumentoExiste(txtPedido.Text, "F") Is Nothing Then
+                    lblExiste.Text = "Existe una reclamacion con este documento."
                     lblExiste.Visible = True
-                Else
-                    lblExiste.Visible = False
                 End If
             Else
                 sMens = "NO EXISTE EL PEDIDO"
                 BuscarPorPedido()
 
                 If Not clsReclamaciones.getDocumentoExiste(txtPedido.Text, "P") Is Nothing Then
+                    lblExiste.Text = "Existe una reclamacion con este documento."
                     lblExiste.Visible = True
-                Else
-                    lblExiste.Visible = False
                 End If
             End If
 
@@ -1060,12 +1070,17 @@ Partial Class Reclamacion
         ddlCliente.Items.Clear()
         ddlVendedor.Items.Clear()
 
+        grdProdReclam.DataSource = Nothing
+        grdProdReclam.DataBind()
+
+        lblExiste.Text = String.Empty
         txtTipoPedido.Text = String.Empty
 
         Dim datos As DataTable = clsReclamaciones.getPedidoERP(txtPedido.Text, lblNoReclamacion.Text, ddlTipoFactura.SelectedValue)
-        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("CodigoVendedor"))
 
         If datos.Rows.Count > 0 Then
+            Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("CodigoVendedor"))
+
             ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("codigoVendedor"))))
             ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreCte")), Trim(datos.Rows(0).Item("codigoCte"))))
 
@@ -1075,7 +1090,8 @@ Partial Class Reclamacion
             lblMensaje.Text = String.Empty
             fillProductos(lblNoReclamacion.Text)
         Else
-            lblMensaje.Text = "NO EXISTE EL PEDIDO"
+            lblExiste.Visible = True
+            lblExiste.Text = "NO EXISTE EL PEDIDO"
         End If
     End Sub
 
@@ -1104,6 +1120,7 @@ Partial Class Reclamacion
             lblMensaje.Text = String.Empty
             fillProductos(lblNoReclamacion.Text)
         Else
+            lblExiste.Visible = True
             lblExiste.Text = "NO EXISTE LA FACTURA"
         End If
     End Sub
@@ -1189,12 +1206,20 @@ Partial Class Reclamacion
 
                 'PARA DESPLEGAR SI ES FACTURA O PEDIDO
                 If Not dtDatos.Rows(0).Item("factura").ToString().Trim() = String.Empty Then
+                    fillTiposFacturas()
+
                     txtPedido.Text = dtDatos.Rows(0).Item("factura")
+                    ddlTipoFactura.SelectedItem.Text = IIf(dtDatos.Rows(0).Item("tipo_fac_ped") Is DBNull.Value, "...", dtDatos.Rows(0).Item("tipo_fac_ped"))
+
                     rbFactura.Visible = True
                     rbPedido.Visible = False
                 Else
+                    fillTiposPedidos()
+
                     txtPedido.Text = dtDatos.Rows(0).Item("pedido")
                     txtTipoPedido.Text = dtDatos.Rows(0).Item("pedido")
+                    ddlTipoFactura.SelectedItem.Text = IIf(dtDatos.Rows(0).Item("tipo_fac_ped") Is DBNull.Value, "...", dtDatos.Rows(0).Item("tipo_fac_ped"))
+
                     rbPedido.Visible = True
                     rbFactura.Visible = False
                 End If
