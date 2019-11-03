@@ -301,11 +301,12 @@ Partial Class Reclamacion
         For Each row As GridViewRow In grdProdReclam.Rows
             Dim chkProd = CType(row.Cells(0).FindControl("chkProd"), CheckBox)
 
-            If indexDeleted = grdProdReclam.Rows.Count - 1 Then
-                Throw New Exception("Debe al menos tener un producto en la reclamación.")
-            End If
-
             If chkProd.Checked = False Then
+
+                If indexDeleted = grdProdReclam.Rows.Count - 1 Then
+                    Throw New Exception("Debe al menos tener un producto en la reclamación.")
+                End If
+
                 clsReclamaciones.delProducto(chkProd.CssClass) 'En este caso el id_producto esta contenido en la propiedad CssClass
                 indexDeleted += 1
             End If
@@ -1503,8 +1504,8 @@ Partial Class Reclamacion
             If txtConclusion.Text.Trim() = String.Empty Then Throw New Exception("Debe escribir una conclusión para cerrar la reclamación.")
             If ddlAreas.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar el AREA para cerrar la reclamación.")
             If ddlMotivos.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar un MOTIVO para cerrar la reclamación.")
-            If ddlMetrica.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar la METRICA para cerrar la reclamación.")
-            If ddlClaseDoc.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar la CLASE DE DOCUMENTO para cerrar la reclamación.")
+            'If ddlMetrica.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar la METRICA para cerrar la reclamación.")
+            'If ddlClaseDoc.SelectedIndex = 0 Then Throw New Exception("Debe seleccionar la CLASE DE DOCUMENTO para cerrar la reclamación.")
 
             If txtCantidad.Text.Trim() = String.Empty Or txtMonto.Text.Trim() = String.Empty Then
                 txtCantidad.Text = "0"
