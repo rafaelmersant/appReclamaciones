@@ -24,6 +24,7 @@
                     <asp:ListItem Value="NODEFINE">---------------</asp:ListItem>
                     <asp:ListItem>RECLAMACION</asp:ListItem>
                     <asp:ListItem>DEVOLUCION</asp:ListItem>
+                    <asp:ListItem>QUEJA</asp:ListItem>
                 </asp:DropDownList></td>
             <td align="right" colspan="1">
                                 <asp:Label ID="Label6" runat="server" Font-Bold="True" Font-Names="Verdana"
@@ -62,7 +63,10 @@
                             <td valign="bottom">
                                 <asp:RadioButton ID="rbFactura" runat="server" Checked="True" CssClass="LetraH2"
                                     Text="Factura" GroupName="Find" AutoPostBack="True" />
-                                <asp:RadioButton ID="rbPedido" runat="server" CssClass="LetraH2" Text="Pedido" GroupName="Find" AutoPostBack="True" /></td>
+                                <asp:RadioButton ID="rbPedido" runat="server" CssClass="LetraH2" Text="Pedido" GroupName="Find" AutoPostBack="True" />
+                                <asp:RadioButton ID="rbOrdenServicio" runat="server" AutoPostBack="True" CssClass="LetraH2" GroupName="Find" Text="Orden Servicio" />
+                                <asp:RadioButton ID="rbOtros" runat="server" AutoPostBack="True" CssClass="LetraH2" GroupName="Find" Text="Otros" />
+                            </td>
                             <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
                                 <asp:Label ID="Label7" runat="server" Font-Bold="True" Font-Names="Verdana"
                                     Text="Fecha" Width="53px" CssClass="LetraH1" Font-Size="12px"></asp:Label></td>
@@ -92,8 +96,9 @@
                                 <asp:Label ID="Label5" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Nombre Cliente"></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlCliente" runat="server" CssClass="LetraH2" TabIndex="2" Width="295px">
+                                <asp:DropDownList ID="ddlCliente" runat="server" CssClass="LetraH2" TabIndex="2" Width="295px" AppendDataBoundItems="True">
                                 </asp:DropDownList>
+                                <asp:TextBox ID="txtClienteManual" runat="server" CssClass="LetraH2" Height="11px" TabIndex="1" Visible="False" Width="290px"></asp:TextBox>
                             </td>
                             <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
                                 <asp:Label ID="Label9" runat="server" Font-Bold="True" Font-Names="Verdana"

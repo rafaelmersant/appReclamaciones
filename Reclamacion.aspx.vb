@@ -173,6 +173,18 @@ Partial Class Reclamacion
 
     End Sub
 
+    Private Sub fillTipoOrdenServicio()
+
+        Dim tipos As String = ConfigurationManager.AppSettings.Get("tiposOS")
+
+        ddlTipoFactura.Items.Clear()
+        For Each item As String In tipos.Split(";")
+            ddlTipoFactura.Items.Add(New ListItem(item, item))
+        Next
+
+    End Sub
+
+
     Private Sub fillGruposDDL()
         Dim dtDatos As DataTable = clsReclamaciones.getGrupos()
         ddlGruposF.DataSource = dtDatos
@@ -246,28 +258,62 @@ Partial Class Reclamacion
     'GUARDAR RECLAMACION
     Protected Sub btnGuardar_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
         Try
-            Dim Factura As String
-            Dim Pedido As String
+            Dim Factura As String = "0"
+            Dim Pedido As String = "0"
+            Dim Categoria As String
+            Dim Cliente As String = String.Empty
+            Dim ClienteValue As String = String.Empty
 
             If rbFactura.Checked Then
                 Factura = txtPedido.Text
                 Pedido = String.Empty
-            Else
+                Categoria = "FC"
+
+            ElseIf rbOrdenServicio.Checked Then
+                Pedido = txtPedido.Text.Trim()
+                Factura = String.Empty
+                Categoria = "OS"
+
+            ElseIf rbPedido.Checked Then
                 Pedido = txtPedido.Text.Trim() '& "-" & txtTipoPedido.Text.Trim()
                 Factura = String.Empty
+                Categoria = "PD"
+            Else
+                Pedido = String.Empty
+                Factura = String.Empty
+                Categoria = "OT"
+
             End If
 
             If ddlTipoDoc.SelectedIndex = 0 Then
-                Throw New Exception("Debe seleccionar el tipo de documento: RECLAMACION o DEVOLUCION.")
+                Throw New Exception("Debe seleccionar el tipo de documento: RECLAMACION / DEVOLUCION / QUEJA.")
             End If
 
-            If txtPedido.Text.Trim() = String.Empty Then lblMensaje.Text = "Debe digitar una factura/pedido." : Exit Try
+            If rbOrdenServicio.Checked = False And rbOtros.Checked = False Then
+                If txtPedido.Text.Trim() = String.Empty Then lblMensaje.Text = "Debe digitar una factura/pedido/orden." : Exit Try
+            End If
+
             If txtDescripcion.Text.Trim() = String.Empty Then lblMensaje.Text = "Debe especificar la descripción de la reclamación" : Exit Try
             If lbUsrInvolucrados.Items.Count < 1 Then lblMensaje.Text = "debe incluir por lo menos un usuario en la reclamación" : Exit Try
 
+            If txtClienteManual.Visible = True Then
+                Cliente = txtClienteManual.Text
+                ClienteValue = "0"
+            End If
+
+            If ddlCliente.Visible = True Then
+                Cliente = ddlCliente.SelectedItem.Text
+                ClienteValue = ddlCliente.SelectedValue
+            End If
+
+            If rbOtros.Checked Then
+                ddlCliente.Items.Add(New ListItem(Cliente, ClienteValue))
+                ddlVendedor.Items.Add(New ListItem("N/A", "0"))
+            End If
+
             clsReclamaciones.guardaReclamacion(Pedido,
                                                 txtDescripcion.Text.Trim(),
-                                                ddlCliente.SelectedValue,
+                                                ClienteValue,
                                                 txtContacto.Text.Trim(),
                                                 Factura,
                                                 ddlVentas.SelectedValue,
@@ -280,8 +326,9 @@ Partial Class Reclamacion
                                                 ddlTipoDoc.SelectedValue,
                                                 ddlChoferes.SelectedValue,
                                                 ddlTransportista.SelectedValue,
-                                                ddlCliente.SelectedItem.Text,
-                                                ddlTipoFactura.SelectedValue)
+                                                Cliente,
+                                                ddlTipoFactura.SelectedValue,
+                                                Categoria)
 
             updateProductos() 'Aqui dentro se verifica si productos fueron deseleccionados para ser eliminados
 
@@ -1051,11 +1098,19 @@ Partial Class Reclamacion
                     lblExiste.Text = "Existe una reclamacion con este documento."
                     lblExiste.Visible = True
                 End If
-            Else
+            ElseIf rbPedido.Checked Then
                 sMens = "NO EXISTE EL PEDIDO"
                 BuscarPorPedido()
 
                 If Not clsReclamaciones.getDocumentoExiste(txtPedido.Text, "P") Is Nothing Then
+                    lblExiste.Text = "Existe una reclamacion con este documento."
+                    lblExiste.Visible = True
+                End If
+            ElseIf rbOrdenServicio.Checked Then
+                sMens = "NO EXISTE LA ORDEN DE SERVICIO"
+                BuscarPorOrdenDeServicio()
+
+                If Not clsReclamaciones.getDocumentoExiste(txtPedido.Text, "O") Is Nothing Then
                     lblExiste.Text = "Existe una reclamacion con este documento."
                     lblExiste.Visible = True
                 End If
@@ -1115,7 +1170,7 @@ Partial Class Reclamacion
             Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datos.Rows(0).Item("codigoVendedor"))
 
             ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datos.Rows(0).Item("codigoVendedor"))))
-            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("NombreCte")), Trim(datos.Rows(0).Item("codigoCte"))))
+            ddlCliente.Items.Add(New ListItem(Trim(datos.Rows(0).Item("nombreCte")), Trim(datos.Rows(0).Item("codigoCte"))))
 
             'If datos(5) = "VE" Then ddlVentas.Text = "INTERNACIONALES"
             lblMensaje.Text = String.Empty
@@ -1123,6 +1178,71 @@ Partial Class Reclamacion
         Else
             lblExiste.Visible = True
             lblExiste.Text = "NO EXISTE LA FACTURA"
+        End If
+    End Sub
+
+    'Este metodo busca la orden de servicio para extraer los campos: Serie, Producto, Tipo Factura, Numero de Factura,
+    'y extrae el listado de productos, vendedor y cliente a traves del numero de factura (si existe)
+    Private Sub BuscarPorOrdenDeServicio()
+
+        ddlCliente.Items.Clear()
+        ddlVendedor.Items.Clear()
+
+        grdProdReclam.DataSource = Nothing
+        grdProdReclam.DataBind()
+
+        lblExiste.Text = String.Empty
+        txtTipoPedido.Text = String.Empty
+
+        Dim datos As DataTable = clsReclamaciones.getOrdenServicioERP(txtPedido.Text, lblNoReclamacion.Text, ddlTipoFactura.SelectedValue)
+
+        If datos.Rows.Count > 0 Then
+            txtDescripcion.Text = String.Empty
+            Dim tracking As String = ""
+
+            Try
+                'Buscar datos de la factura relacionada en AS400 si existe
+                If datos.Rows.Count > 0 Then
+                    Dim tipoFactura As String = datos.Rows(0).Item("TipoFactura").ToString().Trim()
+                    Dim NoFactura As String = datos.Rows(0).Item("NoFactura").ToString().Trim()
+
+                    tracking &= "TipoFactura=" & tipoFactura & "|NoFactura=" & NoFactura
+
+                    Dim datosFactura As DataTable = clsReclamaciones.getFacturaERP(NoFactura, lblNoReclamacion.Text, tipoFactura)
+
+                    tracking &= "|FacturaEncontrada:" & datosFactura.Rows.Count.ToString()
+
+                    If datosFactura.Rows.Count > 0 Then
+                        tracking &= "|Vendedor=" & datosFactura.Rows(0).Item("codigoVendedor")
+
+                        Dim vendedorNombre As String = clsReclamaciones.getVendedorNombreERP(datosFactura.Rows(0).Item("codigoVendedor"))
+
+                        ddlVendedor.Items.Add(New ListItem(Trim(vendedorNombre), Trim(datosFactura.Rows(0).Item("codigoVendedor"))))
+                        ddlCliente.Items.Add(New ListItem(Trim(datosFactura.Rows(0).Item("nombreCte")), Trim(datosFactura.Rows(0).Item("codigoCte"))))
+                        txtClienteManual.Text = datosFactura.Rows(0).Item("nombreCte")
+
+                        lblMensaje.Text = String.Empty
+                        fillProductos(lblNoReclamacion.Text)
+                    Else
+                        'txtDescripcion.Text &= "Cliente: " & datos.Rows(0).Item("nombreCte") & vbCrLf
+                        ddlCliente.Items.Add(New ListItem(datos.Rows(0).Item("nombreCte"), "0"))
+                        ddlVendedor.Items.Add(New ListItem("N/A", "0"))
+                        txtClienteManual.Text = datos.Rows(0).Item("nombreCte")
+                    End If
+
+                End If
+
+                txtDescripcion.Text &= "Serie: " & datos.Rows(0).Item("serie") & vbCrLf
+                txtDescripcion.Text &= "Producto: " & datos.Rows(0).Item("productoDescrp")
+
+            Catch ex As Exception
+                lblMensaje.Text = ex.ToString()
+                clsReclamaciones.EnviaCorreoException("Exception in BuscarPorOrdenDeServicio", ex.ToString() & " Tracking:" & tracking)
+            End Try
+
+        Else
+            lblExiste.Visible = True
+            lblExiste.Text = "NO EXISTE LA ORDEN DE SERVICIO"
         End If
     End Sub
 
@@ -1206,24 +1326,49 @@ Partial Class Reclamacion
                 lblStatus.Text = dtDatos.Rows(0).Item("status").ToString().ToUpper()
 
                 'PARA DESPLEGAR SI ES FACTURA O PEDIDO
-                If Not dtDatos.Rows(0).Item("factura").ToString().Trim() = String.Empty Then
+                If dtDatos.Rows(0).Item("categoria") = "FC" Then
                     fillTiposFacturas()
 
                     txtPedido.Text = dtDatos.Rows(0).Item("factura")
-                    ddlTipoFactura.SelectedItem.Text = IIf(dtDatos.Rows(0).Item("tipo_fac_ped") Is DBNull.Value, "...", dtDatos.Rows(0).Item("tipo_fac_ped"))
 
                     rbFactura.Visible = True
                     rbPedido.Visible = False
-                Else
+                    rbOrdenServicio.Visible = False
+                    rbOtros.Visible = False
+
+                ElseIf dtDatos.Rows(0).Item("categoria") = "PD" Then
+
                     fillTiposPedidos()
 
                     txtPedido.Text = dtDatos.Rows(0).Item("pedido")
                     txtTipoPedido.Text = dtDatos.Rows(0).Item("pedido")
-                    ddlTipoFactura.SelectedItem.Text = IIf(dtDatos.Rows(0).Item("tipo_fac_ped") Is DBNull.Value, "...", dtDatos.Rows(0).Item("tipo_fac_ped"))
 
                     rbPedido.Visible = True
                     rbFactura.Visible = False
+                    rbOrdenServicio.Visible = False
+                    rbOtros.Visible = False
+
+                ElseIf dtDatos.Rows(0).Item("categoria") = "OS" Then
+                    fillTipoOrdenServicio()
+
+                    txtPedido.Text = dtDatos.Rows(0).Item("pedido")
+
+                    rbOrdenServicio.Visible = True
+                    rbFactura.Visible = False
+                    rbPedido.Visible = False
+                    rbOtros.Visible = False
+                Else
+
+                    txtPedido.Text = ""
+
+                    rbOtros.Visible = True
+                    rbOrdenServicio.Visible = False
+                    rbFactura.Visible = False
+                    rbPedido.Visible = False
                 End If
+
+                ddlTipoFactura.SelectedItem.Text = IIf(dtDatos.Rows(0).Item("tipo_fac_ped") Is DBNull.Value, "...", dtDatos.Rows(0).Item("tipo_fac_ped"))
+                ddlTipoFactura.SelectedItem.Text = IIf(dtDatos.Rows(0).Item("tipo_fac_ped") Is DBNull.Value, "...", dtDatos.Rows(0).Item("tipo_fac_ped"))
 
                 ddlTipoDoc.SelectedValue = dtDatos.Rows(0).Item("tipodoc").ToString().Trim()
 
@@ -2195,10 +2340,27 @@ Partial Class Reclamacion
 
     Protected Sub rbFactura_CheckedChanged(sender As Object, e As EventArgs) Handles rbFactura.CheckedChanged
         fillTiposFacturas()
+        toggleClienteTextBox()
     End Sub
 
     Protected Sub rbPedido_CheckedChanged(sender As Object, e As EventArgs) Handles rbPedido.CheckedChanged
         fillTiposPedidos()
+        toggleClienteTextBox()
     End Sub
 
+    Protected Sub rbOrdenServicio_CheckedChanged(sender As Object, e As EventArgs) Handles rbOrdenServicio.CheckedChanged
+        fillTipoOrdenServicio()
+        toggleClienteTextBox()
+    End Sub
+    Protected Sub rbOtros_CheckedChanged(sender As Object, e As EventArgs) Handles rbOtros.CheckedChanged
+        ddlTipoFactura.Items.Clear()
+        toggleClienteTextBox()
+    End Sub
+
+    Private Sub toggleClienteTextBox()
+        Dim value As Boolean = rbOrdenServicio.Checked Or rbOtros.Checked
+
+        txtClienteManual.Visible = value
+        ddlCliente.Visible = Not value
+    End Sub
 End Class

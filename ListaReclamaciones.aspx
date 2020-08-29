@@ -226,7 +226,7 @@
                             <HeaderStyle CssClass="gridHeaders" />
                             <ItemStyle CssClass="gridItems" Width="18%" />
                         </asp:TemplateField>
-                        <asp:BoundField DataField="pedido" HeaderText="Pedido">
+                        <asp:BoundField DataField="pedido" HeaderText="Pedido/OS">
                             <ItemStyle CssClass="gridItems" Width="8%" />
                             <HeaderStyle CssClass="gridHeaders" />
                         </asp:BoundField>

@@ -88,7 +88,7 @@ Public Class clsReclamaciones
     Public Shared Function guardaReclamacion(ByVal pedido As String, ByVal descripcion As String, ByVal cliente As String,
 ByVal contacto As String, ByVal factura As String, ByVal ventas As String, ByVal telefono As String, ByVal vendedor As String, ByVal planta As Integer,
 ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As String, ByVal correo As String, ByVal tipoDoc As String, ByVal chofer As String,
-    ByVal transportista As String, nombreCte As String, tipo_fact_ped As String) As Integer
+    ByVal transportista As String, nombreCte As String, tipo_fact_ped As String, categoria As String) As Integer
         Dim param1 As New OdbcParameter("@pedido", pedido)
         Dim param2 As New OdbcParameter("@descripcion", descripcion)
         Dim param3 As New OdbcParameter("@cliente", cliente)
@@ -107,14 +107,15 @@ ByVal conclusion As String, ByVal creadapor As String, ByVal soporteVta As Strin
         Dim param16 As New OdbcParameter("@transportista", transportista)
         Dim param17 As New OdbcParameter("@nombreCte", nombreCte)
         Dim param18 As New OdbcParameter("@tipo_fac_ped", tipo_fact_ped)
+        Dim param19 As New OdbcParameter("@categoria", categoria)
 
 
         Return ExecuteNonQueryODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL),
-        CommandType.StoredProcedure, "{call sp_guardaReclamacion (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}", New OdbcParameter() {param1, param2,
+        CommandType.StoredProcedure, "{call sp_guardaReclamacion (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}", New OdbcParameter() {param1, param2,
                                                                     param3, param4, param5, param6,
                                                                     param7, param8, param9, param10,
                                                                     param11, param12, param13, param14,
-                                                                    param15, param16, param17, param18})
+                                                                    param15, param16, param17, param18, param19})
 
     End Function
 
@@ -864,10 +865,15 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
             sQueryVendedor = sQueryVendedor.Replace("@VENDEDORES", tablaVendedoresAS400)
 
             Dim Vendedor As DataTable = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryVendedor).Tables(0)
-            VendedorNombre = Vendedor.Rows(0).Item("VENOMB")
 
-            'Insertar Vendedor desde AS400 si no existe
-            insertVendedorFromAS400(Integer.Parse(codVendedor), VendedorNombre)
+            If Vendedor.Rows.Count > 0 Then
+                VendedorNombre = Vendedor.Rows(0).Item("VENOMB")
+
+                'Insertar Vendedor desde AS400 si no existe
+                insertVendedorFromAS400(Integer.Parse(codVendedor), VendedorNombre)
+            Else
+                VendedorNombre = "N/A"
+            End If
 
         End If
 
@@ -883,7 +889,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim tablaFacturaDetalleAS400 = ConfigurationManager.AppSettings.Get("tablaFacturaDetalleAS400")
         'Dim tiposFacturas = ConfigurationManager.AppSettings.Get("tiposFacturas")
 
-        Dim sQueryFactura As String = "SELECT MFNUMCLIEN as codigoCte, MFNOMBRECL as NombreCte, MFTELEFONO as TelefonoCte, " &
+        Dim sQueryFactura As String = "SELECT MFNUMCLIEN as codigoCte, MFNOMBRECL as nombreCte, MFTELEFONO as TelefonoCte, " &
                                         " MFVENFACTU as codigoVendedor FROM @FACTURA_CABECERA WHERE MFTIPOFACT IN ('" & tipoFactura & "') AND MFNUMFACT = " & pFact
         Dim sQueryProductos As String = "SELECT MMNUMPRODU as CodProducto, MMNUMFACTU FROM @FACTURA_DETALLE WHERE MMNUMFACTU =" & pFact
 
@@ -901,7 +907,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
         'Insertar Cliente desde AS400 si no existe
         If DataFactura.Rows.Count > 0 Then
-            insertClienteFromAS400(DataFactura.Rows(0).Item("codigoCte"), DataFactura.Rows(0).Item("NombreCte"), DataFactura.Rows(0).Item("TelefonoCte"), "")
+            insertClienteFromAS400(DataFactura.Rows(0).Item("codigoCte"), DataFactura.Rows(0).Item("nombreCte"), DataFactura.Rows(0).Item("TelefonoCte"), "")
         End If
 
         'Limpiar la tabla de productos con Reclamacion temporal
@@ -931,6 +937,28 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
+
+    Public Shared Function getOrdenServicioERP(ByVal pOrdenServicio As String, ByVal idReclamacion As Integer, tipoOrdenServicio As String) As Data.DataTable
+        Dim DataOrdenServicio As New Data.DataTable
+
+        Dim tablaOrdenServicioAS400 = ConfigurationManager.AppSettings.Get("tablaOrdenServicioAS400")
+
+        Dim sQueryOrdenServicio As String = "SELECT OSNOMC as nombreCte, OSTIFT as TipoFactura, OSFACO as NoFactura,  " &
+                                        " OSLINA as productoDescrp, OSFI03 as serie FROM @ORDEN_SERVICIO WHERE OSTIDO IN ('" & tipoOrdenServicio & "') AND OSNUOS = " & pOrdenServicio
+
+        'Testing or Production Environment
+        If ConfigurationManager.AppSettings.Get("Environment") = "DEV" Then
+            sQueryOrdenServicio = sQueryOrdenServicio.Replace("@ORDEN_SERVICIO", "Z_RCOSMF00_OS")
+        Else
+            sQueryOrdenServicio = sQueryOrdenServicio.Replace("@ORDEN_SERVICIO", tablaOrdenServicioAS400)
+        End If
+
+        DataOrdenServicio = ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.AS400), CommandType.Text, sQueryOrdenServicio).Tables(0)
+
+        Return DataOrdenServicio
+
+    End Function
+
     Public Shared Function getPedidoERP(ByVal pPed As String, ByVal idReclamacion As Integer, tipoPedido As String) As Data.DataTable
         Dim DataPedido As New Data.DataTable
         Dim DataProductos As New Data.DataTable
@@ -939,7 +967,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
         Dim tablaPedidoDetalleAS400 = ConfigurationManager.AppSettings.Get("tablaPedidoDetalleAS400")
         'Dim tiposPedidos = ConfigurationManager.AppSettings.Get("tiposPedidos")
 
-        Dim sQueryPedido As String = "SELECT PDNUMCLIEN as codigoCte, PDNOMBRECL as NombreCte, PDTELEFONO as TelefonoCte, PDVENFACTU as " &
+        Dim sQueryPedido As String = "SELECT PDNUMCLIEN as codigoCte, PDNOMBRECL as nombreCte, PDTELEFONO as TelefonoCte, PDVENFACTU as " &
                                      "codigoVendedor FROM @PEDIDO_CABECERA WHERE PDTIPOPEDI IN ('" & tipoPedido & "') AND PDNUMPEDI = " & pPed
         Dim sQueryProductos As String = "SELECT MMNUMPEDI NoPedido, MMNUMARTIC as CodProducto FROM @PEDIDO_DETALLE WHERE MMNUMPEDI =" & pPed
 
@@ -957,7 +985,7 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
         'Insertar Cliente desde AS400 si no existe
         If DataPedido.Rows.Count > 0 Then
-            insertClienteFromAS400(DataPedido.Rows(0).Item("codigoCte"), DataPedido.Rows(0).Item("NombreCte"), DataPedido.Rows(0).Item("TelefonoCte"), "")
+            insertClienteFromAS400(DataPedido.Rows(0).Item("codigoCte"), DataPedido.Rows(0).Item("nombreCte"), DataPedido.Rows(0).Item("TelefonoCte"), "")
         End If
 
         For Each product As DataRow In DataProductos.Rows
