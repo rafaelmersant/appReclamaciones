@@ -522,6 +522,15 @@ ByVal nombre As String, ByVal depto As Integer, ByVal correo As String, ByVal ni
 
     End Function
 
+    Public Shared Function getReclamacionByOrden(ByVal orden As String, ByVal usuario As String) As DataSet
+        Dim param1 As New OdbcParameter("@orden", orden)
+        Dim param2 As New OdbcParameter("@usuario", usuario)
+
+        Return ExecuteDataSetODBC(clsAccessData.getConnection(clsAccessData.eConn.SQL), CommandType.StoredProcedure,
+                                  "{call sp_getReclamacionByOrden (?,?)}", New OdbcParameter() {param1, param2})
+
+    End Function
+
     Public Shared Function getReclamacionByChofer(ByVal chofer As String, ByVal usuario As String) As DataSet
         Dim param1 As New OdbcParameter("@chofer", chofer)
         Dim param2 As New OdbcParameter("@usuario", usuario)

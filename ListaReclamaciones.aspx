@@ -20,6 +20,7 @@
                     <asp:ListItem>Motivo</asp:ListItem>
                     <asp:ListItem>Area</asp:ListItem>
                     <asp:ListItem>Factura</asp:ListItem>
+                    <asp:ListItem>Orden</asp:ListItem>
                     <%--<asp:ListItem>Chofer</asp:ListItem>--%>
                     <%--<asp:ListItem>Transportista</asp:ListItem>--%>
                 </asp:DropDownList>
@@ -160,6 +161,14 @@
                         <asp:TextBox ID="txtFactura" runat="server"
                             Height="12px" TabIndex="1" Width="81px" CssClass="LAzul"></asp:TextBox>
                         <asp:ImageButton ID="imgbtnFactura" runat="server" ImageUrl="~/Images/search.png"/>
+                    </div>
+
+                    <div id="pororden" style="border: 1px dotted blue; padding: 2px 2px 2px 2px;" >
+                        <asp:Label ID="Label22" runat="server" Font-Bold="True"
+                            Text="Orden" Width="93px" CssClass="LFiltros"></asp:Label>
+                        <asp:TextBox ID="txtOrden" runat="server"
+                            Height="12px" TabIndex="1" Width="81px" CssClass="LAzul"></asp:TextBox>
+                        <asp:ImageButton ID="imgbtnOrden" runat="server" ImageUrl="~/Images/search.png"/>
                     </div>
                     
                     

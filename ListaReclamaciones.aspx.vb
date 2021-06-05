@@ -53,25 +53,27 @@ Partial Class ListaReclamaciones
         clsReclamaciones.TieButton(Page, txtCliente, imgbtnBCliente)
 
         imgUtil.Attributes.Add("onload", "porfecha.style.display='none';pordescrp.style.display='none'; pornumero.style.display='none';porcliente.style.display='none';" &
-        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" &
+        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; pororden.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Fecha') {porfecha.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Numero') {pornumero.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Cliente') {porcliente.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Motivo') {pormotivo.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Area') {porarea.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Factura') {porfactura.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Orden') {pororden.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Descripcion') {pordescrp.style.display='';}")
         '"if(" & ddlBuscaPor.UniqueID & ".value == 'Chofer') {porchofer.style.display='';}" & _
         '"if(" & ddlBuscaPor.UniqueID & ".value == 'Transportista') {portransportista.style.display='';}")
 
         ddlBuscaPor.Attributes.Add("onchange", "porfecha.style.display='none';pordescrp.style.display='none'; pornumero.style.display='none';porcliente.style.display='none';" &
-        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" &
+        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; pororden.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Fecha') {porfecha.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Numero') {pornumero.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Cliente') {porcliente.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Motivo') {pormotivo.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Area') {porarea.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Factura') {porfactura.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Orden') {pororden.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Descripcion') {pordescrp.style.display='';}")
         '"if(" & ddlBuscaPor.UniqueID & ".value == 'Chofer') {porchofer.style.display='';}" & _
         '"if(" & ddlBuscaPor.UniqueID & ".value == 'Transportista') {portransportista.style.display='';}")
@@ -328,6 +330,13 @@ Partial Class ListaReclamaciones
                 If dtDatos.Rows.Count > 0 Then
                     grdReclamaciones.DataSource = dtDatos
                 End If
+
+            Case 10 'ORDEN
+
+                dtDatos = clsReclamaciones.getReclamacionByOrden(txtOrden.Text, Session.Item("usuario")).Tables(0)
+                If dtDatos.Rows.Count > 0 Then
+                    grdReclamaciones.DataSource = dtDatos
+                End If
         End Select
 
         grdReclamaciones.DataBind()
@@ -529,6 +538,15 @@ Partial Class ListaReclamaciones
     Protected Sub imgbtnTransportista_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles imgbtnTransportista.Click
         Try
             getReclamacion(9)
+
+        Catch ex As Exception
+            lblMensaje.Text = ex.Message
+
+        End Try
+    End Sub
+    Protected Sub imgbtnOrden_Click(sender As Object, e As ImageClickEventArgs) Handles imgbtnOrden.Click
+        Try
+            getReclamacion(10)
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message
