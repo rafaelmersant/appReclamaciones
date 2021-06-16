@@ -21,10 +21,11 @@
                 <asp:Label ID="Label24" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
                     Text="TIPO DOCUMENTO: " Width="133px"></asp:Label>
                 <asp:DropDownList ID="ddlTipoDoc" runat="server" Width="160px" TabIndex="5" CssClass="LetraH">
-                    <asp:ListItem Value="NODEFINE">---------------</asp:ListItem>
+                    <asp:ListItem Value="NODEFINE">--SELECCIONAR--</asp:ListItem>
                     <asp:ListItem>RECLAMACION</asp:ListItem>
                     <asp:ListItem>DEVOLUCION</asp:ListItem>
                     <asp:ListItem>QUEJA</asp:ListItem>
+                    <asp:ListItem>PROCONSUMIDOR</asp:ListItem>
                 </asp:DropDownList></td>
             <td align="right" colspan="1">
                                 <asp:Label ID="Label6" runat="server" Font-Bold="True" Font-Names="Verdana"

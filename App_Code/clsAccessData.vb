@@ -5,6 +5,7 @@ Public Class clsAccessData
     'Private Shared sConnSQL As String = ConfigurationManager.ConnectionStrings("sConnSQL").ConnectionString
     Private Shared sConnSQL As String = ConfigurationManager.AppSettings.Get("sConnSQLODBC")
     Private Shared sConnAS400 As String = ConfigurationManager.AppSettings.Get("sConnAS400ODBC")
+    Private Shared sConnLOCAL As String = ConfigurationManager.AppSettings.Get("sConnLOCAL")
     Private Shared sConnDEV As String = ConfigurationManager.ConnectionStrings("sConnDEV").ConnectionString
 
     Enum eConn
@@ -20,9 +21,9 @@ Public Class clsAccessData
             Case 2 : sResult = sConnAS400
         End Select
 
-        'If ConfigurationManager.AppSettings.Get("Environment") = "DEV" Then
-        '    sResult = sConnDEV
-        'End If
+        If ConfigurationManager.AppSettings.Get("Environment") = "LOCAL" Then
+            sResult = sConnLOCAL
+        End If
 
         Return sResult
 

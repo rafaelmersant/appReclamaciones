@@ -210,7 +210,7 @@
         </tr>
         <tr>
             <td>
-                <asp:GridView ID="grdReclamaciones" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="False" Width="100%" AllowPaging="True" PageSize="15">
+                <asp:GridView ID="grdReclamaciones" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="False" Width="100%" AllowPaging="True" PageSize="100">
                     <FooterStyle BackColor="#666666" Font-Bold="True" ForeColor="White" />
                     <RowStyle BackColor="WhiteSmoke" ForeColor="#333333" />
                     <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" Font-Names="Verdana" Font-Size="14px" Font-Bold="False" />

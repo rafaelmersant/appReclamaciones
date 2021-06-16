@@ -286,7 +286,7 @@ Partial Class Reclamacion
             End If
 
             If ddlTipoDoc.SelectedIndex = 0 Then
-                Throw New Exception("Debe seleccionar el tipo de documento: RECLAMACION / DEVOLUCION / QUEJA.")
+                Throw New Exception("Debe seleccionar el tipo de documento: RECLAMACION / DEVOLUCION / QUEJA / PROCONSUMIDOR.")
             End If
 
             If rbOrdenServicio.Checked = False And rbOtros.Checked = False Then
@@ -1326,7 +1326,7 @@ Partial Class Reclamacion
                 lblStatus.Text = dtDatos.Rows(0).Item("status").ToString().ToUpper()
 
                 'PARA DESPLEGAR SI ES FACTURA O PEDIDO
-                If dtDatos.Rows(0).Item("categoria") = "FC" Then
+                If dtDatos.Rows(0).Item("Pedido") = "FC" Then
                     fillTiposFacturas()
 
                     txtPedido.Text = dtDatos.Rows(0).Item("factura")
