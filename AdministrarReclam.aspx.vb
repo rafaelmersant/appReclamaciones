@@ -22,7 +22,12 @@ Partial Class AdministrarReclam
         Try
             Dim dtComent As Data.DataTable
 
-            dtComent = clsReclamaciones.getComentarios(txtid.Text, Session.Item("depto"))
+            If Session.Item("nivel").ToString() = "2" Then
+                dtComent = clsReclamaciones.getComentarios(txtid.Text, 99)
+            Else
+                dtComent = clsReclamaciones.getComentarios(txtid.Text, Session.Item("depto"))
+            End If
+
             grdComentarios.DataSource = dtComent
             grdComentarios.DataBind()
 
