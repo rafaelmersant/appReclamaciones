@@ -99,6 +99,20 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="width:5%">
+                                <asp:Label ID="Label18" runat="server" CssClass="LFiltros" Text="Localidad" Width="87px"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlLocalidadGeneral" runat="server" CssClass="LetraH2" TabIndex="5" Width="264px">
+                                    <asp:ListItem>TODAS</asp:ListItem>
+                                    <asp:ListItem>SANTO DOMINGO</asp:ListItem>
+                                    <asp:ListItem>HAINA</asp:ListItem>
+                                    <asp:ListItem>SANTIAGO</asp:ListItem>
+                                    <asp:ListItem>HERRERA</asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>
                                 <asp:Button ID="btnVerReporte" runat="server" BackColor="SteelBlue" BorderColor="Gray"
                                     BorderStyle="Ridge" BorderWidth="1px" Font-Bold="True" Font-Names="Arial" ForeColor="White"
@@ -147,6 +161,20 @@
                                     Width="81px" BackColor="Ivory"></asp:TextBox><cc1:CalendarExtender ID="CalendarExtenderFfin" runat="server"
                                         CssClass="CalendarExtenderFF" TargetControlID="txtFechaFin" Format="MM/dd/yyyy">
                                     </cc1:CalendarExtender>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:5%">
+                                <asp:Label ID="Label19" runat="server" CssClass="LFiltros" Text="Localidad" Width="87px"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlLocalidadAreaMotivo" runat="server" CssClass="LetraH2" TabIndex="5" Width="264px">
+                                    <asp:ListItem>TODAS</asp:ListItem>
+                                    <asp:ListItem>SANTO DOMINGO</asp:ListItem>
+                                    <asp:ListItem>HAINA</asp:ListItem>
+                                    <asp:ListItem>SANTIAGO</asp:ListItem>
+                                    <asp:ListItem>HERRERA</asp:ListItem>
+                                </asp:DropDownList>
                             </td>
                         </tr>
                         <tr>
@@ -223,6 +251,20 @@
                                     Width="81px" BackColor="Ivory"></asp:TextBox><cc1:CalendarExtender ID="CalendarExtender2" runat="server"
                                         CssClass="CalendarExtenderFF" TargetControlID="txtFechaFEx" Format="MM/dd/yyyy">
                                     </cc1:CalendarExtender>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:5%">
+                                <asp:Label ID="Label17" runat="server" CssClass="LFiltros" Text="Localidad" Width="87px"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlLocalidad" runat="server" CssClass="LetraH2" TabIndex="5" Width="264px">
+                                    <asp:ListItem>TODAS</asp:ListItem>
+                                    <asp:ListItem>SANTO DOMINGO</asp:ListItem>
+                                    <asp:ListItem>HAINA</asp:ListItem>
+                                    <asp:ListItem>SANTIAGO</asp:ListItem>
+                                    <asp:ListItem>HERRERA</asp:ListItem>
+                                </asp:DropDownList>
                             </td>
                         </tr>
                         <tr>

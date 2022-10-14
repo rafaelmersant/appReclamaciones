@@ -53,7 +53,8 @@ Partial Class ListaReclamaciones
         clsReclamaciones.TieButton(Page, txtCliente, imgbtnBCliente)
 
         imgUtil.Attributes.Add("onload", "porfecha.style.display='none';pordescrp.style.display='none'; pornumero.style.display='none';porcliente.style.display='none';" &
-        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; pororden.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" &
+        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; pororden.style.display='none'; porchofer.style.display='none';" &
+        " portransportista.style.display='none'; porlocalidad.style.display='none';" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Fecha') {porfecha.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Numero') {pornumero.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Cliente') {porcliente.style.display='';}" &
@@ -61,12 +62,14 @@ Partial Class ListaReclamaciones
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Area') {porarea.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Factura') {porfactura.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Orden') {pororden.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Localidad') {porlocalidad.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Descripcion') {pordescrp.style.display='';}")
         '"if(" & ddlBuscaPor.UniqueID & ".value == 'Chofer') {porchofer.style.display='';}" & _
         '"if(" & ddlBuscaPor.UniqueID & ".value == 'Transportista') {portransportista.style.display='';}")
 
         ddlBuscaPor.Attributes.Add("onchange", "porfecha.style.display='none';pordescrp.style.display='none'; pornumero.style.display='none';porcliente.style.display='none';" &
-        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; pororden.style.display='none'; porchofer.style.display='none'; portransportista.style.display='none';" &
+        " pormotivo.style.display='none';porarea.style.display='none'; porfactura.style.display='none'; pororden.style.display='none'; porchofer.style.display='none';" &
+        " portransportista.style.display='none'; porlocalidad.display='none';" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Fecha') {porfecha.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Numero') {pornumero.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Cliente') {porcliente.style.display='';}" &
@@ -74,6 +77,7 @@ Partial Class ListaReclamaciones
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Area') {porarea.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Factura') {porfactura.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Orden') {pororden.style.display='';}" &
+          "if(" & ddlBuscaPor.UniqueID & ".value == 'Localidad') {porlocalidad.style.display='';}" &
           "if(" & ddlBuscaPor.UniqueID & ".value == 'Descripcion') {pordescrp.style.display='';}")
         '"if(" & ddlBuscaPor.UniqueID & ".value == 'Chofer') {porchofer.style.display='';}" & _
         '"if(" & ddlBuscaPor.UniqueID & ".value == 'Transportista') {portransportista.style.display='';}")
@@ -229,6 +233,16 @@ Partial Class ListaReclamaciones
 
     End Sub
 
+    Private Sub getReclamacionLocalidadForExcel()
+        Dim dtDatos As New DataSet
+
+        lblMensaje.Text = ""
+
+        grdReclamaciones.DataSource = clsReclamaciones.getReclamacionByLocalidadToExcel(ddlLocalidad.SelectedValue, Session.Item("usuario")).Tables(0)
+        grdReclamaciones.DataBind()
+
+    End Sub
+
     Private Sub getReclamacionAreaForExcel()
         Dim dtDatos As New DataSet
 
@@ -334,6 +348,13 @@ Partial Class ListaReclamaciones
             Case 10 'ORDEN
 
                 dtDatos = clsReclamaciones.getReclamacionByOrden(txtOrden.Text, Session.Item("usuario")).Tables(0)
+                If dtDatos.Rows.Count > 0 Then
+                    grdReclamaciones.DataSource = dtDatos
+                End If
+
+            Case 11 'LOCALIDAD
+
+                dtDatos = clsReclamaciones.getReclamacionByLocalidad(ddlLocalidad.SelectedValue, Session.Item("usuario")).Tables(0)
                 If dtDatos.Rows.Count > 0 Then
                     grdReclamaciones.DataSource = dtDatos
                 End If
@@ -459,6 +480,8 @@ Partial Class ListaReclamaciones
                 getReclamacionMotivoForExcel()
             Case "Area"
                 getReclamacionAreaForExcel()
+            Case "Localidad"
+                getReclamacionLocalidadForExcel()
 
             Case Else
                 listaReclamacionesForExcel()
@@ -475,7 +498,13 @@ Partial Class ListaReclamaciones
         Response.Clear()
         Response.Buffer = True
         Response.ContentType = "application/vnd.ms-excel"
-        Response.AddHeader("Content-Disposition", "attachment;filename=" & "reclamaciones" & ddlBuscaPor.SelectedValue & Environment.TickCount.ToString().Substring(1, 2) & ".xls")
+
+        If ddlBuscaPor.SelectedItem.Text = "Localidad" Then
+            Response.AddHeader("Content-Disposition", "attachment;filename=" & "reclamaciones" & ddlBuscaPor.SelectedValue & "_" & ddlLocalidad.SelectedValue & "_" & Environment.TickCount.ToString().Substring(1, 2) & ".xls")
+        Else
+            Response.AddHeader("Content-Disposition", "attachment;filename=" & "reclamaciones" & ddlBuscaPor.SelectedValue & Environment.TickCount.ToString().Substring(1, 2) & ".xls")
+        End If
+
         Response.Charset = "UTF-8"
         Response.ContentEncoding = Encoding.Default
         Response.Write(sb.ToString())
@@ -547,6 +576,16 @@ Partial Class ListaReclamaciones
     Protected Sub imgbtnOrden_Click(sender As Object, e As ImageClickEventArgs) Handles imgbtnOrden.Click
         Try
             getReclamacion(10)
+
+        Catch ex As Exception
+            lblMensaje.Text = ex.Message
+
+        End Try
+    End Sub
+
+    Protected Sub imgbtnLocalidad_Click(sender As Object, e As ImageClickEventArgs) Handles imgbtnLocalidad.Click
+        Try
+            getReclamacion(11)
 
         Catch ex As Exception
             lblMensaje.Text = ex.Message

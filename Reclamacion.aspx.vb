@@ -328,7 +328,8 @@ Partial Class Reclamacion
                                                 ddlTransportista.SelectedValue,
                                                 Cliente,
                                                 ddlTipoFactura.SelectedValue,
-                                                Categoria)
+                                                Categoria,
+                                                ddlLocalidad.SelectedValue)
 
             updateProductos() 'Aqui dentro se verifica si productos fueron deseleccionados para ser eliminados
 
@@ -1009,6 +1010,17 @@ Partial Class Reclamacion
 
     End Sub
 
+    Private Sub fillDecisionesCliente()
+        Dim dtDatos As DataTable = clsReclamaciones.getDecisiones()
+        ddlDecisionesCliente.DataSource = dtDatos
+        ddlDecisionesCliente.DataTextField = "descripcion"
+        ddlDecisionesCliente.DataValueField = "id_motivo"
+        ddlDecisionesCliente.DataBind()
+
+        ddlDecisionesCliente.Items.Insert(0, New ListItem("Seleccionar...", "0"))
+
+    End Sub
+
     'Este metodo llena el GridView, solo la columna de codigo de producto.
     Private Sub fillProductos(ByVal irecl As Integer, Optional selectAll As Boolean = True)
         Dim prod As New DataTable
@@ -1097,8 +1109,36 @@ Partial Class Reclamacion
                 If Not clsReclamaciones.getDocumentoExiste(txtPedido.Text, "F") Is Nothing Then
                     lblExiste.Text = "Existe una reclamacion con este documento."
                     lblExiste.Visible = True
+                Else
+                    If (ddlTipoFactura.SelectedValue = "FTA" Or
+                        ddlTipoFactura.SelectedValue = "FTC" Or
+                        ddlTipoFactura.SelectedValue = "FTD" Or
+                        ddlTipoFactura.SelectedValue = "FTI" Or
+                        ddlTipoFactura.SelectedValue = "FTL" Or
+                        ddlTipoFactura.SelectedValue = "FTO" Or
+                        ddlTipoFactura.SelectedValue = "FTP" Or
+                        ddlTipoFactura.SelectedValue = "FTAF") Then
+                        ddlLocalidad.SelectedValue = "SANTO DOMINGO"
+                    End If
+
+                    If (ddlTipoFactura.SelectedValue = "FTI" Or
+                        ddlTipoFactura.SelectedValue = "FTM" Or
+                        ddlTipoFactura.SelectedValue = "FTCF" Or
+                        ddlTipoFactura.SelectedValue = "FTIF" Or
+                        ddlTipoFactura.SelectedValue = "FTG" Or
+                        ddlTipoFactura.SelectedValue = "FTH" Or
+                        ddlTipoFactura.SelectedValue = "FTQ" Or
+                        ddlTipoFactura.SelectedValue = "FTE") Then
+                        ddlLocalidad.SelectedValue = "SANTIAGO"
+                    End If
+
+                    If (ddlTipoFactura.SelectedValue = "FTS" Or
+                        ddlTipoFactura.SelectedValue = "FTU") Then
+                        ddlLocalidad.SelectedValue = "HERRERA"
+                    End If
                 End If
-            ElseIf rbPedido.Checked Then
+
+                    ElseIf rbPedido.Checked Then
                 sMens = "NO EXISTE EL PEDIDO"
                 BuscarPorPedido()
 
@@ -1262,13 +1302,28 @@ Partial Class Reclamacion
 
             fillAreas()
             fillMotivos()
+            fillDecisionesCliente()
             MostrarUsuariosInv(iReclamacion)
             fillProductos(iReclamacion)
 
             fillComentariosCrono(iReclamacion)
 
+            'pnDetalles.Enabled = False
+            rbFactura.Enabled = False
+            rbPedido.Enabled = False
+            rbOrdenServicio.Enabled = False
+            rbOtros.Enabled = False
+            txtPedido.Enabled = False
+            ddlTipoFactura.Enabled = False
+            btnBuscaPedido.Enabled = False
+            txtTelefono.Enabled = False
+            ddlCliente.Enabled = False
+            ddlVendedor.Enabled = False
+            txtSoporteVta.Enabled = False
+            ddlLocalidad.Enabled = False
+            imgbtnSaveLocalidad.Enabled = False
+
             'VISIBLES******
-            pnDetalles.Enabled = False
             btnGuardar.Visible = False
             lblDeptosInvolucrados.Visible = True
             Accordion1.Visible = True
@@ -1282,6 +1337,7 @@ Partial Class Reclamacion
             ddlAreas.Visible = True
             lblMotivo.Visible = True
             ddlMotivos.Visible = True
+            ddlDecisionesCliente.Visible = True
             btnAgregarMotivoFast.Visible = True
 
             lblMonto.Visible = True
@@ -1429,6 +1485,10 @@ Partial Class Reclamacion
                     ddlMotivos.SelectedValue = dtDatos.Rows(0).Item("motivo")
                 End If
 
+                If Not dtDatos.Rows(0).Item("decisionCliente") Is DBNull.Value Then
+                    ddlDecisionesCliente.SelectedValue = dtDatos.Rows(0).Item("decisionCliente")
+                End If
+
                 'NUEVOS CAMPOS AGOSTO 2014
                 If dtDatos.Rows(0).Item("monto") Is DBNull.Value Then
                     txtMonto.Visible = False
@@ -1479,16 +1539,25 @@ Partial Class Reclamacion
                 ddlChoferes.SelectedValue = dtDatos.Rows(0).Item("chofer").ToString().Trim()
                 ddlTransportista.SelectedValue = dtDatos.Rows(0).Item("transportista").ToString().Trim()
 
+                'NUEVA MODIFICAION ***SEPTIEMBRE 2022
+                If Not dtDatos.Rows(0).Item("localidad") Is DBNull.Value Then
+                    ddlLocalidad.SelectedValue = dtDatos.Rows(0).Item("localidad")
+                End If
+
             End If
 
             'CONCLUSION
             If Session.Item("nivel").ToString().Trim() = 2 And
             lblStatus.Text.Trim() <> "CERRADA" Then
+                ddlLocalidad.Enabled = True
+                imgbtnSaveLocalidad.Enabled = True
+
                 btnCerrar.Visible = True
                 txtConclusion.ReadOnly = False
 
                 lblMotivo.Visible = True
                 ddlMotivos.Visible = True
+                ddlDecisionesCliente.Visible = True
                 btnAgregarMotivoFast.Visible = True
 
                 lblArea.Visible = True
@@ -1521,6 +1590,7 @@ Partial Class Reclamacion
 
                 ddlAreas.Enabled = True
                 ddlMotivos.Enabled = True
+                ddlDecisionesCliente.Enabled = True
 
                 'PARA INVOLUCRAR MAS USUARIOS
                 lblInvolucradosUsr.Visible = True
@@ -1536,6 +1606,7 @@ Partial Class Reclamacion
 
                 ddlAreas.Enabled = False
                 ddlMotivos.Enabled = False
+                ddlDecisionesCliente.Enabled = False
                 txtDescripcion.ReadOnly = True
                 txtMonto.ReadOnly = True
                 txtNCND.ReadOnly = True
@@ -1568,6 +1639,7 @@ Partial Class Reclamacion
             ddlAreas.Visible = False
             lblMotivo.Visible = False
             ddlMotivos.Visible = False
+            ddlDecisionesCliente.Visible = False
             btnAgregarMotivoFast.Visible = False
             panelConclusion.Visible = False
 
@@ -1666,7 +1738,8 @@ Partial Class Reclamacion
                                                 ddlMoneda.SelectedValue,
                                                 txtCantidad.Text,
                                                 ddlMetrica.SelectedValue,
-                                                ddlClaseDoc.SelectedValue)
+                                                ddlClaseDoc.SelectedValue,
+                                                ddlDecisionesCliente.SelectedValue)
 
             Try
                 EnviaCorreoConclusion()
@@ -2362,5 +2435,13 @@ Partial Class Reclamacion
 
         txtClienteManual.Visible = value
         ddlCliente.Visible = Not value
+    End Sub
+
+    Protected Sub imgbtnSaveLocalidad_Click(sender As Object, e As ImageClickEventArgs) Handles imgbtnSaveLocalidad.Click
+        Dim iReclamacion As Integer = Integer.Parse(Request.QueryString("id"))
+
+        Dim result = clsReclamaciones.SaveLocalidad(ddlLocalidad.SelectedValue, iReclamacion)
+        Console.WriteLine(result)
+        lblSaveLocalidad.Visible = True
     End Sub
 End Class

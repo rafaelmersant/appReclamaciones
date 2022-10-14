@@ -21,6 +21,7 @@
                     <asp:ListItem>Area</asp:ListItem>
                     <asp:ListItem>Factura</asp:ListItem>
                     <asp:ListItem>Orden</asp:ListItem>
+                    <asp:ListItem>Localidad</asp:ListItem>
                     <%--<asp:ListItem>Chofer</asp:ListItem>--%>
                     <%--<asp:ListItem>Transportista</asp:ListItem>--%>
                 </asp:DropDownList>
@@ -171,6 +172,23 @@
                         <asp:ImageButton ID="imgbtnOrden" runat="server" ImageUrl="~/Images/search.png"/>
                     </div>
                     
+                    <div id="porlocalidad" style="border: 1px dotted blue; padding: 2px 2px 2px 2px;">
+                    <asp:Label ID="Label23" runat="server" CssClass="LFiltros" Font-Bold="True" Text="Localidad"
+                        Width="93px"></asp:Label>
+                        
+                        <asp:DropDownList ID="ddlLocalidad" runat="server" CssClass="LetraH2" TabIndex="5" Width="264px">
+                                    <asp:ListItem>SELECCIONAR...</asp:ListItem>
+                                    <asp:ListItem>SANTO DOMINGO</asp:ListItem>
+                                    <asp:ListItem>HAINA</asp:ListItem>
+                                    <asp:ListItem>SANTIAGO</asp:ListItem>
+                                    <asp:ListItem>HERRERA</asp:ListItem>
+                                </asp:DropDownList>
+
+                        <asp:ImageButton ID="imgbtnLocalidad" runat="server" ImageUrl="~/Images/search.png"/>
+                        <br />
+                    
+                    </div>
+
                     
                     <div id="porchofer" style="border: 1px dotted blue; padding: 2px 2px 2px 2px;" >
                         <asp:Label ID="Label20" runat="server" Font-Bold="True"

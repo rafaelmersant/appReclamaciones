@@ -117,12 +117,23 @@
                             </td>
                             <td style="border-left: #ccccff thin outset; width: 10%;" valign="middle">
                                 <asp:Label ID="Label11" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Ventas" Width="53px" Visible="False"></asp:Label>
+                                <asp:Label ID="Label3" runat="server" CssClass="LetraH1" Font-Bold="True" Font-Names="Verdana" Font-Size="12px" Text="Localidad" Width="53px"></asp:Label>
                             </td>
                             <td style="width: 40%">
                                 <asp:DropDownList ID="ddlVentas" runat="server" CssClass="LetraH2" TabIndex="5" Width="236px" Visible="False">
                                     <asp:ListItem>LOCALES</asp:ListItem>
                                     <asp:ListItem>INTERNACIONALES</asp:ListItem>
                                 </asp:DropDownList>
+                                <asp:DropDownList ID="ddlLocalidad" runat="server" CssClass="LetraH2" TabIndex="5" Width="264px">
+                                    <asp:ListItem>SELECCIONAR...</asp:ListItem>
+                                    <asp:ListItem>SANTO DOMINGO</asp:ListItem>
+                                    <asp:ListItem>HAINA</asp:ListItem>
+                                    <asp:ListItem>SANTIAGO</asp:ListItem>
+                                    <asp:ListItem>HERRERA</asp:ListItem>
+                                </asp:DropDownList>
+                                <asp:ImageButton ID="imgbtnSaveLocalidad" runat="server" ImageUrl="~/Images/save_small.png" ToolTip="Guardar localidad" />
+                                <asp:Label ID="lblSaveLocalidad" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Verdana"
+                                    Font-Size="11px" ForeColor="Green" Visible="False" Width="100%">Actualizada!</asp:Label></td>
                             </td>
                         </tr>
                         <tr>
@@ -854,7 +865,7 @@
                             <asp:DropDownList ID="ddlAreas" runat="server" Width="236px" TabIndex="5" Enabled="False">
                             </asp:DropDownList></td>
 
-                        <td valign="top" style="margin-left: 80px">
+                        <td valign="top" style="margin-left: 80px; width: 134px;">
                             <asp:Label ID="lblMotivo" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
                                 Text="Motivo"></asp:Label></td>
                         <td valign="top" style="width: 254px">
@@ -878,19 +889,11 @@
                         <td style="width: 288px" valign="top">
                             <asp:TextBox ID="txtMonto" runat="server" CssClass="LetraH2 NuevosCampos"
                                 TabIndex="1" Width="92px" AutoCompleteType="Disabled"></asp:TextBox></td>
-                        <td valign="top">
-                            <asp:Label ID="lblNCND" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
-                                Text="# Doc."></asp:Label></td>
+                        <td valign="top" style="width: 134px">
+                            <asp:Label ID="lblMotivo0" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
+                                Text="Decisión del Cliente"></asp:Label></td>
                         <td style="width: 254px" valign="top">
-                            <asp:TextBox ID="txtNCND" runat="server" CssClass="LetraH2 NuevosCampos"
-                                TabIndex="1" Width="92px" AutoCompleteType="Disabled"></asp:TextBox>
-                            <asp:Label ID="lblMoneda" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
-                                Text="Moneda"></asp:Label>
-                            <asp:DropDownList ID="ddlMoneda" runat="server" Width="86px" TabIndex="9" CssClass="LetraH2 NuevosCampos" Enabled="False">
-                                <asp:ListItem Value="0">...</asp:ListItem>
-                                <asp:ListItem>DOP</asp:ListItem>
-                                <asp:ListItem>USD</asp:ListItem>
-                                <asp:ListItem>CRC</asp:ListItem>
+                            <asp:DropDownList ID="ddlDecisionesCliente" runat="server" Width="320px" TabIndex="5" Enabled="False">
                             </asp:DropDownList></td>
                         <td valign="top">
                             &nbsp;</td>
@@ -902,7 +905,7 @@
                         <td style="width: 288px" valign="top">
                             <asp:TextBox ID="txtCantidad" runat="server" AutoCompleteType="Disabled" CssClass="LetraH2 NuevosCampos"
                                 TabIndex="1" Width="92px"></asp:TextBox></td>
-                        <td valign="top">
+                        <td valign="top" style="width: 134px">
                             <asp:Label ID="lblMetrica" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
                                 Text="Metrica"></asp:Label></td>
                         <td style="width: 254px" valign="top">
@@ -912,14 +915,48 @@
                                 <asp:ListItem>USD</asp:ListItem>
                                 <asp:ListItem>CRC</asp:ListItem>
                             </asp:DropDownList>
+                            </td>
+                        <td valign="top">
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <asp:Label ID="lblNCND" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
+                                Text="# Doc."></asp:Label></td>
+                        <td style="width: 288px" valign="top">
+                            <asp:TextBox ID="txtNCND" runat="server" CssClass="LetraH2 NuevosCampos"
+                                TabIndex="1" Width="92px" AutoCompleteType="Disabled"></asp:TextBox>
+                            </td>
+                        <td valign="top" style="width: 134px">
                             <asp:Label ID="lblClaseDoc" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
                                 Text="Clase Doc."></asp:Label>
+                            </td>
+                        <td style="width: 254px" valign="top">
                             <asp:DropDownList ID="ddlClaseDoc" runat="server" Width="86px" TabIndex="9" CssClass="LetraH2 NuevosCampos" Enabled="False">
                                 <asp:ListItem Value="0">...</asp:ListItem>
                                 <asp:ListItem>DOP</asp:ListItem>
                                 <asp:ListItem>USD</asp:ListItem>
                                 <asp:ListItem>CRC</asp:ListItem>
                             </asp:DropDownList></td>
+                        <td valign="top">
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <asp:Label ID="lblMoneda" runat="server" Font-Bold="True" Font-Names="Verdana" Font-Size="12px"
+                                Text="Moneda"></asp:Label>
+                            </td>
+                        <td style="width: 288px" valign="top">
+                            <asp:DropDownList ID="ddlMoneda" runat="server" Width="97px" TabIndex="9" CssClass="LetraH2 NuevosCampos" Enabled="False" Height="16px">
+                                <asp:ListItem Value="0">...</asp:ListItem>
+                                <asp:ListItem>DOP</asp:ListItem>
+                                <asp:ListItem>USD</asp:ListItem>
+                                <asp:ListItem>CRC</asp:ListItem>
+                            </asp:DropDownList></td>
+                        <td valign="top" style="width: 134px">
+                            &nbsp;</td>
+                        <td style="width: 254px" valign="top">
+                            &nbsp;</td>
                         <td valign="top">
                             &nbsp;</td>
                     </tr>

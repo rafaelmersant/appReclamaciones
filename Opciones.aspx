@@ -26,6 +26,12 @@
         </tr>
         <tr>
             <td colspan="2">
+                <asp:HyperLink ID="hlDecisionCliente" runat="server" CssClass="LetraUsual" NavigateUrl="~/DecisionCliente.aspx">Mantenimiento DECISIONES DEL CLIENTE</asp:HyperLink></td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
                 <asp:HyperLink ID="hlMotivos" runat="server" CssClass="LetraUsual" NavigateUrl="~/Motivos.aspx">Mantenimiento MOTIVOS</asp:HyperLink></td>
             <td>
             </td>

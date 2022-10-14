@@ -40,21 +40,21 @@ Partial Class Reportes
 
         Select Case cual
             Case 1
-                MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionRpt(txtFechaI.Text, txtFechaF.Text).Tables(0))
+                MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionRpt(txtFechaI.Text, txtFechaF.Text, ddlLocalidadGeneral.SelectedValue).Tables(0))
                 MyReportDocument.DataDefinition.FormulaFields(0).Text = """" & Format(Convert.ToDateTime(txtFechaI.Text), "MM/dd/yyyy") & """"
                 MyReportDocument.DataDefinition.FormulaFields(1).Text = """" & Format(Convert.ToDateTime(txtFechaF.Text), "MM/dd/yyyy") & """"
             Case 2
-                MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionRptAM(txtFechaIni.Text, txtFechaFin.Text).Tables(0))
+                MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionRptAM(txtFechaIni.Text, txtFechaFin.Text, ddlLocalidadAreaMotivo.SelectedValue).Tables(0))
                 MyReportDocument.DataDefinition.FormulaFields(0).Text = """" & Format(Convert.ToDateTime(txtFechaIni.Text), "MM/dd/yyyy") & """"
                 MyReportDocument.DataDefinition.FormulaFields(1).Text = """" & Format(Convert.ToDateTime(txtFechaFin.Text), "MM/dd/yyyy") & """"
             Case 3
-                MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionRptAMC(txtFechaIni.Text, txtFechaFin.Text).Tables(0))
+                MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionRptAMC(txtFechaIni.Text, txtFechaFin.Text, ddlLocalidadAreaMotivo.SelectedValue).Tables(0))
                 MyReportDocument.DataDefinition.FormulaFields(0).Text = """" & Format(Convert.ToDateTime(txtFechaIni.Text), "MM/dd/yyyy") & """"
                 MyReportDocument.DataDefinition.FormulaFields(1).Text = """" & Format(Convert.ToDateTime(txtFechaFin.Text), "MM/dd/yyyy") & """"
             Case 4
                 MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionRpt15D().Tables(0))
             Case 5
-                MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionesExcedidas(txtFechaIEx.Text, txtFechaFEx.Text).Tables(0))
+                MyReportDocument.SetDataSource(clsReclamaciones.getReclamacionesExcedidas(txtFechaIEx.Text, txtFechaFEx.Text, ddlLocalidad.SelectedValue).Tables(0))
                 MyReportDocument.DataDefinition.FormulaFields(0).Text = """" & Format(Convert.ToDateTime(txtFechaIEx.Text), "MM/dd/yyyy") & """"
                 MyReportDocument.DataDefinition.FormulaFields(1).Text = """" & Format(Convert.ToDateTime(txtFechaFEx.Text), "MM/dd/yyyy") & """"
 
@@ -275,4 +275,5 @@ Partial Class Reportes
         Response.Write(strb.ToString())
         Response.End()
     End Sub
+
 End Class
